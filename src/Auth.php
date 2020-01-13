@@ -1,6 +1,6 @@
 <?php
 
-namespace G3n1us\AuthProxy;
+namespace BlueRaster\PowerBIAuthProxy;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;

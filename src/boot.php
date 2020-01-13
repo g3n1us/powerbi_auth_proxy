@@ -1,5 +1,5 @@
 <?php
-	namespace G3n1us\AuthProxy;
+	namespace BlueRaster\PowerBIAuthProxy;
 
 	require(__DIR__ . '/helpers.php');
 

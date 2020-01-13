@@ -1,6 +1,6 @@
 <?php
 
-namespace G3n1us\AuthProxy;
+namespace BlueRaster\PowerBIAuthProxy;
 
 class Routes{
 
