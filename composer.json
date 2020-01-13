@@ -1,0 +1,24 @@
+{
+    "name": "g3n1us/auth_proxy",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sean Bethel",
+            "email": "tech@jmbdc.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "thenetworg/oauth2-azure": "dev-master",
+        "vlucas/phpdotenv": "^4.1@dev",
+        "kint-php/kint": "dev-master",
+        "filp/whoops": "^2.6@dev",
+        "composer/composer": "^1.10@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "G3n1us\\AuthProxy\\": "src/"
+        }
+    }
+}

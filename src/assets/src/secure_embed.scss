@@ -1,0 +1,51 @@
+#main-content{
+	position: relative;
+}
+
+#secure_embed_root{
+	position: absolute;
+	height: calc(100% - 20px);
+	width: calc(100% - 40px);;
+	display: flex;
+
+	.tabbable, .main-container, .tab-content{
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		flex-shrink: 0;
+	}
+
+	.page-header{
+		margin: 0;
+	}
+
+	.tab-content, .tab-pane{
+		flex: 1;
+	}
+
+	.tab-content{
+		border: 1px solid #ddd;
+		border-top: none;
+	}
+
+    .tab-pane iframe{
+        border: 0;
+        width: 100%;
+        height: 100%;
+        flex: 1;
+    }
+
+	.loading-indicator{
+		font-size: 20px;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		position: absolute;
+		height: 20px;
+		margin: auto;
+	    text-align: center;
+	}
+}
+
