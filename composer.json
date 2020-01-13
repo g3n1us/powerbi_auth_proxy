@@ -1,11 +1,11 @@
 {
-    "name": "g3n1us/auth_proxy",
+    "name": "blueraster/powerbi_auth_proxy",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "Sean Bethel",
-            "email": "tech@jmbdc.com"
+            "email": "tech@americanmadeweb.com"
         }
     ],
     "minimum-stability": "dev",
