@@ -20,5 +20,10 @@
         "psr-4": {
             "BlueRaster\\PowerBIAuthProxy\\": "src/"
         }
+    },
+    "scripts": {
+        "test": [
+            "pwd",
+        ]
     }
 }
