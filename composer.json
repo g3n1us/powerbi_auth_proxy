@@ -10,7 +10,6 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "thenetworg/oauth2-azure": "dev-master",
         "vlucas/phpdotenv": "^4.1@dev",
         "kint-php/kint": "dev-master",
         "filp/whoops": "^2.6@dev",
