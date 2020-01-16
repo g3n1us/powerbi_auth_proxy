@@ -13,7 +13,8 @@
         "vlucas/phpdotenv": "^4.1@dev",
         "kint-php/kint": "dev-master",
         "filp/whoops": "^2.6@dev",
-        "composer/composer": "^1.10@dev"
+        "composer/composer": "^1.10@dev",
+        "guzzlehttp/guzzle": "^7.0@dev"
     },
     "autoload": {
         "psr-4": {

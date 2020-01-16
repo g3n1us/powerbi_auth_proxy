@@ -5,7 +5,7 @@ namespace BlueRaster\PowerBIAuthProxy;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 
-use TheNetworg\OAuth2\Client\Provider\Azure as AzureProvider;
+// use TheNetworg\OAuth2\Client\Provider\Azure as AzureProvider;
 
 require_once(__DIR__.'/boot.php');
 
@@ -38,7 +38,7 @@ class Auth{
 
 	public function __construct(){
 		if(static::$instance){
-			throw new \Exception("The AuthProxy Auth class must be provided an instance of Ci_Controller, and the class must not be constructed directly. Use Auth::get_instance(\$ci_app)");
+			throw new \Exception("Double Instantiation error");
 		}
 		if(! static::$ci =& get_instance() ) {
 			new \Ci_Controller;
@@ -53,6 +53,10 @@ class Auth{
 	    $this->application_secret = env('APPLICATION_SECRET');
 	    $this->group_id = env('GROUP_ID');
 	    $this->selected_reports = env('SELECTED_REPORTS');
+
+	    if(empty($this->username) || empty($this->password) || empty($this->application_id) || empty($this->application_secret) || empty($this->group_id) || empty($this->selected_reports)){
+		    throw new \Exception("Required configuration values are missing.");
+	    }
 	}
 
 

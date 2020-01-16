@@ -16,7 +16,6 @@ class Installer{
 
 	public static function postAutoloadDump(Event $event){
 		new self($event);
-
 	}
 
 	public function __construct(Event $event){
@@ -48,7 +47,7 @@ class Installer{
 	private function isInstalled(){
 		$missing = [];
 		// is the controller in place?
-		$controller_filepath =  $this->applicationDir . '/core/My_Controller.php';
+		$controller_filepath =  $this->applicationDir . '/core/MY_Controller.php';
 		if(!file_exists($controller_filepath)){
 			$missing[] = 'installController';
 		}
@@ -63,7 +62,7 @@ class Installer{
 	}
 
 	private function installController(){
-		$filepath =  $this->applicationDir . '/core/My_Controller.php';
+		$filepath =  $this->applicationDir . '/core/MY_Controller.php';
 		if(!file_exists($filepath)){
 			file_put_contents($filepath, "<?php" . PHP_EOL . $this->controller_contents . PHP_EOL);
 			Command::say("The controller file has been created at: \n" . $filepath);
