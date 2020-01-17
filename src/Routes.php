@@ -63,6 +63,18 @@ class Routes{
 		$embed_token = $this->auth_proxy->getEmbedToken($report_id);
 		return json_encode(['embed_token' => $embed_token, 'report_id' => $report_id]);
 	}
+	
+	
+	// responds to the url: /auth_proxy_routes/esri_embed/{report_id}
+	private function esri_embed($report_id = false){
+		if($report_id === false) return false;
+		$embed_token = $this->auth_proxy->getEsriEmbedToken($report_id);
+		return json_encode(['access_token' => $embed_token, 'report_id' => $report_id]);
+	}
+	
+	
+	
+// 	be8cf70442fc4ff491247d47708302df
 
 
 	// responds to the url: /auth_proxy_routes/asset/{secure_embed.js|secure_embed.css}

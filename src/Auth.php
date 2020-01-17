@@ -26,6 +26,10 @@ class Auth{
 	private $group_id;
 
 	private $selected_reports;
+	
+	private $esri_client_id;
+
+	private $esri_client_secret;
 
 	private static $instance = false;
 
@@ -53,6 +57,8 @@ class Auth{
 	    $this->application_secret = env('APPLICATION_SECRET');
 	    $this->group_id = env('GROUP_ID');
 	    $this->selected_reports = env('SELECTED_REPORTS');
+	    $this->esri_client_id = env('ESRI_CLIENT_ID');
+	    $this->esri_client_secret = env('ESRI_CLIENT_SECRET');
 
 	    if(empty($this->username) || empty($this->password) || empty($this->application_id) || empty($this->application_secret) || empty($this->group_id) || empty($this->selected_reports)){
 		    throw new \Exception("Required configuration values are missing.");
@@ -180,7 +186,31 @@ class Auth{
 
 
 		return $this->embed_tokens[$report_id];
+	}
+	
+	
+	public function getEsriEmbedToken($report_id){
+		$guzzle = new GuzzleClient(['base_uri' => 'https://www.arcgis.com/sharing/oauth2/token/']);
+		$params = [
+			'client_id' => $this->esri_client_id,
+			'client_secret' => $this->esri_client_secret,
+			'grant_type' => 'client_credentials',
+			'f' => 'json'
+		];
+		
+		$path = "https://www.arcgis.com/sharing/oauth2/token/";
+		$request = new Request('POST', $path);
+		$response = $guzzle->send($request);
 
+		$body = $response->getBody();
+		$json = '';
+		while (!$body->eof()) {
+		    $json .= $body->read(1024);
+		}
+
+		$token_data = json_decode($json, true);
+		if(isset($token_data['error'])) return $token_data['error'];
+		return $token_data['access_token'];
 	}
 
 }

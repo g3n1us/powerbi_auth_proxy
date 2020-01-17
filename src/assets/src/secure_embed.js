@@ -20,10 +20,11 @@ class App{
 		    this.data.selected_reports = this.data.selected_reports.map(v => {
 			    const found = this.data.reports[v.id];
 			    found.slug = found.id.replace(/-/g, '');
+				found.handle = v.name.toLowerCase().replace(/ /g, '-');
 
 			    return { ...found, ...v };
 		    });
-
+console.log(this.data.selected_reports);
 			this.render();
 			this.attachHandlers();
 		});
@@ -44,6 +45,11 @@ class App{
         const $reportContainer = $(link.hash);
         if($reportContainer.find('iframe').length) return;
         $reportContainer.html('<span class="loading-indicator">loading...</span>');
+        
+		if($(link).data('esrireport')){
+			return this.loadEsriReport(link, $reportContainer);
+		}
+        
         axios.get('/auth_proxy_routes/report_embed/' + reportData.id).then(response => {
             const embedConfiguration = {
             	type: 'report',
@@ -56,6 +62,19 @@ class App{
 
             const report = this.powerbi.embed($reportContainer.get(0), embedConfiguration);
         });
+	}
+	
+	loadEsriReport(link, $reportContainer){
+		const reportId = $(link).data('esrireport');
+        axios.get(`/auth_proxy_routes/esri_embed/${reportId}`).then(response => {
+	        console.log(response);
+			$reportContainer.html(`<iframe frameborder="0" src="https://arcgis.com/apps/View/index.html?appid=${reportId}&token=${response.access_token}"></iframe>`)
+        });
+		
+		// <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://arcgis.com/apps/View/index.html?appid=6b6a075eca8d4899958fb273710a6806"></iframe>
+		
+		
+
 	}
 
 	attachHandlers(){
@@ -72,12 +91,12 @@ class App{
 	}
 
 	render(){
-		const links = this.data.selected_reports.map((v, i) => `<li class="${i === 0 ? 'active' : ''}"><a data-toggle="tab" href="#${v.slug}" data-report="${v.id}">${v.name}</a></li>`);
+		const links = this.data.selected_reports.map((v, i) => `<li class="${i === 0 ? 'active' : ''}"><a data-XXtoggle="tab" href="#${v.slug}" data-report="${v.id}">${v.name}</a></li>`);
 		const tabs = `
 			<ul class="nav nav-tabs" id="secure_embed_tabs">
 				${links.join('')}
 	            <li>
-					<a data-toggle="tab" href="#cluster_detection">
+					<a data-toggle="tab" data-esrireport="be8cf70442fc4ff491247d47708302df" href="#cluster_detection">
 						Cluster Detection & Response (Maps)
 					</a>
 				</li>
@@ -87,9 +106,12 @@ class App{
 		const tab_panels = `
 			<div class="tab-content">
 			${tab_panel_items.join('')}
-			<div id="cluster_detection" class="tab-pane fade"></div>
+			<div id="cluster_detection" class="tab-pane fade">
+
+			</div>
 			</div>
 		`;
+// 				<iframe src="https://icap.maps.arcgis.com/apps/opsdashboard/index.html#/be8cf70442fc4ff491247d47708302df" frameborder="0" allowFullScreen="true"></iframe>
 
 		const page = `<div id="secure_embed_root">
 			<div class="main-container" id="main-container">
