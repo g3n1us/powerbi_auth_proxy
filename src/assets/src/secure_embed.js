@@ -24,8 +24,9 @@ class App{
 
 			    return { ...found, ...v };
 		    });
-console.log(this.data.selected_reports);
+
 			this.render();
+			this.$ = window.$ || window.jQuery;
 			this.attachHandlers();
 		});
 
@@ -40,6 +41,8 @@ console.log(this.data.selected_reports);
 	}
 
 	loadReport(link){
+		const { $ } = this;
+		$(link).tab('show');
 		const { reports } = this.data;
         const reportData = reports[$(link).data('report')];
         const $reportContainer = $(link.hash);
@@ -65,44 +68,64 @@ console.log(this.data.selected_reports);
 	}
 	
 	loadEsriReport(link, $reportContainer){
+		const { $ } = this;
 		const reportId = $(link).data('esrireport');
         axios.get(`/auth_proxy_routes/esri_embed/${reportId}`).then(response => {
 	        console.log(response);
+	        //! X-man!!!
+	        // below does not work! 
+	        // The map layers are what are protected, not the dashboard itself.
 			$reportContainer.html(`<iframe frameborder="0" src="https://arcgis.com/apps/View/index.html?appid=${reportId}&token=${response.access_token}"></iframe>`)
         });
 		
-		// <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://arcgis.com/apps/View/index.html?appid=6b6a075eca8d4899958fb273710a6806"></iframe>
-		
-		
-
 	}
 
 	attachHandlers(){
-
-	    $(document).on('click', '[data-toggle="tab"]', (event) => {
-	        this.loadReport(event.target);
-	    });
-	    // load first tab
-	    var $active = $('[data-toggle="tab"]').filter(function(){
-	        return $(this).parents('li.active').length;
-	    });
-
-	    this.loadReport($active[0]);
+		const { $ } = this;			
+		
+		const $tabpanes = $('#secure_embed_root .tab-pane');
+		
+		const tabs = {initial_tab: false};
+		$tabpanes.toArray().map(v => {
+			const $a = $(`[href="#${v.id}"]`);
+			if(!$a.length){
+				throw new Error(`The tabpane, ${v.id}, has no corresponding a to go with it.`);
+				return;
+			}
+			$a.tab();
+			if(!tabs.initial_tab) tabs.initial_tab = $a[0];
+			tabs['#'+v.id] = $a[0];
+		});
+		
+		$(window).on('hashchange', (event) => {
+			const { hash } = window.location;
+			if(!(hash in tabs)) {
+				alert('ddd');
+				return;
+			}
+			const link = tabs[hash];
+			this.loadReport(link);
+			
+		});
+		
+		const initial_tab = tabs[window.location.hash] || tabs.initial_tab;
+		this.loadReport(initial_tab);
 	}
 
 	render(){
-		const links = this.data.selected_reports.map((v, i) => `<li class="${i === 0 ? 'active' : ''}"><a data-XXtoggle="tab" href="#${v.slug}" data-report="${v.id}">${v.name}</a></li>`);
+		console.log('this.data.selected_reports', this.data.selected_reports);
+		const links = this.data.selected_reports.map((v, i) => `<li class="${i === 0 ? 'active' : ''}"><a data-XXtoggle="tab" href="#${v.handle}" data-report="${v.id}">${v.name}</a></li>`);
 		const tabs = `
 			<ul class="nav nav-tabs" id="secure_embed_tabs">
 				${links.join('')}
 	            <li>
-					<a data-toggle="tab" data-esrireport="be8cf70442fc4ff491247d47708302df" href="#cluster_detection">
+					<a data-esrireport="be8cf70442fc4ff491247d47708302df" href="#cluster_detection">
 						Cluster Detection & Response (Maps)
 					</a>
 				</li>
 			</ul>
 		`;
-		const tab_panel_items = this.data.selected_reports.map((v, i) => `<div id="${v.slug}" class="tab-pane fade ${i === 0 ? 'in active' : ''}"></div>`);
+		const tab_panel_items = this.data.selected_reports.map((v, i) => `<div id="${v.handle}" class="tab-pane fade ${i === 0 ? 'in active' : ''}">${v.handle}</div>`);
 		const tab_panels = `
 			<div class="tab-content">
 			${tab_panel_items.join('')}
