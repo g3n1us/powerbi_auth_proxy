@@ -1,5 +1,5 @@
 import PbiClient, { models, service, factories } from 'powerbi-client';
-const $ = require('jquery');
+// const $ = require('jquery');
 import axios from 'axios';
 
 
@@ -20,13 +20,12 @@ class App{
 		    this.data.selected_reports = this.data.selected_reports.map(v => {
 			    const found = this.data.reports[v.id];
 			    found.slug = found.id.replace(/-/g, '');
-				found.handle = v.name.toLowerCase().replace(/ /g, '-');
+				found.handle = v.name.toLowerCase().replace(/[^a-z]/g, '-');
 
 			    return { ...found, ...v };
 		    });
-
-			this.render();
 			this.$ = window.$ || window.jQuery;
+			this.render();
 			this.attachHandlers();
 		});
 
@@ -113,7 +112,7 @@ class App{
 	}
 
 	render(){
-		console.log('this.data.selected_reports', this.data.selected_reports);
+		const { $ } = this;	
 		const links = this.data.selected_reports.map((v, i) => `<li class="${i === 0 ? 'active' : ''}"><a data-XXtoggle="tab" href="#${v.handle}" data-report="${v.id}">${v.name}</a></li>`);
 		const tabs = `
 			<ul class="nav nav-tabs" id="secure_embed_tabs">
