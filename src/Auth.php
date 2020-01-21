@@ -5,8 +5,6 @@ namespace BlueRaster\PowerBIAuthProxy;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 
-// use TheNetworg\OAuth2\Client\Provider\Azure as AzureProvider;
-
 require_once(__DIR__.'/boot.php');
 
 class Auth{
@@ -33,23 +31,26 @@ class Auth{
 
 	private static $instance = false;
 
-	private static $ci;
+	private static $framework;
 
 	public static function get_instance(){
 		if(!self::$instance) self::$instance = new self;
 		return self::$instance;
 	}
-
+	
 	public function __construct(){
 		if(static::$instance){
 			throw new \Exception("Double Instantiation error");
 		}
+		static::$framework = $this->register_frameworks();
+/*
 		if(! static::$ci =& get_instance() ) {
 			new \Ci_Controller;
 			static::$ci =& get_instance();
 		}
+*/
 
-		UserProxy::handle(static::$ci->user);
+		UserProxy::handle(static::$framework->user);
 
 	    $this->username = env('USERNAME');
 	    $this->password = env('PASSWORD');
@@ -65,11 +66,27 @@ class Auth{
 	    }
 	}
 
+	private function register_frameworks(){
+		$framework = false;
+		$classes = [
+			'Prologin',
+			'Mock',
+		];
+		foreach($classes as $classname){
+			$class = "BlueRaster\\PowerBIAuthProxy\\Frameworks\\$classname";
+			if($framework = $class::test()){
+				return new $class;
+			}
+		}
+	}
 
+
+/*
 
 	public function getCi(){
 		return static::$ci;
 	}
+*/
 
 	public function getAuthToken(){
 		if(!$this->oauth_token){

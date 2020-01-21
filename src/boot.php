@@ -6,6 +6,7 @@
 	if(!session_status()) session_start();
 // 	$dotenv_dir = dirname(dirname(\Composer\Factory::getComposerFile()));
 	$dotenv_dir = dirname(getcwd());
+
 	if(file_exists("$dotenv_dir/.env")){
 		$dotenv = \Dotenv\Dotenv::createImmutable($dotenv_dir);
 		$dotenv->load();

@@ -37,6 +37,7 @@ class UserProxy{
 			}
 		}
 	}
+	
 
 	private function getHandlerForProvider($key){
 		$handlers = [
@@ -58,6 +59,7 @@ class UserProxy{
 		}
 
 	}
+
 
 	private function abort(){
 	    header("HTTP/1.1 403 Forbidden");
