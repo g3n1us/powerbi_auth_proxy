@@ -4,8 +4,8 @@
 	require(__DIR__ . '/helpers.php');
 
 	if(!session_status()) session_start();
-// 	$dotenv_dir = dirname(dirname(\Composer\Factory::getComposerFile()));
-	$dotenv_dir = dirname(getcwd());
+// 	$dotenv_dir = dirname(getcwd());
+	$dotenv_dir = dirname($_SERVER['DOCUMENT_ROOT']);
 
 	if(file_exists("$dotenv_dir/.env")){
 		$dotenv = \Dotenv\Dotenv::createImmutable($dotenv_dir);

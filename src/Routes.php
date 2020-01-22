@@ -6,15 +6,10 @@ class Routes{
 
 	private $auth_proxy;
 
-	public function __construct(){
-
-	}
-
 	public function _route(){
 		$matched = preg_match('/^\/auth_proxy_routes\/(.*?)$/', $_SERVER['REQUEST_URI'], $matches);
 		if($matched){
 			$this->auth_proxy = Auth::get_instance();
-// 			dd( $this->auth_proxy->getCi()->user );
 			$segments = explode('/', $matches[1]);
 			$method = array_shift($segments);
 

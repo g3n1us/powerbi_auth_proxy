@@ -43,27 +43,31 @@ class Auth{
 			throw new \Exception("Double Instantiation error");
 		}
 		static::$framework = $this->register_frameworks();
-/*
-		if(! static::$ci =& get_instance() ) {
-			new \Ci_Controller;
-			static::$ci =& get_instance();
-		}
-*/
 
 		UserProxy::handle(static::$framework->user);
+		
+		foreach(static::config() as $key => $value){
+			$this->{$key} = $value;
+		}
+	}
+	
+	public static function config(){
+	    $config = [
+		    'username' => env('USERNAME'),
+		    'password' => env('PASSWORD'),
+		    'application_id' => env('APPLICATION_ID'),
+		    'application_secret' => env('APPLICATION_SECRET'),
+		    'group_id' => env('GROUP_ID'),
+		    'selected_reports' => env('SELECTED_REPORTS'),
+		    'esri_client_id' => env('ESRI_CLIENT_ID'),
+		    'esri_client_secret' => env('ESRI_CLIENT_SECRET'),
+	    ];
 
-	    $this->username = env('USERNAME');
-	    $this->password = env('PASSWORD');
-	    $this->application_id = env('APPLICATION_ID');
-	    $this->application_secret = env('APPLICATION_SECRET');
-	    $this->group_id = env('GROUP_ID');
-	    $this->selected_reports = env('SELECTED_REPORTS');
-	    $this->esri_client_id = env('ESRI_CLIENT_ID');
-	    $this->esri_client_secret = env('ESRI_CLIENT_SECRET');
-
-	    if(empty($this->username) || empty($this->password) || empty($this->application_id) || empty($this->application_secret) || empty($this->group_id) || empty($this->selected_reports)){
+	    if(empty($config['username']) || empty($config['password']) || empty($config['application_id']) || empty($config['application_secret']) || empty($config['group_id']) || empty($config['selected_reports'])){
 		    throw new \Exception("Required configuration values are missing.");
 	    }
+	    
+	    return $config;
 	}
 
 	private function register_frameworks(){
@@ -81,12 +85,6 @@ class Auth{
 	}
 
 
-/*
-
-	public function getCi(){
-		return static::$ci;
-	}
-*/
 
 	public function getAuthToken(){
 		if(!$this->oauth_token){
