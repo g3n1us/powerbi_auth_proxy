@@ -40,7 +40,7 @@ if(!empty($_GET['configure'])){
 		$output[] = "<h1>Configuration Required</h1>";
 		$output[] = "<h4>Please fill in the following fields:</h4>";
 		$output[] = '<div class="container">
-						<form class="row" method="post" action="/?configure=true">
+						<form class="row" method="post" action="?configure=true">
 							<div class="col-md-8">';
 		foreach($config as $line){
 			if(is_array($line)){
@@ -61,7 +61,7 @@ else if(!empty($_GET['installing'])){
 	$output[] = "Installation complete.\n";
 	$output[] = "Errors (if any) will be reported below.\n";
 	$output[] = "<pre><small style='line-height:1'>";
-	exec("php \"$build_dir/composer.phar\" install --no-suggest -d \"$dir\" 2>&1", $output);
+	exec("php \"$build_dir/composer.phar\" install --no-suggest --ignore-platform-reqs -d \"$dir\" 2>&1", $output);
 	$output[] = "</small></pre>";
 	$output[] =  "Install complete, <button class='btn btn-primary' onclick='window.location.assign(\"/\")'>click to continue...</button>";
 
