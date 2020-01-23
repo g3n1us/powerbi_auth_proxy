@@ -2,7 +2,9 @@
 	
 namespace BlueRaster\PowerBIAuthProxy\Frameworks;	
 	
-class Prologin extends Framework{
+class CodeIgniter extends Framework{
+	
+	protected $providers = ['Prologin'];
 	
 	public static $ci;
 	
@@ -16,6 +18,6 @@ class Prologin extends Framework{
 	}
 	
 	public static function test(){
-		return false;
+		return class_exists('Ci_Controller');
 	}
 }

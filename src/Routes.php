@@ -2,6 +2,9 @@
 
 namespace BlueRaster\PowerBIAuthProxy;
 
+use BlueRaster\PowerBIAuthProxy\Exceptions\MissingConfigException;
+
+
 class Routes{
 
 	private $auth_proxy;
@@ -25,8 +28,19 @@ class Routes{
 	}
 
     public static function route(){
-		(new self)->_route();
+		try{
+			(new self)->_route();
+		}
+		catch(\Exception $e){
+			if(method_exists($e, 'handle')){
+				$e->handle();
+			}
+			else{
+				throw new \Exception($e->getMessage());
+			}
+		}
     }
+
 
 	private static function set_mime($filename = null){
 		$ok = preg_match('/^.*?\.(js|css)$/', $filename, $match);
@@ -67,9 +81,6 @@ class Routes{
 		return json_encode(['access_token' => $embed_token, 'report_id' => $report_id]);
 	}
 	
-	
-	
-// 	be8cf70442fc4ff491247d47708302df
 
 
 	// responds to the url: /auth_proxy_routes/asset/{secure_embed.js|secure_embed.css}

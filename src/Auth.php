@@ -5,6 +5,8 @@ namespace BlueRaster\PowerBIAuthProxy;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 
+use BlueRaster\PowerBIAuthProxy\Exceptions\MissingConfigException;
+
 require_once(__DIR__.'/boot.php');
 
 class Auth{
@@ -42,9 +44,9 @@ class Auth{
 		if(static::$instance){
 			throw new \Exception("Double Instantiation error");
 		}
-		static::$framework = $this->register_frameworks();
+		static::$framework = $this->register_framework();
 
-		UserProxy::handle(static::$framework->user);
+		UserProxy::handle(static::$framework->getUser());
 		
 		foreach(static::config() as $key => $value){
 			$this->{$key} = $value;
@@ -64,20 +66,35 @@ class Auth{
 	    ];
 
 	    if(empty($config['username']) || empty($config['password']) || empty($config['application_id']) || empty($config['application_secret']) || empty($config['group_id']) || empty($config['selected_reports'])){
-		    throw new \Exception("Required configuration values are missing.");
+		    throw new MissingConfigException;
 	    }
 	    
 	    return $config;
 	}
 
-	private function register_frameworks(){
+	private function register_framework(){
 		$framework = false;
 		$classes = [
-			'Prologin',
+			'CodeIgniter',
 			'Mock',
 		];
 		foreach($classes as $classname){
 			$class = "BlueRaster\\PowerBIAuthProxy\\Frameworks\\$classname";
+			if($class::test()){
+				return new $class;
+			}
+		}
+	}
+
+
+	private function register_user_providers(){
+		$framework = false;
+		$classes = [
+			'Prologin',
+			'MockUser',
+		];
+		foreach($classes as $classname){
+			$class = "BlueRaster\\PowerBIAuthProxy\\UserProviders\\$classname";
 			if($framework = $class::test()){
 				return new $class;
 			}

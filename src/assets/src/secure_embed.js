@@ -27,6 +27,9 @@ class App{
 			this.$ = window.$ || window.jQuery;
 			this.render();
 			this.attachHandlers();
+		})
+		.catch($e => {
+			console.log($e);
 		});
 
 

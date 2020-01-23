@@ -2,6 +2,9 @@
 
 namespace BlueRaster\PowerBIAuthProxy;
 
+use BlueRaster\PowerBIAuthProxy\Exceptions\MissingUserProviderException;
+
+use BlueRaster\PowerBIAuthProxy\UserProviders\UserProvider;
 
 class UserProxy{
 
@@ -9,14 +12,14 @@ class UserProxy{
 
 	private $user_model_reflection;
 
-	public function __construct($user_model){
+	public function __construct(UserProvider $user_model){
 		$this->user_model = $user_model;
 		$this->user_model_reflection = new \ReflectionClass($user_model);
+		dd($this);
 	}
 
 
 	public static function handle($user_model){
-// 		self::getProvider($user_model);
 		(new self($user_model))->getProvider();
 	}
 
@@ -28,8 +31,14 @@ class UserProxy{
 				if(preg_match('/^.*?\/application\/libraries\/User.php$/', $this->user_model_reflection->getFileName()) ){
 					return true;
 				}
+				return false;
 			}
 		];
+		
+		$found = array_filter($tests, 'call_user_func');
+		if(empty($found)){
+			throw new MissingUserProviderException;
+		}
 
 		foreach($tests as $key => $test_fn){
 			if($test_fn() === true){
@@ -63,6 +72,7 @@ class UserProxy{
 
 	private function abort(){
 	    header("HTTP/1.1 403 Forbidden");
+	    echo "Forbidden";
 	    exit;
 	}
 

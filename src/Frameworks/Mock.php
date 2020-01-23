@@ -10,7 +10,7 @@ class Mock extends Framework{
 	}
 	
 	public static function test(){
-		return true;
+		return php_sapi_name() === 'cli-server';
 	}
 	
 }

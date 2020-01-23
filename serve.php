@@ -1,6 +1,6 @@
 <?php
 if (php_sapi_name() !== 'cli-server'){
-	die('not allowed');
+	//die('not allowed');
 }
 
 $src = __DIR__.'/src';
@@ -18,7 +18,7 @@ else{
 	}
 	catch(\Exception $e){
 		if(empty($_GET['configure'])){
-			header('Location: /?configure=true');
+			header('Location: ?configure=true');
 			exit;			
 		}
 		$content = require(__DIR__.'/install.php');
@@ -51,4 +51,5 @@ $html = '
 </html>';
 
 echo trim($html);	
+die();
 
