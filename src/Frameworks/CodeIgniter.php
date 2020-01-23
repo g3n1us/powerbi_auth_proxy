@@ -4,11 +4,12 @@ namespace BlueRaster\PowerBIAuthProxy\Frameworks;
 	
 class CodeIgniter extends Framework{
 	
-	protected $providers = ['Prologin'];
+	protected $user_providers = ['Prologin'];
 	
 	public static $ci;
 	
 	public function __construct(){
+		parent::__construct();
 		if(! static::$ci =& get_instance() ) {
 			new \Ci_Controller;
 			static::$ci =& get_instance();

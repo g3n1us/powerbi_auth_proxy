@@ -2,40 +2,32 @@
 	
 namespace BlueRaster\PowerBIAuthProxy\Frameworks;
 
-class Framework{
+abstract class Framework{
 
 	protected $user;
 	
-	protected $providers;
+	protected $user_providers;
+	
+	public function __construct(Array $config = ['user' => null]){
+		[ 'user' => $user ] = $config;
+		if($user) $this->user = $user;
+	}
 	
 	public static function test(){
 		return false;
 	}
 	
-	private function getProvider(){
-		$tests = [
-			'ci_ehris' => function(){
-				$props = $this->user_model_reflection->getProperties();
-				if(preg_match('/^.*?\/application\/libraries\/User.php$/', $this->user_model_reflection->getFileName()) ){
-					return true;
-				}
-				return false;
+	public function getUserProvider(){
+		return collect($this->user_providers)->map(function($classname){
+			$p = "BlueRaster\\PowerBIAuthProxy\\UserProviders\\$classname";
+			if($p::test($this)){
+				return new $p($this->getUser());
 			}
-		];
-		
-		$found = array_filter($tests, 'call_user_func');
-		if(empty($found)){
-			throw new MissingUserProviderException;
-		}
-
-		foreach($tests as $key => $test_fn){
-			if($test_fn() === true){
-				$this->getHandlerForProvider($key);
-			}
-		}
+		})->filter()->first();
 	}
 	
-	
+	// Provides the currently used "user" object that the framework is utilizing.
+	// 
 	public function getUser(){
 		return $this->user;
 	}

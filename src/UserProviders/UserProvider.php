@@ -2,13 +2,21 @@
 	
 namespace BlueRaster\PowerBIAuthProxy\UserProviders;	
 	
+use BlueRaster\PowerBIAuthProxy\Frameworks\Framework;
+
 class UserProvider{
 	
-	private $user;
+	protected $user;
+	
+	protected $user_reflection;
 	
 	public function __construct($user){
 		$this->user = $user;
 		$this->user_reflection = new \ReflectionClass($user);
+	}
+	
+	public function getUser(){
+		return $this->user;
 	}
 	
 	public function logged_in(){
@@ -19,7 +27,7 @@ class UserProvider{
 		return false;
 	}
 		
-	public static function test(){
+	public static function test(Framework $framework){
 		return false;
 	}
 }

@@ -4,10 +4,10 @@ namespace BlueRaster\PowerBIAuthProxy\UserProviders;
 
 use BlueRaster\PowerBIAuthProxy\Frameworks\Framework;
 	
-class Prologin extends UserProvider{
+class Eloquent extends UserProvider{
 	
 	public function logged_in(){
-		return !!$this->user->loggedin;
+		return !!$this->user;
 	}
 	
 	public function can($ability = '*'){
@@ -16,11 +16,7 @@ class Prologin extends UserProvider{
 		
 	public static function test(Framework $framework){
 		$user = $framework->getUser();
-		$reflection = new \ReflectionClass($user);
-		$props = $reflection->getProperties();
-		if(preg_match('/^.*?\/application\/libraries\/User.php$/', $reflection->getFileName()) ){
-			return true;
-		}
+		if($user) return $user instanceof Illuminate\Foundation\Auth\User;
 		return false;
 	}
 }

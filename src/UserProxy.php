@@ -8,27 +8,37 @@ use BlueRaster\PowerBIAuthProxy\UserProviders\UserProvider;
 
 class UserProxy{
 
-	private $user_model;
+	private $user;
 
-	private $user_model_reflection;
+	private $user_reflection;
 
-	public function __construct(UserProvider $user_model){
-		$this->user_model = $user_model;
-		$this->user_model_reflection = new \ReflectionClass($user_model);
-		dd($this);
+	public function __construct(UserProvider $user){
+		$this->user = $user;
+		$this->user_reflection = new \ReflectionClass($user);
 	}
 
 
-	public static function handle($user_model){
-		(new self($user_model))->getProvider();
+	public static function handle(UserProvider $user){
+		$instance = new self($user);
+		if( ! $instance->user->logged_in() ){
+			$instance->abort();
+		}
 	}
 
 
+	public function abort(){
+	    header("HTTP/1.1 403 Forbidden");
+	    echo "Forbidden";
+	    exit;
+	}
+}
+
+/*
 	private function getProvider(){
 		$tests = [
 			'ci_ehris' => function(){
-				$props = $this->user_model_reflection->getProperties();
-				if(preg_match('/^.*?\/application\/libraries\/User.php$/', $this->user_model_reflection->getFileName()) ){
+				$props = $this->user_reflection->getProperties();
+				if(preg_match('/^.*?\/application\/libraries\/User.php$/', $this->user_reflection->getFileName()) ){
 					return true;
 				}
 				return false;
@@ -51,8 +61,8 @@ class UserProxy{
 	private function getHandlerForProvider($key){
 		$handlers = [
 			'ci_ehris' => function(){
-				if(isset($this->user_model->loggedin)){
-					return $this->user_model->loggedin;
+				if(isset($this->user->loggedin)){
+					return $this->user->loggedin;
 				}
 				return false;
 			}
@@ -68,12 +78,6 @@ class UserProxy{
 		}
 
 	}
+*/
 
 
-	private function abort(){
-	    header("HTTP/1.1 403 Forbidden");
-	    echo "Forbidden";
-	    exit;
-	}
-
-}

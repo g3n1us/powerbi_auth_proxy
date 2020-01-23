@@ -5,6 +5,8 @@ namespace BlueRaster\PowerBIAuthProxy;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 
+// use Illuminate\Filesystem\Filesystem;
+
 use BlueRaster\PowerBIAuthProxy\Exceptions\MissingConfigException;
 
 require_once(__DIR__.'/boot.php');
@@ -46,7 +48,9 @@ class Auth{
 		}
 		static::$framework = $this->register_framework();
 
-		UserProxy::handle(static::$framework->getUser());
+		// UserProxy handles middleware functions.
+		// Aborts the request if authorization is not valid
+		UserProxy::handle(static::$framework->getUserProvider());
 		
 		foreach(static::config() as $key => $value){
 			$this->{$key} = $value;
@@ -73,34 +77,13 @@ class Auth{
 	}
 
 	private function register_framework(){
-		$framework = false;
-		$classes = [
-			'CodeIgniter',
-			'Mock',
-		];
-		foreach($classes as $classname){
-			$class = "BlueRaster\\PowerBIAuthProxy\\Frameworks\\$classname";
+		foreach(Filesystem::list_classes('Frameworks') as $class){
+			$class = "$class";
 			if($class::test()){
 				return new $class;
 			}
 		}
 	}
-
-
-	private function register_user_providers(){
-		$framework = false;
-		$classes = [
-			'Prologin',
-			'MockUser',
-		];
-		foreach($classes as $classname){
-			$class = "BlueRaster\\PowerBIAuthProxy\\UserProviders\\$classname";
-			if($framework = $class::test()){
-				return new $class;
-			}
-		}
-	}
-
 
 
 	public function getAuthToken(){

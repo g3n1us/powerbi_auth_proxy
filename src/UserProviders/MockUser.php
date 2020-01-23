@@ -2,7 +2,9 @@
 	
 namespace BlueRaster\PowerBIAuthProxy\UserProviders;	
 	
-class Prologin extends UserProvider{
+use BlueRaster\PowerBIAuthProxy\Frameworks\Framework;	
+	
+class MockUser extends UserProvider{
 	
 	public function logged_in(){
 		return !!$this->user->loggedin;
@@ -12,7 +14,7 @@ class Prologin extends UserProvider{
 		return false;
 	}
 		
-	public static function test(){
+	public static function test(Framework $framework){
 		return false;
 	}
 }
