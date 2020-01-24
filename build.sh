@@ -21,6 +21,7 @@ if [ ! -f "$FILEPATH" ]; then
     cd $VERSIONSDIR
     ln -s "../$FILENAME.zip" "build_$TIMESTAMP.zip"
     cd ..
+    rm "current.zip"
     ln -s "$FILENAME.zip" "current.zip"
     echo $VERSION > hash.txt
 
