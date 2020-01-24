@@ -20,7 +20,8 @@ if [ ! -f "$FILEPATH" ]; then
     composer archive -f zip --dir="../auth_proxy_builds" --file="$FILENAME" --ignore-filters
     cd $VERSIONSDIR
     ln -s "../$FILENAME.zip" "build_$TIMESTAMP.zip"
-    ln -s "../$FILENAME.zip" "current.zip"
+    cd ..
+    ln -s "$FILENAME.zip" "current.zip"
     echo $VERSION > hash.txt
 
 else
