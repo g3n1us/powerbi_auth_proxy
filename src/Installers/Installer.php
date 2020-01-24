@@ -1,9 +1,10 @@
 <?php
 
-namespace BlueRaster\PowerBIAuthProxy;
+namespace BlueRaster\PowerBIAuthProxy\Installers;
 
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
+use BlueRaster\PowerBIAuthProxy\Command;
 
 
 class Installer{
@@ -64,7 +65,7 @@ class Installer{
 	private function installController(){
 		$filepath =  $this->applicationDir . '/core/MY_Controller.php';
 		if(!file_exists($filepath)){
-			file_put_contents($filepath, "<?php" . PHP_EOL . $this->controller_contents . PHP_EOL);
+			file_put_contents($filepath, "<?php" . PHP_EOL . PHP_EOL . $this->controller_contents . PHP_EOL);
 			Command::say("The controller file has been created at: \n" . $filepath);
 			Command::say("This will get called automatically by CodeIgniter, so no other steps are needed.\n");
 		}
@@ -81,6 +82,7 @@ class Installer{
 }
 
 
+/*
 class Command{
 
 	private static $instance;
@@ -181,3 +183,4 @@ class Command{
 	}
 
 }
+*/
