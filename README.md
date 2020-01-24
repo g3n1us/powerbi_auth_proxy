@@ -30,3 +30,4 @@ php composer.phar require blueraster/powerbi_auth_proxy:dev-master
 
 ```
 
+.
