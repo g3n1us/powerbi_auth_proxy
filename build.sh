@@ -9,7 +9,5 @@ fi
 FILENAME="powerbi_auth_proxy_build_$VERSION"
 
 if [ ! -f "../auth_proxy_builds/$FILENAME.zip" ]; then
-
     composer archive -f zip --dir="../auth_proxy_builds" --file="$FILENAME" --ignore-filters
-
 fi
