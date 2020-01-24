@@ -10,13 +10,13 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "vlucas/phpdotenv": "^4.1@dev",
-        "kint-php/kint": "dev-master",
-        "filp/whoops": "^2.6@dev",
-        "composer/composer": "^1.10@dev",
-        "guzzlehttp/guzzle": "^7.0@dev",
-        "illuminate/support": "^7.0@dev",
-        "illuminate/filesystem": "^7.0@dev"
+        "vlucas/phpdotenv": "^4.1",
+        "kint-php/kint": "^3.3",
+        "filp/whoops": "^2.6",
+        "composer/composer": "^1.10",
+        "guzzlehttp/guzzle": "^7.0",
+        "illuminate/support": "^6.0",
+        "illuminate/filesystem": "^6.0"
     },
     "autoload": {
         "psr-4": {
