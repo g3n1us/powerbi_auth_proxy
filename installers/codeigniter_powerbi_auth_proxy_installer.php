@@ -1,29 +1,64 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-
 
 class CodeigniterPowerBIAuthProxyInstaller{
 
     private $repository_url = "https://auth-proxy-downloader.dev.also-too.com";
 
-    private $install_dir = __DIR__ . '/application/third_party/powerbi_auth_proxy';
+    private $install_dir = '/application/third_party/powerbi_auth_proxy';
+
+    private $installer_parent_dirname = 'powerbi_auth_proxy_updater';
 
     private $output = [];
 
     private $errors = [];
 
-    public function __construct(){
-        $this->check_requirements();
+    private $results = ['<hr style="margin: 40px auto" />'];
 
-        if($this->should_install()){
-            $this->install();
+    private $title = '';
+
+    private $config = [
+        'subclass_prefix' => null,
+    ];
+
+    public function __construct(){
+        define('BASEPATH', '');
+        try{
+            require(dirname(__DIR__) . '/application/config/config.php');
+        }
+        catch(\Exception $e){
+            die(var_dump($e));
+        }
+
+        $this-> ci_config($config);
+
+        $this->install_dir = dirname(__DIR__) . $this->install_dir;
+
+        if(!$this->preflight()) return;
+
+        $requirements_ok = $this->check_requirements();
+        if(!empty($_POST['continue'])){
+            $this->title = "";
+            if($requirements_ok && $this->should_install()){
+                $this->install();
+            }
             $this->post_install();
+        }
+        else if(empty($this->errors)){
+            $this->title = "Review the information below and click 'Continue' to proceed with the installation";
+            $this->results[] = '<button type="submit" name="continue" value="true" class="btn btn-primary">Continue?</button>';
+        }
+        else{
+            $this->title = "<span class='text-danger'>Please correct the issues listed below</span>";
         }
     }
 
+    private function ci_config(Array $config){
+        $this->config['subclass_prefix'] = $config['subclass_prefix'];
+
+
+    }
+
     private function install(){
-        @mkdir($this->install_dir);
         copy($this->repository_url . '/current.zip', $this->install_dir . '/current.zip');
         copy($this->repository_url . '/hash.txt', $this->install_dir . '/hash.txt');
 
@@ -31,62 +66,115 @@ class CodeigniterPowerBIAuthProxyInstaller{
         if ($zip->open($this->install_dir . '/current.zip') === TRUE) {
             $zip->extractTo($this->install_dir);
             $zip->close();
-            $this->output[] = "<div class='alert alert-info'>Update successfully unzipped.</div>";
+            $this->results[] = "<div class='alert alert-info'>Update successfully unzipped into the installation directory.</div>";
         } else {
             $this->errors[] = "<div class='alert alert-danger'>An error occurred with unzipping the update/install package</div>";
         }
 
+        // create controller file
+        $controller_content = 'require_once APPPATH . \'/third_party/powerbi_auth_proxy/vendor/autoload.php\';';
+
+        if(empty($this->errors)){
+            $this->results[] = '<h3>Installation/Update Complete.</h3>';
+        }
     }
 
     private function post_install(){
-        unlink($this->install_dir . '/current.zip');
-    }
+        @unlink($this->install_dir . '/current.zip');
+        //file_put_contents(__DIR__.'/.htaccess', 'deny from all' . PHP_EOL);
 
 
-    private function should_install(){
-        $proceed = false;
-        if(!is_dir($this->install_dir)) $proceed = true;
-        else{
-            $remotehash = @file_get_contents($this->repository_url . '/hash.txt');
-            $localhash = @file_get_contents($this->install_dir . '/hash.txt');
-            $proceed = trim($remotehash) != trim($localhash);
+        // test that installer is no longer available via the web
+        $uri = @$_SERVER['HTTP_REFERER'];
+        $contents = !!@file_get_contents($uri);
+        if($contents){
+            $this->results[] = '<div class="text-danger">ERROR - This script should no longer be accessible from the web for security purposes.</div>';
         }
 
-        if(!$proceed) $this->output[] = "<div class='alert alert-success'>The application is up-to-date</div>";
-        return $proceed;
     }
+
+
+    private function preflight(){
+        $folder = $this->installer_parent_dirname;
+        $thisfilename = basename(__FILE__);
+        $scriptdirname = basename(dirname(__FILE__));
+
+        if($scriptdirname != $this->installer_parent_dirname){
+            $this->results[] = '<div class="text-danger">ERROR</div>';
+            $this->results[] = "This installer script (<code>$thisfilename</code>) must be placed inside a folder named: <code>$folder</code> in the root folder of your website.";
+            return false;
+        }
+
+
+
+        return true;
+    }
+
 
     private function check_requirements(){
         $proceed = true;
 
         // are directories writable
-        @mkdir($this->install_dir);
+        if(!empty($_POST['create_install_dir']))
+            @mkdir($this->install_dir);
+
         if(!is_writable($this->install_dir)){
-            $this->errors[] = "<div class='alert alert-danger'>The installation directory (".$this->install_dir.") is not writable.</div>";
+            $me = function_exists('shell_exec') ? shell_exec('whoami') : "web user cannot be determined automatically";
+            $this->errors[] = "<div class='alert alert-danger'>The installation directory (".$this->install_dir.") does not exist or is not writable.</div>
+            <div class='well'>Create a folder at <code>".$this->install_dir."</code> and ensure that the user: <code>$me</code>can write to it.
+            Click <button type='submit' name='create_install_dir' value='true' class='btn btn-primary'>HERE</button> to attempt to do this automatically.
+            </div>
+            ";
             $proceed = false;
         }
         else{
-            $this->output[] = "<div class='alert alert-success'>Installation directory writable</div>";
+            $this->output[] = "<div class='alert alert-success'><i class='glyphicon glyphicon-ok'></i> Installation directory (".$this->install_dir.") exists and is writable</div>";
         }
 
         // is zip extension installed
         if(!class_exists('ZipArchive')){
-            $this->errors[] = "<div class='alert alert-danger'>Zip extension is missing</div>";
+            $this->errors[] = "<div class='alert alert-danger'><i class='glyphicon glyphicon-remove'></i> Zip extension is missing</div>";
             $proceed = false;
         }
         else{
-            $this->output[] = "<div class='alert alert-success'>Zip extension installed</div>";
+            $this->output[] = "<div class='alert alert-success'><i class='glyphicon glyphicon-ok'></i> Zip extension installed</div>";
         }
 
+        if(!$proceed){
+            $this->results[] = "<div class='alert alert-danger'><i class='glyphicon glyphicon-remove'></i> There are ". count($this->errors) ." issue(s) that must be fixed before proceeding.</div>";
+        }
         return $proceed;
     }
 
+    private function should_install(){
+        $proceed = false;
+        if(!is_dir($this->install_dir)) {
+            $proceed = true;
+        }
+        else{
+            $remotehash = @file_get_contents($this->repository_url . '/hash.txt');
+            $localhash = @file_get_contents($this->install_dir . '/hash.txt');
+
+            $proceed = trim($remotehash) != trim($localhash);
+        }
+
+        if(!$proceed) {
+            $this->results[] = "<div class='alert alert-success'>The application is already installed and is up-to-date</div>";
+        }
+        return $proceed;
+    }
+
+
     public function __toString(){
-        return implode(PHP_EOL, $this->errors) . implode(PHP_EOL, $this->output);
+        $title = '<h4 class="text-muted">' .$this->title. '</h4>';
+        return $title . implode(PHP_EOL, $this->errors) . implode(PHP_EOL, $this->output) . implode(PHP_EOL, $this->results);
     }
 
 }
 
+function dd($val){
+    die(var_dump($val));
+}
 
 $content = new CodeigniterPowerBIAuthProxyInstaller;
 
@@ -104,15 +192,11 @@ $html = '
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
   </head>
   <body style="padding:25px">
-	<script
-	  src="https://code.jquery.com/jquery-3.4.1.min.js"
-	  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-	  crossorigin="anonymous"></script>
-
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-
+  <img src="https://docs.microsoft.com/bs-latn-ba/azure/power-bi-embedded/media/index/power-bi-logo.svg" width="200" height="150">
+    <h1>PowerBI Auth Proxy Installer/Updater</h1>
+    <form method="post">
 	'.$content.'
+	</form>
   </body>
 </html>';
 
