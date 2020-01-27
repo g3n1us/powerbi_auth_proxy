@@ -44,7 +44,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
             $this->post_install();
         }
         else if(empty($this->errors)){
-            $this->title = "Review the information below and click 'Continue' to proceed with the installation";
+            $this->title = "Review the information below and click 'Continue' to proceed with the installation or update";
             $this->results[] = '<button type="submit" name="continue" value="true" class="btn btn-primary">Continue?</button>';
         }
         else{
@@ -148,18 +148,24 @@ class CodeigniterPowerBIAuthProxyInstaller{
 
     private function should_install(){
         $proceed = false;
+        $step = false;
         if(!is_dir($this->install_dir)) {
             $proceed = true;
+            $step = 'Application not found, so it will be installed';
         }
         else{
             $remotehash = @file_get_contents($this->repository_url . '/hash.txt');
             $localhash = @file_get_contents($this->install_dir . '/hash.txt');
-
-            $proceed = trim($remotehash) != trim($localhash);
+            $compared = trim($remotehash) != trim($localhash);
+            if($compared) $step = 'Application exists but an update is available, so it will be updated';
+            $proceed = $compared;
         }
 
         if(!$proceed) {
             $this->results[] = "<div class='alert alert-success'>The application is already installed and is up-to-date</div>";
+        }
+        else{
+            $this->results[] = "<div class='alert alert-warning'>$step</div>";
         }
         return $proceed;
     }

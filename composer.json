@@ -10,7 +10,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "vlucas/phpdotenv": "^4.1",
+        "vlucas/phpdotenv": "^3.3",
         "kint-php/kint": "^3.3",
         "filp/whoops": "^2.6",
         "composer/composer": "^1.10",

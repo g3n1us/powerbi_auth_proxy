@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "58f356c8bd5c2858dba7b1e7fa3ce8c1",
+    "content-hash": "041585d2bbb80513d85e63e9a76e1f93",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -441,12 +441,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "192d1f1945e63239b45abfcfd606556f1673ab79"
+                "reference": "1cdd69a0cd361ee8b6ba5584e45db80c0ea8b31c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/192d1f1945e63239b45abfcfd606556f1673ab79",
-                "reference": "192d1f1945e63239b45abfcfd606556f1673ab79",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/1cdd69a0cd361ee8b6ba5584e45db80c0ea8b31c",
+                "reference": "1cdd69a0cd361ee8b6ba5584e45db80c0ea8b31c",
                 "shasum": ""
             },
             "require": {
@@ -455,6 +455,9 @@
                 "guzzlehttp/psr7": "^1.6.1",
                 "php": "^7.2.5",
                 "psr/http-client": "^1.0"
+            },
+            "provide": {
+                "psr/http-client-implementation": "1.0"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.0",
@@ -509,7 +512,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2020-01-19T19:33:25+00:00"
+            "time": "2020-01-25T11:19:56+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1433,12 +1436,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "b71643142b48c7470ed071374f8ad138d09b00b2"
+                "reference": "caa18f35097816140a87d9d031e7782eb5de9579"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/b71643142b48c7470ed071374f8ad138d09b00b2",
-                "reference": "b71643142b48c7470ed071374f8ad138d09b00b2",
+                "url": "https://api.github.com/repos/symfony/console/zipball/caa18f35097816140a87d9d031e7782eb5de9579",
+                "reference": "caa18f35097816140a87d9d031e7782eb5de9579",
                 "shasum": ""
             },
             "require": {
@@ -1501,7 +1504,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-21T07:39:56+00:00"
+            "time": "2020-01-27T10:27:10+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -2020,31 +2023,30 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "dev-master",
+            "version": "3.6.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "92c402dad814531e4fd0469cf867302ef1f59b47"
+                "reference": "1bdf24f065975594f6a117f0f1f6cabf1333b156"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/92c402dad814531e4fd0469cf867302ef1f59b47",
-                "reference": "92c402dad814531e4fd0469cf867302ef1f59b47",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/1bdf24f065975594f6a117f0f1f6cabf1333b156",
+                "reference": "1bdf24f065975594f6a117f0f1f6cabf1333b156",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9 || ^7.0",
-                "phpoption/phpoption": "^1.7.2",
+                "php": "^5.4 || ^7.0",
+                "phpoption/phpoption": "^1.5",
                 "symfony/polyfill-ctype": "^1.9"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.3",
                 "phpunit/phpunit": "^4.8.35 || ^5.0 || ^6.0 || ^7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.1-dev"
+                    "dev-master": "3.6-dev"
                 }
             },
             "autoload": {
@@ -2074,7 +2076,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2020-01-13T12:50:29+00:00"
+            "time": "2019-09-10T21:37:39+00:00"
         }
     ],
     "packages-dev": [],
