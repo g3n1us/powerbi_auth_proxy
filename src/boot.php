@@ -8,7 +8,7 @@
 	$dotenv_dir = dirname($_SERVER['DOCUMENT_ROOT']);
 
 	if(file_exists("$dotenv_dir/.env")){
-		$dotenv = \Dotenv\Dotenv::createImmutable($dotenv_dir);
+		$dotenv = \Dotenv\Dotenv::create($dotenv_dir);
 		$dotenv->load();
 	}
 

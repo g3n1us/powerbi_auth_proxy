@@ -28,7 +28,7 @@ class Auth{
 	private $group_id;
 
 	private $selected_reports;
-	
+
 	private $esri_client_id;
 
 	private $esri_client_secret;
@@ -41,7 +41,7 @@ class Auth{
 		if(!self::$instance) self::$instance = new self;
 		return self::$instance;
 	}
-	
+
 	public function __construct(){
 		if(static::$instance){
 			throw new \Exception("Double Instantiation error");
@@ -51,28 +51,33 @@ class Auth{
 		// UserProxy handles middleware functions.
 		// Aborts the request if authorization is not valid
 		UserProxy::handle(static::$framework->getUserProvider());
-		
+
 		foreach(static::config() as $key => $value){
 			$this->{$key} = $value;
 		}
 	}
-	
+
 	public static function config(){
-	    $config = [
-		    'username' => env('USERNAME'),
-		    'password' => env('PASSWORD'),
-		    'application_id' => env('APPLICATION_ID'),
-		    'application_secret' => env('APPLICATION_SECRET'),
-		    'group_id' => env('GROUP_ID'),
-		    'selected_reports' => env('SELECTED_REPORTS'),
-		    'esri_client_id' => env('ESRI_CLIENT_ID'),
-		    'esri_client_secret' => env('ESRI_CLIENT_SECRET'),
-	    ];
+    	if(method_exists(static::$framework, 'getConfig')){
+        	$config = static::$framework->getConfig();
+    	}
+    	else{
+    	    $config = [
+    		    'username' => env('USERNAME'),
+    		    'password' => env('PASSWORD'),
+    		    'application_id' => env('APPLICATION_ID'),
+    		    'application_secret' => env('APPLICATION_SECRET'),
+    		    'group_id' => env('GROUP_ID'),
+    		    'selected_reports' => env('SELECTED_REPORTS'),
+    		    'esri_client_id' => env('ESRI_CLIENT_ID'),
+    		    'esri_client_secret' => env('ESRI_CLIENT_SECRET'),
+    	    ];
+    	}
 
 	    if(empty($config['username']) || empty($config['password']) || empty($config['application_id']) || empty($config['application_secret']) || empty($config['group_id']) || empty($config['selected_reports'])){
 		    throw new MissingConfigException;
 	    }
-	    
+
 	    return $config;
 	}
 
@@ -202,8 +207,8 @@ class Auth{
 
 		return $this->embed_tokens[$report_id];
 	}
-	
-	
+
+
 	public function getEsriEmbedToken($report_id){
 		$guzzle = new GuzzleClient(['base_uri' => 'https://www.arcgis.com/sharing/oauth2/token/']);
 		$params = [
@@ -212,7 +217,7 @@ class Auth{
 			'grant_type' => 'client_credentials',
 			'f' => 'json'
 		];
-		
+
 		$path = "https://www.arcgis.com/sharing/oauth2/token/";
 		$request = new Request('POST', $path);
 		$response = $guzzle->send($request);
