@@ -1,5 +1,5 @@
 <?php
-$output = [];	
+$output = [];
 $output[] = '
 <style>
 [type="hidden"] + br{
@@ -17,9 +17,9 @@ if(!empty($_GET['configure'])){
 			return [$key, $value, $v];
 		}
 		else return $line;
-		
+
 	}, $example));
-	
+
 	$config_keys = array_values(array_map(function($v){ return $v[0]; }, array_filter($config, 'is_array')));
 	$submitted_env = !empty($_POST['env']) ? array_filter(array_map('trim', $_POST['env'])) : [];
 
@@ -33,7 +33,7 @@ if(!empty($_GET['configure'])){
 		}
 		// put .env one directory above the document root for security purposes
 		file_put_contents(dirname($_SERVER['DOCUMENT_ROOT'])."/.env", implode(PHP_EOL, $env_contents));
-		$output[] =  "Configuration complete, <button class='btn btn-primary' onclick='window.location.assign(\"/\")'>click to continue...</button>";
+		$output[] =  "Configuration complete, <button class='btn btn-primary' onclick='window.location.assign(window.location.pathname)'>click to continue...</button>";
 	}
 	else{
 		if(!empty($_POST['env'])) $output[] = '<div class="alert alert-danger">One or more values was missing. All fields are required.</div>';
@@ -57,24 +57,25 @@ if(!empty($_GET['configure'])){
 else if(!empty($_GET['installing'])){
 	$build_dir = __DIR__.'/build';
 	$dir = __DIR__;
-	file_put_contents("$build_dir/composer.phar", file_get_contents('https://getcomposer.org/composer-stable.phar')); 
+	file_put_contents("$build_dir/composer.phar", file_get_contents('https://getcomposer.org/composer-stable.phar'));
 	$output[] = "Installation complete.\n";
 	$output[] = "Errors (if any) will be reported below.\n";
 	$output[] = "<pre><small style='line-height:1'>";
 	exec("php \"$build_dir/composer.phar\" install --no-suggest --ignore-platform-reqs -d \"$dir\" 2>&1", $output);
 	$output[] = "</small></pre>";
-	$output[] =  "Install complete, <button class='btn btn-primary' onclick='window.location.assign(\"/\")'>click to continue...</button>";
+	$output[] =  "Install complete, <button class='btn btn-primary' onclick='window.location.assign(window.location.pathname)'>click to continue...</button>";
 
 }
 else{
 	echo "Installation is required. Please be patient while this completes.<br />";
-	echo('<script>window.location.assign("/?installing=true")</script>');	
+	echo "<button class='btn btn-primary' onclick='window.location.assign(window.location.pathname + \"?installing=true\")'>click to continue...</button>";
+// 	echo('<script>window.location.assign("/?installing=true")</script>');
 }
 
 
-	
+
 $output = array_map('trim', $output);
-// return "<pre>" . implode("<br />\n", array_filter($output)) . "</pre>";	
-return implode("<br />\n", array_filter($output));	
+// return "<pre>" . implode("<br />\n", array_filter($output)) . "</pre>";
+return implode("<br />\n", array_filter($output));
 
 
