@@ -94,7 +94,7 @@ class Routes{
 	// responds to the url: /auth_proxy_routes/app_update
 	private function app_update(){
         return [
-            'update_available' => Installer::web_update_available(),
+            'update_available' => (new Installer)->web_update_available(),
         ];
 	}
 
