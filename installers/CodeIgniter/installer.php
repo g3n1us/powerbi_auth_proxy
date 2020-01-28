@@ -59,7 +59,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
 
 
     private function set_config(){
-
+        if(!file_exists($this->install_dir . '/vendor/autoload.php')) return false;
         require $this->install_dir . '/vendor/autoload.php';
 
         try{
