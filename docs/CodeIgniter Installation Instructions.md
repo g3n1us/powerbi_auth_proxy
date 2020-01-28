@@ -18,7 +18,9 @@ composer require blueraster/powerbi_auth_proxy
 You will upload an installation script manually to your web server. Then, the installation will take by accessing this script from the web.
 
 Step 1:
-Download the installation/update script from: [https://raw.githubusercontent.com/blueraster/powerbi_auth_proxy/master/installers/CodeIgniter/installer.php](https://raw.githubusercontent.com/blueraster/powerbi_auth_proxy/master/installers/CodeIgniter/installer.php)
+Download the installation/update script from: 
+<a href="https://raw.githubusercontent.com/blueraster/powerbi_auth_proxy/master/installers/CodeIgniter/installer.php" target="_blank" download="download">https://raw.githubusercontent.com/blueraster/powerbi_auth_proxy/master/installers/CodeIgniter/installer.php</a>
+
 
 Step 2:
 Create a folder named: `powerbi_auth_proxy_updater` in the web root on your webserver.
