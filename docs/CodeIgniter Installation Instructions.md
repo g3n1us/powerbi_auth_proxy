@@ -19,7 +19,7 @@ You will upload an installation script manually to your web server. Then, the in
 
 Step 1:
 Download the installation/update script from the link below: 
-<a href="https://raw.githubusercontent.com/blueraster/powerbi_auth_proxy/master/installers/CodeIgniter/installer.php" target="_blank" download="download">https://raw.githubusercontent.com/blueraster/powerbi_auth_proxy/master/installers/CodeIgniter/installer.php</a>
+<a href="https://raw.githubusercontent.com/blueraster/powerbi_auth_proxy/master/installers/CodeIgniter/installer.php" target="_blank" download="installer.php">https://raw.githubusercontent.com/blueraster/powerbi_auth_proxy/master/installers/CodeIgniter/installer.php</a>
 
 
 Step 2:
