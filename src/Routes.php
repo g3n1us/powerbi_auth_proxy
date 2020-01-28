@@ -20,6 +20,7 @@ class Routes{
 				$response = call_user_func_array([$this, $method], $segments);
 				if($response !== false){
 					self::set_mime(count($segments) ? $segments[0] : null);
+					if(is_array($response)) $response = json_encode($response);
 					echo $response;
 					exit();
 				}
