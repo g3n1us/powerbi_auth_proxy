@@ -67,8 +67,8 @@ else if(!empty($_GET['installing'])){
 
 }
 else{
-	echo "Installation is required. Please be patient while this completes.<br />";
-	echo "<button class='btn btn-primary' onclick='window.location.assign(window.location.pathname + \"?installing=true\")'>click to continue...</button>";
+// 	echo "Installation is required. Please be patient while this completes.<br />";
+// 	echo "<button class='btn btn-primary' onclick='window.location.assign(window.location.pathname + \"?installing=true\")'>click to continue...</button>";
 // 	echo('<script>window.location.assign("/?installing=true")</script>');
 }
 

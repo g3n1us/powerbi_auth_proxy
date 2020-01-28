@@ -72,15 +72,15 @@ class Routes{
 		$embed_token = $this->auth_proxy->getEmbedToken($report_id);
 		return json_encode(['embed_token' => $embed_token, 'report_id' => $report_id]);
 	}
-	
-	
+
+
 	// responds to the url: /auth_proxy_routes/esri_embed/{report_id}
 	private function esri_embed($report_id = false){
 		if($report_id === false) return false;
 		$embed_token = $this->auth_proxy->getEsriEmbedToken($report_id);
 		return json_encode(['access_token' => $embed_token, 'report_id' => $report_id]);
 	}
-	
+
 
 
 	// responds to the url: /auth_proxy_routes/asset/{secure_embed.js|secure_embed.css}
@@ -89,4 +89,15 @@ class Routes{
 		if(!$ok) return false;
 		return @file_get_contents(__DIR__."/assets/dist/$filename");
 	}
+
+
+	// responds to the url: /auth_proxy_routes/app_update
+	private function app_update(){
+        return [
+            'update_available' => Installer::web_update_available(),
+        ];
+	}
+
+
+
 }

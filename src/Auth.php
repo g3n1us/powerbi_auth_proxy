@@ -5,8 +5,6 @@ namespace BlueRaster\PowerBIAuthProxy;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 
-// use Illuminate\Filesystem\Filesystem;
-
 use BlueRaster\PowerBIAuthProxy\Exceptions\MissingConfigException;
 
 require_once(__DIR__.'/boot.php');

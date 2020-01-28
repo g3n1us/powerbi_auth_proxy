@@ -14,11 +14,22 @@ class Installer{
 
 	private $controller_contents = 'BlueRaster\\PowerBIAuthProxy\\Routes::route();';
 
+    private $repository_url = "https://auth-proxy-downloader.dev.also-too.com";
+
+//     private $install_dir = '/application/third_party/powerbi_auth_proxy';
+
+    public  $installed_with_composer;
+
 	public static function postAutoloadDump(Event $event){
-		new self($event);
+		(new self())->run($event);
 	}
 
-	public function __construct(Event $event){
+	public function __construct(){
+    	$this->installed_with_composer = basename(dirname(dirname(__DIR__))) == 'vendor';
+
+	}
+
+	public function run(Event $event = null){
         $this->vendorDir = $event->getComposer()->getConfig()->get('vendor-dir');
         $this->applicationDir = dirname($this->vendorDir);
         require $this->vendorDir . '/autoload.php';
@@ -60,6 +71,14 @@ class Installer{
 		if(empty($missing)) return true;
 		return $missing;
 	}
+
+
+	public function web_update_available(){
+        $remotehash = @file_get_contents($this->repository_url . '/hash.txt');
+        $localhash = @file_get_contents(dirname(__DIR__) . '/hash.txt');
+        return trim($remotehash) != trim($localhash);
+	}
+
 
 	private function installController(){
 		$filepath =  $this->applicationDir . '/core/MY_Controller.php';
