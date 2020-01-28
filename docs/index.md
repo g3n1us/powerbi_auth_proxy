@@ -14,7 +14,7 @@ You will place the embed code inside a script tag on your site. The PowerBI repo
 
 Embed Code:
 
-```js
+```html
 <script>
     (function(){
        var s = document.createElement('script');
