@@ -29,7 +29,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
             die(var_dump($e));
         }
 
-        $this-> ci_config($config);
+        $this->ci_config($config);
 
         $this->install_dir = dirname(__DIR__) . $this->install_dir;
 
@@ -38,19 +38,42 @@ class CodeigniterPowerBIAuthProxyInstaller{
         $requirements_ok = $this->check_requirements();
         if(!empty($_POST['continue'])){
             $this->title = "";
-            if($requirements_ok && $this->should_install()){
+            if($requirements_ok && $this->should_install(true)){
                 $this->install();
             }
-            $this->post_install();
+
         }
         else if(empty($this->errors)){
-            $this->title = "Review the information below and click 'Continue' to proceed with the installation or update";
-            $this->results[] = '<button type="submit" name="continue" value="true" class="btn btn-primary">Continue?</button>';
+            if($this->should_install()){
+                $this->title = "Review the information below and click 'Continue' to proceed with the installation or update";
+                $this->results[] = '<button type="submit" name="continue" value="true" class="btn btn-primary">Continue?</button>';
+            }
         }
         else{
             $this->title = "<span class='text-danger'>Please correct the issues listed below</span>";
         }
+
+        $this->post_install();
+
     }
+
+
+    private function set_config(){
+
+        require $this->install_dir . '/vendor/autoload.php';
+
+        try{
+            BlueRaster\PowerBIAuthProxy\Auth::config();
+        }
+        catch(Exception $e){
+            $_GET['configure'] = true;
+            $this->results[] = require $this->install_dir . '/install.php';
+            return false;
+        }
+
+        return true;
+    }
+
 
     private function ci_config(Array $config){
         $this->config['subclass_prefix'] = $config['subclass_prefix'];
@@ -71,24 +94,36 @@ class CodeigniterPowerBIAuthProxyInstaller{
             $this->errors[] = "<div class='alert alert-danger'>An error occurred with unzipping the update/install package</div>";
         }
 
+
+        $app_path = dirname(dirname($this->install_dir));
+
         // create controller file
-        $controller_content = 'require_once APPPATH . \'/third_party/powerbi_auth_proxy/vendor/autoload.php\';';
+        $controller_content = 'require_once APPPATH . \'/third_party/powerbi_auth_proxy/vendor/autoload.php\';' .PHP_EOL . PHP_EOL;
+        $controller_content .= 'BlueRaster\\PowerBIAuthProxy\\Routes::route();';
+        $controllerpath = $app_path . '/core/' . $this->config['subclass_prefix'] . 'Controller.php';
+		file_put_contents($controllerpath, "<?php" . PHP_EOL . $controller_content . PHP_EOL);
+
 
         if(empty($this->errors)){
-            $this->results[] = '<h3>Installation/Update Complete.</h3>';
+            $this->results[] = '<h3 class="text-success">Installation/Update Complete.</h3>';
         }
     }
 
     private function post_install(){
         @unlink($this->install_dir . '/current.zip');
-        //file_put_contents(__DIR__.'/.htaccess', 'deny from all' . PHP_EOL);
 
 
-        // test that installer is no longer available via the web
-        $uri = @$_SERVER['HTTP_REFERER'];
-        $contents = !!@file_get_contents($uri);
-        if($contents){
-            $this->results[] = '<div class="text-danger">ERROR - This script should no longer be accessible from the web for security purposes.</div>';
+        $config_complete = $this->set_config();
+
+
+        if($config_complete){
+//             file_put_contents(__DIR__.'/.htaccess', 'deny from all' . PHP_EOL);
+            // test that installer is no longer available via the web
+            $uri = @$_SERVER['HTTP_REFERER'];
+            $contents = !!@file_get_contents($uri);
+            if($contents){
+                $this->results[] = '<div class="text-danger">ERROR - This script should no longer be accessible from the web for security purposes.</div>';
+            }
         }
 
     }
@@ -146,10 +181,10 @@ class CodeigniterPowerBIAuthProxyInstaller{
         return $proceed;
     }
 
-    private function should_install(){
+    private function should_install($quiet = false){
         $proceed = false;
         $step = false;
-        if(!is_dir($this->install_dir)) {
+        if(!is_dir($this->install_dir . '/vendor')) {
             $proceed = true;
             $step = 'Application not found, so it will be installed';
         }
@@ -161,11 +196,13 @@ class CodeigniterPowerBIAuthProxyInstaller{
             $proceed = $compared;
         }
 
-        if(!$proceed) {
-            $this->results[] = "<div class='alert alert-success'>The application is already installed and is up-to-date</div>";
-        }
-        else{
-            $this->results[] = "<div class='alert alert-warning'>$step</div>";
+        if(!$quiet){
+            if(!$proceed) {
+                $this->results[] = "<div class='alert alert-success'>The application is already installed and is up-to-date</div>";
+            }
+            else{
+                $this->results[] = "<div class='alert alert-warning'>$step</div>";
+            }
         }
         return $proceed;
     }
