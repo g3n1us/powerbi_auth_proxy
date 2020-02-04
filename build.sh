@@ -21,12 +21,15 @@ if [ ! -f "$FILEPATH" ]; then
     cd $VERSIONSDIR
     ln -s "../$FILENAME.zip" "build_$TIMESTAMP.zip"
     cd ..
-    rm "current.zip"
+    if [ -f current.zip ]; then
+        rm "current.zip"
+    fi
     ln -s "$FILENAME.zip" "current.zip"
     echo $VERSION > hash.txt
     echo "syncing..."
-    S3_SYNC_AUTH_PROXY
+    bash "../S3_SYNC_AUTH_PROXY.sh"
 
 else
     echo "build is current"
 fi
+
