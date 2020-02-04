@@ -31,5 +31,8 @@ Upload the file you downloaded to the folder you just created.
 Step 4:
 Visit the installer on the web. It will be found at the url: `<website-url>/powerbi_auth_proxy_updater/installer.php`
 
-Follow the instructions to complete installation.
+Follow the instructions to complete installation of the library.
 
+You can now use the embed code provided [HERE](/) to insert your PowerBI and Esri applications into the site.
+
+For CodeIgniter applications, this is usually placed inside a view template file located at `/application/views`.
