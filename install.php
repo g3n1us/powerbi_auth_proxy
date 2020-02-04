@@ -45,6 +45,7 @@ if(!empty($_GET['configure'])){
 		foreach($config as $line){
 			if(is_array($line)){
 				[$key, $value, $v] = $line;
+				$value = trim($value, '"');
 				$output[] = "$key <br /><input type='text' name='env[$key]' class='form-control' placeholder='$value' value='$v' />";
 			}
 			else $output[] = $line;
