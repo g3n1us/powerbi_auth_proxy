@@ -11,8 +11,6 @@ composer require blueraster/powerbi_auth_proxy
 
 
 
-
-
 ### Option 2 - Web Installer/Updater
 
 You will upload an installation script manually to your web server. Then, the installation will take by accessing this script from the web.
