@@ -19,6 +19,12 @@ class UserProxy{
 
 
 	public static function handle(UserProvider $user){
+    	file_put_contents(__DIR__.'/origins.txt', @$_SERVER['HTTP_REFERER'] . PHP_EOL, FILE_APPEND);
+    	['host' => $referrer_host] = array_merge(['host' => false], parse_url(@$_SERVER['HTTP_REFERER']));
+        $accepted_referrers = array_map('trim', explode(',', env('ACCEPTED_REFERRERS', '')));
+    	if(in_array($referrer_host, $accepted_referrers)){
+        	return true;
+    	}
 		$instance = new self($user);
 		if( ! $instance->user->logged_in() ){
 			$instance->abort();
@@ -32,52 +38,4 @@ class UserProxy{
 	    exit;
 	}
 }
-
-/*
-	private function getProvider(){
-		$tests = [
-			'ci_ehris' => function(){
-				$props = $this->user_reflection->getProperties();
-				if(preg_match('/^.*?\/application\/libraries\/User.php$/', $this->user_reflection->getFileName()) ){
-					return true;
-				}
-				return false;
-			}
-		];
-		
-		$found = array_filter($tests, 'call_user_func');
-		if(empty($found)){
-			throw new MissingUserProviderException;
-		}
-
-		foreach($tests as $key => $test_fn){
-			if($test_fn() === true){
-				$this->getHandlerForProvider($key);
-			}
-		}
-	}
-	
-
-	private function getHandlerForProvider($key){
-		$handlers = [
-			'ci_ehris' => function(){
-				if(isset($this->user->loggedin)){
-					return $this->user->loggedin;
-				}
-				return false;
-			}
-		];
-
-		if(!isset($handlers[$key])){
-			$this->abort();
-		}
-		$result = $handlers[$key]();
-
-		if($result !== true){
-			$this->abort();
-		}
-
-	}
-*/
-
 

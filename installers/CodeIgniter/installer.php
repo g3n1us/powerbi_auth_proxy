@@ -215,8 +215,12 @@ class CodeigniterPowerBIAuthProxyInstaller{
 
 }
 
-function dd($val){
-    die(var_dump($val));
+if(!function_exists('dd')){
+
+    function dd($val){
+        die(var_dump($val));
+    }
+
 }
 
 $content = new CodeigniterPowerBIAuthProxyInstaller;
@@ -226,21 +230,23 @@ $content = new CodeigniterPowerBIAuthProxyInstaller;
 $html = '
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <head>
+        <meta charset="utf-8">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
-  </head>
-  <body style="padding:25px">
-  <img src="https://docs.microsoft.com/bs-latn-ba/azure/power-bi-embedded/media/index/power-bi-logo.svg" width="200" height="150">
-    <h1>PowerBI Auth Proxy Installer/Updater</h1>
-    <form method="post">
-	'.$content.'
-	</form>
-  </body>
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+    </head>
+    <body style="padding:25px">
+        <a href="/">
+          <img src="https://docs.microsoft.com/bs-latn-ba/azure/power-bi-embedded/media/index/power-bi-logo.svg" width="200" height="150">
+        </a>
+        <h1>PowerBI Auth Proxy Installer/Updater</h1>
+        <form method="post">
+        '.$content.'
+        </form>
+    </body>
 </html>';
 
 echo trim($html);

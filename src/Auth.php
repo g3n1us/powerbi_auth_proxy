@@ -7,7 +7,7 @@ use GuzzleHttp\Psr7\Request;
 
 use BlueRaster\PowerBIAuthProxy\Exceptions\MissingConfigException;
 
-require_once(__DIR__.'/boot.php');
+// require_once(__DIR__.'/boot.php');
 
 class Auth{
 
@@ -137,8 +137,9 @@ class Auth{
 
 	public function getSelectedReports(){
 		$selected_reports = array_map(function($v){
-			[$id, $name] = explode('|', trim($v));
-			return ['id' => $id, 'name' => $name];
+			[$id, $name, $type] = array_merge(explode('|', trim($v)), [null, null, null]);
+
+			return ['id' => $id, 'name' => $name, 'type' => $type ?? 'power_bi'];
 		}, explode(',', $this->selected_reports));
 
 		return $selected_reports;
@@ -207,8 +208,8 @@ class Auth{
 	}
 
 
-	public function getEsriEmbedToken($report_id){
-		$guzzle = new GuzzleClient(['base_uri' => 'https://www.arcgis.com/sharing/oauth2/token/']);
+	public function getEsriEmbedToken($report_id = null){
+		$guzzle = new GuzzleClient();
 		$params = [
 			'client_id' => $this->esri_client_id,
 			'client_secret' => $this->esri_client_secret,
@@ -217,9 +218,11 @@ class Auth{
 		];
 
 		$path = "https://www.arcgis.com/sharing/oauth2/token/";
-		$request = new Request('POST', $path);
-		$response = $guzzle->send($request);
-
+		$response = $guzzle->post($path, [
+            'form_params' => $params
+        ]);
+// 		$request = new Request('POST', $path, [], $params);
+// 		$response = $guzzle->send($request);
 		$body = $response->getBody();
 		$json = '';
 		while (!$body->eof()) {
@@ -227,7 +230,10 @@ class Auth{
 		}
 
 		$token_data = json_decode($json, true);
+// 		dd($token_data);
+
 		if(isset($token_data['error'])) return $token_data['error'];
+
 		return $token_data['access_token'];
 	}
 
