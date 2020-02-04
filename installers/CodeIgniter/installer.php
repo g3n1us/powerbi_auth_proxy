@@ -2,7 +2,7 @@
 
 class CodeigniterPowerBIAuthProxyInstaller{
 
-    private $repository_url = "https://auth-proxy-downloader.dev.also-too.com";
+    private $repository_url = "https://powerbi-auth-proxy-downloads.s3.us-east-1.amazonaws.com";
 
     private $install_dir = '/application/third_party/powerbi_auth_proxy';
 

@@ -25,7 +25,7 @@ if [ ! -f "$FILEPATH" ]; then
     ln -s "$FILENAME.zip" "current.zip"
     echo $VERSION > hash.txt
     echo "syncing..."
-    /usr/bin/aws --profile=phia s3 sync ../auth_proxy_builds s3://powerbi-auth-proxy-downloads
+    S3_SYNC_AUTH_PROXY
 
 else
     echo "build is current"
