@@ -24,7 +24,10 @@ if [ ! -f "$FILEPATH" ]; then
     if [ -f current.zip ]; then
         rm "current.zip"
     fi
-    ln -s "$FILENAME.zip" "current.zip"
+    if [ -f hash.txt ]; then
+        rm "hash.txt"
+    fi
+    cp "$FILENAME.zip" "current.zip"
     echo $VERSION > hash.txt
     echo "syncing..."
     bash "../S3_SYNC_AUTH_PROXY.sh"
