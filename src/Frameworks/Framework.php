@@ -8,15 +8,13 @@ abstract class Framework{
 
 	protected $user_providers;
 
-	protected static $config_prefix = '';
-
 	public function __construct(Array $config = ['user' => null]){
 		[ 'user' => $user ] = $config;
 		if($user) $this->user = $user;
 	}
 
-	public static function getConfigPrefix(){
-    	return static::$config_prefix;
+	public function getConfig(){
+    	return [];
 	}
 
 	public static function test(){

@@ -6,8 +6,6 @@ class CodeIgniter extends Framework{
 
 	protected $user_providers = ['Prologin'];
 
-	protected static $config_prefix = 'pbi_config_';
-
 	public static $ci;
 
 	public function __construct(){
@@ -21,7 +19,7 @@ class CodeIgniter extends Framework{
 	}
 
 	public function getConfig(){
-    	return static::$ci->config->config;
+    	return @static::$ci->config->config['powerbi_auth_proxy'] ?? [];
 	}
 
 	public static function test(){

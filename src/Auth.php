@@ -52,9 +52,7 @@ class Auth{
 		UserProxy::handle(static::$framework->getUserProvider());
 
 
-        $prefix = static::$framework::getConfigPrefix();
 		foreach(self::getDefaultConfig() as $key => $value){
-    		$key = str_replace($prefix, '', $key);
 			$this->{$key} = static::config($key);
 		}
 	}
@@ -65,40 +63,30 @@ class Auth{
 	}
 
     private static function getDefaultConfig(){
-        $framework = static::getFramework();
-        $prefix = $framework::getConfigPrefix();
 	    return [
-		    "{$prefix}username" => env('USERNAME'),
-		    "{$prefix}password" => env('PASSWORD'),
-		    "{$prefix}application_id" => env('APPLICATION_ID'),
-		    "{$prefix}application_secret" => env('APPLICATION_SECRET'),
-		    "{$prefix}group_id" => env('GROUP_ID'),
-		    "{$prefix}selected_reports" => env('SELECTED_REPORTS'),
-		    "{$prefix}esri_client_id" => env('ESRI_CLIENT_ID'),
-		    "{$prefix}esri_client_secret" => env('ESRI_CLIENT_SECRET'),
-		    "{$prefix}accepted_referrers" => env('ACCEPTED_REFERRERS'),
+		    "username" => env('USERNAME'),
+		    "password" => env('PASSWORD'),
+		    "application_id" => env('APPLICATION_ID'),
+		    "application_secret" => env('APPLICATION_SECRET'),
+		    "group_id" => env('GROUP_ID'),
+		    "selected_reports" => env('SELECTED_REPORTS'),
+		    "esri_client_id" => env('ESRI_CLIENT_ID'),
+		    "esri_client_secret" => env('ESRI_CLIENT_SECRET'),
+		    "accepted_referrers" => env('ACCEPTED_REFERRERS'),
 	    ];
     }
 
 	public static function config($key = null, $default = null){
     	$framework = static::getFramework();
-    	$prefix = $framework::getConfigPrefix();
 
-	    $default_config = self::getDefaultConfig();
+        $config = array_merge(self::getDefaultConfig(), $framework->getConfig());
 
-    	if(method_exists($framework, 'getConfig')){
-        	$config = array_merge($default_config, $framework->getConfig());
-    	}
-    	else{
-    	    $config = $default_config;
-    	}
-
-	    if(empty($config["{$prefix}username"]) || empty($config["{$prefix}password"]) || empty($config["{$prefix}application_id"]) || empty($config["{$prefix}application_secret"]) || empty($config["{$prefix}group_id"]) || empty($config["{$prefix}selected_reports"])){
+	    if(empty($config["username"]) || empty($config["password"]) || empty($config["application_id"]) || empty($config["application_secret"]) || empty($config["group_id"]) || empty($config["selected_reports"])){
 		    throw new MissingConfigException;
 	    }
 
         if($key){
-            return @$config[$prefix.$key] ?? @$config[$key] ?? $default;
+            return @$config[$key] ?? $default;
         }
 	    return $config;
 	}
@@ -112,7 +100,7 @@ class Auth{
 			}
 		}
 
-		static::$framework = new BlueRaster\PowerBIAuthProxy\Frameworks\Mock;
+		static::$framework = new \BlueRaster\PowerBIAuthProxy\Frameworks\Mock;
 		return static::$framework;
 	}
 
