@@ -40,6 +40,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
             $this->title = "";
             if($requirements_ok && $this->should_install(true)){
                 $this->install();
+                $this->post_install();
             }
 
         }
@@ -53,7 +54,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
             $this->title = "<span class='text-danger'>Please correct the issues listed below</span>";
         }
 
-        $this->post_install();
+
 
     }
 

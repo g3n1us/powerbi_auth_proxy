@@ -14,10 +14,6 @@ class Installer{
 
 	private $controller_contents = 'BlueRaster\\PowerBIAuthProxy\\Routes::route();';
 
-    private $repository_url = "https://auth-proxy-downloader.dev.also-too.com";
-
-//     private $install_dir = '/application/third_party/powerbi_auth_proxy';
-
     public  $installed_with_composer;
 
 	public static function postAutoloadDump(Event $event){
