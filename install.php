@@ -15,7 +15,7 @@ if(!empty($_GET['configure'])){
 		if(preg_match('/^(.*?)=(.*?)$/', $line, $matches)){
 			$key = $matches[1];
 			$value = $matches[2];
-			$v = !empty($_POST['env'][$key]) ? $_POST['env'][$key] : BlueRaster\PowerBIAuthProxy\Auth::config(strtolower($key));
+			$v = !empty($_POST['env'][$key]) ? $_POST['env'][$key] : BlueRaster\PowerBIAuthProxy\Auth::config(strtolower($key), env($key));
 			return [$key, $value, $v];
 		}
 		else return $line;
