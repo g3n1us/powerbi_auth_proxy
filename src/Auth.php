@@ -6,8 +6,9 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 
 use BlueRaster\PowerBIAuthProxy\Exceptions\MissingConfigException;
+use BlueRaster\PowerBIAuthProxy\Filesystem;
+use BlueRaster\PowerBIAuthProxy\UserProxy;
 
-// require_once(__DIR__.'/boot.php');
 
 class Auth{
 
@@ -44,7 +45,7 @@ class Auth{
 		if(static::$instance){
 			throw new \Exception("Double Instantiation error");
 		}
-		static::$framework = $this->register_framework();
+		static::getFramework();
 
 		// UserProxy handles middleware functions.
 		// Aborts the request if authorization is not valid
@@ -64,7 +65,8 @@ class Auth{
 	}
 
     private static function getDefaultConfig(){
-        $prefix = static::$framework::getConfigPrefix();
+        $framework = static::getFramework();
+        $prefix = $framework::getConfigPrefix();
 	    return [
 		    "{$prefix}username" => env('USERNAME'),
 		    "{$prefix}password" => env('PASSWORD'),
@@ -79,12 +81,13 @@ class Auth{
     }
 
 	public static function config($key = null, $default = null){
-    	$prefix = static::$framework::getConfigPrefix();
+    	$framework = static::getFramework();
+    	$prefix = $framework::getConfigPrefix();
 
 	    $default_config = self::getDefaultConfig();
 
-    	if(method_exists(static::$framework, 'getConfig')){
-        	$config = array_merge($default_config, static::$framework->getConfig());
+    	if(method_exists($framework, 'getConfig')){
+        	$config = array_merge($default_config, $framework->getConfig());
     	}
     	else{
     	    $config = $default_config;
@@ -100,13 +103,17 @@ class Auth{
 	    return $config;
 	}
 
-	private function register_framework(){
+	public static function getFramework(){
 		foreach(Filesystem::list_classes('Frameworks') as $class){
 			$class = "$class";
 			if($class::test()){
-				return new $class;
+    			static::$framework = new $class;
+				return static::$framework;
 			}
 		}
+
+		static::$framework = new BlueRaster\PowerBIAuthProxy\Frameworks\Mock;
+		return static::$framework;
 	}
 
 
