@@ -19,10 +19,15 @@ class Routes{
 
 	public $path;
 
+	private $method;
+
 	private static $mime_set = false;
 
+	public static $routes = [];
+
+	public $current_route;
+
 	public $patterns= [
-    	'^\/auth_proxy_routes\/(.*?)$',
     	'proxy' => '.*?arcgis\\/rest.*?$',
         'proxy_other' => '.*?ESRI.*?',
 	];
@@ -32,41 +37,87 @@ class Routes{
     	$this->query_string = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 
         $this->patterns = array_merge($this->patterns, $patterns, $this->get_patterns());
-
         $matched = false;
         $method = null;
+        $current_route = null;
         foreach($this->patterns as $possible_method => $pattern){
-            $matched = preg_match('/'.$pattern.'/i', $this->path, $matches);
+            $matched = !!preg_match('/'.$pattern.'/i', $this->path, $matches);
             if($matched) {
-                if(is_string($possible_method)) $method = $possible_method;
+                if($pattern instanceof Route){
+                    $current_route = $pattern;
+                    $current_route->router = $this;
+                    $this->current_route = $current_route;
+                    $method = $current_route->callback;
+                }
+                else if(is_string($possible_method)) $method = $possible_method;
                 break;
             }
         }
 
 		if($matched){
+
 			$this->auth_proxy = Auth::get_instance();
 
 			$this->segments = explode('/', @$matches[1]);
 
-			$method = $method ?? array_shift($this->segments);
+			$method = $this->method = $method ?? array_shift($this->segments);
 
 			$this->argument_string = empty($this->segments) ? null : implode('/', $this->segments);
 
-			if(method_exists($this, $method)){
-				$response = call_user_func_array([$this, $method], $this->segments);
-				if($response !== false){
-					self::set_mime(count($this->segments) ? $this->segments[0] : null);
-					if(is_array($response)) $response = json_encode($response);
-					echo $response;
-					exit();
-				}
+            $response = false;
+
+            $this->call_gates();
+
+			if(is_callable($method)){
+    			$args = array_filter(array_merge($this->segments, [$this]));
+    			$response = call_user_func_array($method, $args);
+//     			$response = $method($this);
 			}
+
+			else if(method_exists($current_route, $method)){
+    			$args = array_filter(array_merge($this->segments, [$this]));
+				$response = call_user_func_array([$current_route, $method], $args);
+			}
+
+			else if(method_exists($this, $method)){
+				$response = call_user_func_array([$this, $method], $this->segments);
+			}
+
+
+
+			if($response !== false){
+				self::set_mime(count($this->segments) ? $this->segments[0] : null);
+				if(is_array($response)) $response = json_encode($response);
+				echo $response;
+				exit();
+			}
+
 		}
 	}
 
 
+	public function call_gates(){
+    	$gates = array_map(function($v){
+        	if(is_callable($v)){
+            	return $v($this);
+        	}
+        	else if(is_callable(Auth::config($v))){
+            	return Auth::config($v)($this);
+        	}
+
+    	}, $this->current_route->gates);
+
+    	$passes = count($gates) === count(array_filter($gates));
+
+    	if(!$passes){
+        	return UserProxy::abort();
+    	}
+	}
+
+
 	private function get_patterns(){
-    	$patterns = [];
+
+        $patterns = static::$routes;
     	$i = 0;
 
         $continuing = true;
@@ -80,8 +131,10 @@ class Routes{
             }
             $i++;
         }
+
         return $patterns;
 	}
+
 
     public static function route(){
 		try{
@@ -116,7 +169,7 @@ class Routes{
 
 
     private function proxy(){
-        $esri_endpoint = env('ESRI_ENDPOINT', 'https://services7.arcgis.com');
+        $esri_endpoint = Auth::config('esri_endpoint', 'https://services7.arcgis.com');
 
         $query = $_GET;
 
@@ -142,51 +195,5 @@ class Routes{
         return file_get_contents("$url");
 
     }
-
-
-
-	// responds to the url: /auth_proxy_routes/embed_data
-	private function embed_data(){
-		return [
-			'reports' => $this->auth_proxy->getReports(),
-			'group_id' => $this->auth_proxy->getGroupId(),
-			'selected_reports' => $this->auth_proxy->getSelectedReports(),
-		];
-	}
-
-
-	// responds to the url: /auth_proxy_routes/report_embed/{report_id}
-	private function report_embed($report_id = false){
-		if($report_id === false) return false;
-		$embed_token = $this->auth_proxy->getEmbedToken($report_id);
-		return ['embed_token' => $embed_token, 'report_id' => $report_id];
-	}
-
-
-	// responds to the url: /auth_proxy_routes/esri_embed/{report_id}
-	private function esri_embed($report_id = false){
-		if($report_id === false) return false;
-		$embed_token = $this->auth_proxy->getEsriEmbedToken($report_id);
-		return ['access_token' => $embed_token, 'report_id' => $report_id];
-	}
-
-
-
-	// responds to the url: /auth_proxy_routes/asset/{secure_embed.js|secure_embed.css}
-	private function asset($filename){
-		$ok = preg_match('/^secure_embed\.(js|css)$/', $filename, $match);
-		if(!$ok) return false;
-		return @file_get_contents(__DIR__."/assets/dist/$filename");
-	}
-
-
-	// responds to the url: /auth_proxy_routes/app_update
-	private function app_update(){
-        return [
-            'update_available' => (new Installer)->web_update_available(),
-        ];
-	}
-
-
 
 }

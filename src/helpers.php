@@ -2,7 +2,8 @@
 
 if(!function_exists('dd')){
 	function dd($variable, $depth = null){
-	    return die(s($variable));
+    	foreach(func_get_args() as $v) s($v);
+	    die();
 	}
 }
 

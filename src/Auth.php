@@ -50,32 +50,53 @@ class Auth{
 		// Aborts the request if authorization is not valid
 		UserProxy::handle(static::$framework->getUserProvider());
 
-		foreach(static::config() as $key => $value){
-			$this->{$key} = $value;
+
+        $prefix = static::$framework::getConfigPrefix();
+		foreach(self::getDefaultConfig() as $key => $value){
+    		$key = str_replace($prefix, '', $key);
+			$this->{$key} = static::config($key);
 		}
 	}
 
-	public static function config(){
+	public static function getCurrentUser(){
+    	static::get_instance();
+    	return static::$framework->getUserProvider()->getUser();
+	}
+
+    private static function getDefaultConfig(){
+        $prefix = static::$framework::getConfigPrefix();
+	    return [
+		    "{$prefix}username" => env('USERNAME'),
+		    "{$prefix}password" => env('PASSWORD'),
+		    "{$prefix}application_id" => env('APPLICATION_ID'),
+		    "{$prefix}application_secret" => env('APPLICATION_SECRET'),
+		    "{$prefix}group_id" => env('GROUP_ID'),
+		    "{$prefix}selected_reports" => env('SELECTED_REPORTS'),
+		    "{$prefix}esri_client_id" => env('ESRI_CLIENT_ID'),
+		    "{$prefix}esri_client_secret" => env('ESRI_CLIENT_SECRET'),
+		    "{$prefix}accepted_referrers" => env('ACCEPTED_REFERRERS'),
+	    ];
+    }
+
+	public static function config($key = null, $default = null){
+    	$prefix = static::$framework::getConfigPrefix();
+
+	    $default_config = self::getDefaultConfig();
+
     	if(method_exists(static::$framework, 'getConfig')){
-        	$config = static::$framework->getConfig();
+        	$config = array_merge($default_config, static::$framework->getConfig());
     	}
     	else{
-    	    $config = [
-    		    'username' => env('USERNAME'),
-    		    'password' => env('PASSWORD'),
-    		    'application_id' => env('APPLICATION_ID'),
-    		    'application_secret' => env('APPLICATION_SECRET'),
-    		    'group_id' => env('GROUP_ID'),
-    		    'selected_reports' => env('SELECTED_REPORTS'),
-    		    'esri_client_id' => env('ESRI_CLIENT_ID'),
-    		    'esri_client_secret' => env('ESRI_CLIENT_SECRET'),
-    	    ];
+    	    $config = $default_config;
     	}
 
-	    if(empty($config['username']) || empty($config['password']) || empty($config['application_id']) || empty($config['application_secret']) || empty($config['group_id']) || empty($config['selected_reports'])){
+	    if(empty($config["{$prefix}username"]) || empty($config["{$prefix}password"]) || empty($config["{$prefix}application_id"]) || empty($config["{$prefix}application_secret"]) || empty($config["{$prefix}group_id"]) || empty($config["{$prefix}selected_reports"])){
 		    throw new MissingConfigException;
 	    }
 
+        if($key){
+            return @$config[$prefix.$key] ?? @$config[$key] ?? $default;
+        }
 	    return $config;
 	}
 
@@ -221,8 +242,7 @@ class Auth{
 		$response = $guzzle->post($path, [
             'form_params' => $params
         ]);
-// 		$request = new Request('POST', $path, [], $params);
-// 		$response = $guzzle->send($request);
+
 		$body = $response->getBody();
 		$json = '';
 		while (!$body->eof()) {
@@ -230,7 +250,6 @@ class Auth{
 		}
 
 		$token_data = json_decode($json, true);
-// 		dd($token_data);
 
 		if(isset($token_data['error'])) return $token_data['error'];
 

@@ -131,7 +131,7 @@ class App{
 			${tab_panel_items.join('')}
 			</div>
 		`;
-// 				<iframe src="https://icap.maps.arcgis.com/apps/opsdashboard/index.html#/be8cf70442fc4ff491247d47708302df" frameborder="0" allowFullScreen="true"></iframe>
+        // <iframe src="https://icap.maps.arcgis.com/apps/opsdashboard/index.html#/be8cf70442fc4ff491247d47708302df" frameborder="0" allowFullScreen="true"></iframe>
 
 		const page = `<div id="secure_embed_root">
 			<div class="main-container" id="main-container">
