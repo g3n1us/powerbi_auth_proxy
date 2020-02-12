@@ -4,4 +4,3 @@ node_modules
 composer.phar
 .env
 src/origins.txt
-hash.txt
