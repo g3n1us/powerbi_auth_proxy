@@ -115,6 +115,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
 
         if(empty($this->errors)){
             $this->results[] = '<h3 class="text-success">Installation/Update Complete.</h3>';
+            $this->results[] = '<a class="btn btn-danger" href="?secure_directory=true">Click to Secure Installer and Continue...</a>';
         }
     }
 
