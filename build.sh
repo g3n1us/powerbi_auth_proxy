@@ -17,6 +17,7 @@ TIMESTAMP=$(date +%F--%H-%M-%S)
 VERSIONSDIR="../auth_proxy_builds/versions"
 
 if [ ! -f "$FILEPATH" ]; then
+    echo $VERSION > hash.txt
     composer archive -f zip --dir="../auth_proxy_builds" --file="$FILENAME" --ignore-filters
     cd $VERSIONSDIR
     ln -s "../$FILENAME.zip" "build_$TIMESTAMP.zip"

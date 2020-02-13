@@ -48,6 +48,10 @@ class CodeigniterPowerBIAuthProxyInstaller{
             }
 
         }
+        else if(!empty($_GET['secure_directory'])){
+            $this->secure_installer();
+            header('Location: /');
+        }
         else if(empty($this->errors)){
             if($this->should_install()){
                 $this->title = "Review the information below and click 'Continue' to proceed with the installation or update";
@@ -121,8 +125,9 @@ class CodeigniterPowerBIAuthProxyInstaller{
         $config_complete = $this->set_config();
 
 
+/*
         if($config_complete){
-//             file_put_contents(__DIR__.'/.htaccess', 'deny from all' . PHP_EOL);
+            file_put_contents(__DIR__.'/.htaccess', 'deny from all' . PHP_EOL);
             // test that installer is no longer available via the web
             $uri = @$_SERVER['HTTP_REFERER'];
             $contents = !!@file_get_contents($uri);
@@ -130,7 +135,19 @@ class CodeigniterPowerBIAuthProxyInstaller{
                 $this->results[] = '<div class="text-danger">ERROR - This script should no longer be accessible from the web for security purposes.</div>';
             }
         }
+*/
 
+    }
+
+
+    private function secure_installer(){
+        file_put_contents(__DIR__.'/.htaccess', 'deny from all' . PHP_EOL);
+        // test that installer is no longer available via the web
+        $uri = @$_SERVER['HTTP_REFERER'];
+        $contents = !!@file_get_contents($uri);
+        if($contents){
+            $this->results[] = '<div class="text-danger">ERROR - This script should no longer be accessible from the web for security purposes.</div>';
+        }
     }
 
 
