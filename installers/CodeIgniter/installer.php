@@ -24,6 +24,8 @@ class CodeigniterPowerBIAuthProxyInstaller{
         'subclass_prefix' => null,
     ];
 
+    private $secure_directory_button = '<a class="btn btn-danger" href="?secure_directory=true">Click to Secure Installer and Continue...</a>';
+
     public function __construct(){
         define('BASEPATH', '');
         try{
@@ -115,7 +117,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
 
         if(empty($this->errors)){
             $this->results[] = '<h3 class="text-success">Installation/Update Complete.</h3>';
-            $this->results[] = '<a class="btn btn-danger" href="?secure_directory=true">Click to Secure Installer and Continue...</a>';
+            $this->results[] = $this->secure_directory_button;
         }
     }
 
@@ -222,6 +224,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
         if(!$quiet){
             if(!$proceed) {
                 $this->results[] = "<div class='alert alert-success'>The application is already installed and is up-to-date</div>";
+                $this->results[] = $this->secure_directory_button;
             }
             else{
                 $this->results[] = "<div class='alert alert-warning'>$step</div>";
