@@ -1,5 +1,9 @@
 <?php
 
+if(!defined('PBI_AUTH_PROXY_RUNNING_INSTALL')){
+    define('PBI_AUTH_PROXY_RUNNING_INSTALL', true);
+}
+
 class CodeigniterPowerBIAuthProxyInstaller{
 
     private $repository_url = "https://powerbi-auth-proxy-downloads.s3.us-east-1.amazonaws.com";

@@ -81,9 +81,11 @@ class Auth{
 
         $config = array_merge(self::getDefaultConfig(), $framework->getConfig());
 
-	    if(empty($config["username"]) || empty($config["password"]) || empty($config["application_id"]) || empty($config["application_secret"]) || empty($config["group_id"]) || empty($config["selected_reports"])){
-		    throw new MissingConfigException;
-	    }
+        if(!defined('PBI_AUTH_PROXY_RUNNING_INSTALL')){
+    	    if(empty($config["username"]) || empty($config["password"]) || empty($config["application_id"]) || empty($config["application_secret"]) || empty($config["group_id"]) || empty($config["selected_reports"])){
+    		    throw new MissingConfigException;
+    	    }
+        }
 
         if($key){
             return @$config[$key] ?? $default;

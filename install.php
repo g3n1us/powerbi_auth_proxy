@@ -1,6 +1,8 @@
 <?php
 require_once(__DIR__.'/src/boot.php');
-
+if(!defined('PBI_AUTH_PROXY_RUNNING_INSTALL')){
+    define('PBI_AUTH_PROXY_RUNNING_INSTALL', true);
+}
 $output = [];
 $output[] = '
 <style>
