@@ -48,6 +48,6 @@ $config['powerbi_auth_proxy'] = [
 
 This configuration that is provided can be used to restrict users based on permissions when accessing certain sections of the site. In the `auth_proxy_gate` function, you will return either true or false depending on the currently accessed state of the application. The `$router` variable passed into the function can be used to view the currently accessed report and other useful information.
 
-You can now use the embed code provided [HERE](/) to insert your PowerBI and Esri applications into the site.
+You can now use the embed code provided [HERE](./) to insert your PowerBI and Esri applications into the site.
 
 For CodeIgniter applications, this is usually placed inside a view template file located at `/application/views`.
