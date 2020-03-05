@@ -1,5 +1,4 @@
 import PbiClient, { models, service, factories } from 'powerbi-client';
-// const $ = require('jquery');
 import axios from 'axios';
 
 
@@ -73,12 +72,10 @@ class App{
 		const { $ } = this;
 		const reportId = $(link).data('report');
         axios.get(`/auth_proxy_routes/esri_embed/${reportId}`).then(response => {
-	        console.log(response);
-	        //! X-man!!!
-	        // below does not work!
 	        // The map layers are what are protected, not the dashboard itself.
-// 	        https://icap.maps.arcgis.com/apps/opsdashboard/index.html#/be8cf70442fc4ff491247d47708302df
-
+	        // So the Dashboard itself must use the proxy functionality to function
+	        // Use this installations endpoint for map embeds in the dashboard
+            // We are passing the token anyway, in case future functionality allows for this. Also doesn't hurt anything.
 			$reportContainer.html(`<iframe frameborder="0" src="https://icap.maps.arcgis.com/apps/opsdashboard/index.html?token=${response.access_token}#/${reportId}"></iframe>`)
         });
 
@@ -118,7 +115,6 @@ class App{
 
 	render(){
 		const { $ } = this;
-		console.log('this.data.selected_reports', this.data.selected_reports);
 		const links = this.data.selected_reports.map((v, i) => `<li class="${i === 0 ? 'active' : ''}"><a data-XXtoggle="tab" href="#${v.handle}" data-report="${v.id}" data-reporttype="${v.type}">${v.name}</a></li>`);
 		const tabs = `
 			<ul class="nav nav-tabs" id="secure_embed_tabs">
@@ -131,7 +127,6 @@ class App{
 			${tab_panel_items.join('')}
 			</div>
 		`;
-        // <iframe src="https://icap.maps.arcgis.com/apps/opsdashboard/index.html#/be8cf70442fc4ff491247d47708302df" frameborder="0" allowFullScreen="true"></iframe>
 
 		const page = `<div id="secure_embed_root">
 			<div class="main-container" id="main-container">

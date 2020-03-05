@@ -36,7 +36,8 @@ class Routes{
     	$this->path = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
     	$this->query_string = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 
-        $this->patterns = array_merge($this->patterns, $patterns, $this->get_patterns());
+//         $this->patterns = array_merge($this->patterns, $patterns, $this->get_patterns());
+        $this->patterns = array_merge($this->get_patterns(), $this->patterns, $patterns);
         $matched = false;
         $method = null;
         $current_route = null;
@@ -49,13 +50,18 @@ class Routes{
                     $this->current_route = $current_route;
                     $method = $current_route->callback;
                 }
-                else if(is_string($possible_method)) $method = $possible_method;
+                else if(is_string($possible_method)) {
+                    $this->current_route = new Route($pattern);
+                    $this->current_route->router = $this;
+                    $method = $possible_method;
+
+                    $current_route = $this->current_route;
+                }
                 break;
             }
         }
 
 		if($matched){
-
 			$this->auth_proxy = Auth::get_instance();
 
 			$this->segments = explode('/', @$matches[1]);
@@ -71,7 +77,6 @@ class Routes{
 			if(is_callable($method)){
     			$args = array_filter(array_merge($this->segments, [$this]));
     			$response = call_user_func_array($method, $args);
-//     			$response = $method($this);
 			}
 
 			else if(method_exists($current_route, $method)){
@@ -83,15 +88,12 @@ class Routes{
 				$response = call_user_func_array([$this, $method], $this->segments);
 			}
 
-
-
 			if($response !== false){
 				self::set_mime(count($this->segments) ? $this->segments[0] : null);
 				if(is_array($response)) $response = json_encode($response);
 				echo $response;
 				exit();
 			}
-
 		}
 	}
 
@@ -193,7 +195,6 @@ class Routes{
         $url = $esri_endpoint . $this->path;
         self::set_mime($this->path);
         return file_get_contents("$url");
-
     }
 
 }
