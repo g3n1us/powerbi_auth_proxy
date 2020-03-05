@@ -29,7 +29,7 @@ if [ ! -f "$FILEPATH" ]; then
         fi
     done
     ##    remove node_modules
-    rm -r "src/assets/node_modules"
+    rm -rf "src/assets/node_modules"
 
     echo $VERSION > hash.txt
     composer archive -f zip --dir="../auth_proxy_builds" --file="$FILENAME" --ignore-filters
@@ -57,6 +57,7 @@ if [ ! -f "$FILEPATH" ]; then
 
     rm -r "../$TIMESTAMP"
 
+    echo "adding back node_modules by running `npm i`"
     cd "src/assets"
     npm i
 
