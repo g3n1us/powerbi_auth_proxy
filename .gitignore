@@ -1,6 +1,6 @@
 .DS_Store
 vendor
-node_modules
+src/assets/node_modules
 composer.phar
 .env
 src/origins.txt
