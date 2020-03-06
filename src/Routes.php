@@ -186,7 +186,7 @@ class Routes{
 
         header('Access-Control-Allow-Origin: *');
 
-        return file_get_contents($url);
+        return guzzle_get_contents($url);
     }
 
 
@@ -194,7 +194,7 @@ class Routes{
         $esri_endpoint = env('ESRI_ENDPOINT', 'https://services7.arcgis.com');
         $url = $esri_endpoint . $this->path;
         self::set_mime($this->path);
-        return file_get_contents("$url");
+        return guzzle_get_contents("$url");
     }
 
 }

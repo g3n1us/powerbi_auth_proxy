@@ -14,4 +14,16 @@ if(!function_exists('env')){
 	}
 }
 
+if(!function_exists('guzzle_get_contents')){
+    function guzzle_get_contents($url){
+        $client = new GuzzleHttp\Client;
+		$res = $client->get($url);
 
+		$body = $res->getBody();
+		$content = '';
+		while (!$body->eof()) {
+		    $content .= $body->read(1024);
+		}
+        return $content;
+    }
+}
