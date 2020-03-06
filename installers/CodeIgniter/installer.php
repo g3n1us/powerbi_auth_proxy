@@ -26,7 +26,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
 
     private $secure_directory_button = '<a class="btn btn-danger" href="?secure_directory=true">Click to Secure Installer and Continue...</a>';
 
-    public function __construct(){
+    public function __construct($options = []){
         define('BASEPATH', '');
         try{
             require(dirname(__DIR__) . '/application/config/config.php');
@@ -36,8 +36,11 @@ class CodeigniterPowerBIAuthProxyInstaller{
         }
 
         $this->ci_config($config);
+        $this->repository_url = @$options['repository_url'] ? $options['repository_url'] : $this->repository_url;
 
-        $this->install_dir = dirname(__DIR__) . $this->install_dir;
+        $this->install_dir = @$options['install_dir'] ? $options['install_dir'] : dirname(__DIR__) . $this->install_dir;
+
+        $this->installer_parent_dirname = @$options['installer_parent_dirname'] ? $options['installer_parent_dirname'] : $this->installer_parent_dirname;
 
         if(!$this->preflight()) return;
 
@@ -92,9 +95,24 @@ class CodeigniterPowerBIAuthProxyInstaller{
 
     }
 
+
+    private function get_http($url){
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => $url,
+            CURLOPT_USERAGENT => 'G3N1US cURL Fn'
+        ));
+        $resp = curl_exec($curl);
+        curl_close($curl);
+        return $resp;
+    }
+
+
     private function install(){
-        copy($this->repository_url . '/current.zip', $this->install_dir . '/current.zip');
-        copy($this->repository_url . '/hash.txt', $this->install_dir . '/hash.txt');
+
+        file_put_contents($this->install_dir . '/current.zip', $this->get_http($this->repository_url . '/current.zip'));
+        file_put_contents($this->install_dir . '/hash.txt', $this->get_http($this->repository_url . '/hash.txt'));
 
         $zip = new ZipArchive;
         if ($zip->open($this->install_dir . '/current.zip') === TRUE) {
@@ -124,22 +142,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
     private function post_install(){
         @unlink($this->install_dir . '/current.zip');
 
-
         $config_complete = $this->set_config();
-
-
-/*
-        if($config_complete){
-            file_put_contents(__DIR__.'/.htaccess', 'deny from all' . PHP_EOL);
-            // test that installer is no longer available via the web
-            $uri = @$_SERVER['HTTP_REFERER'];
-            $contents = !!@file_get_contents($uri);
-            if($contents){
-                $this->results[] = '<div class="text-danger">ERROR - This script should no longer be accessible from the web for security purposes.</div>';
-            }
-        }
-*/
-
     }
 
 
@@ -147,7 +150,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
         file_put_contents(__DIR__.'/.htaccess', 'deny from all' . PHP_EOL);
         // test that installer is no longer available via the web
         $uri = @$_SERVER['HTTP_REFERER'];
-        $contents = !!@file_get_contents($uri);
+        $contents = !!$this->get_http($uri);
         if($contents){
             $this->results[] = '<div class="text-danger">ERROR - This script should no longer be accessible from the web for security purposes.</div>';
         }
@@ -164,8 +167,6 @@ class CodeigniterPowerBIAuthProxyInstaller{
             $this->results[] = "This installer script (<code>$thisfilename</code>) must be placed inside a folder named: <code>$folder</code> in the root folder of your website.";
             return false;
         }
-
-
 
         return true;
     }
@@ -200,6 +201,16 @@ class CodeigniterPowerBIAuthProxyInstaller{
             $this->output[] = "<div class='alert alert-success'><i class='glyphicon glyphicon-ok'></i> Zip extension installed</div>";
         }
 
+
+        // is cURL extension installed
+        if(!function_exists('curl_init')){
+            $this->errors[] = "<div class='alert alert-danger'><i class='glyphicon glyphicon-remove'></i> cURL extension is missing</div>";
+            $proceed = false;
+        }
+        else{
+            $this->output[] = "<div class='alert alert-success'><i class='glyphicon glyphicon-ok'></i> cURL extension installed</div>";
+        }
+
         if(!$proceed){
             $this->results[] = "<div class='alert alert-danger'><i class='glyphicon glyphicon-remove'></i> There are ". count($this->errors) ." issue(s) that must be fixed before proceeding.</div>";
         }
@@ -214,8 +225,8 @@ class CodeigniterPowerBIAuthProxyInstaller{
             $step = 'Application not found, so it will be installed';
         }
         else{
-            $remotehash = @file_get_contents($this->repository_url . '/hash.txt');
-            $localhash = @file_get_contents($this->install_dir . '/hash.txt');
+            $remotehash = $this->get_http($this->repository_url . '/hash.txt');
+            $localhash = file_get_contents($this->install_dir . '/hash.txt');
             $compared = trim($remotehash) != trim($localhash);
             if($compared) $step = 'Application exists but an update is available, so it will be updated';
             $proceed = $compared;
@@ -249,7 +260,7 @@ if(!function_exists('dd')){
 
 }
 
-$content = new CodeigniterPowerBIAuthProxyInstaller;
+$content = new CodeigniterPowerBIAuthProxyInstaller($_GET);
 
 
 
