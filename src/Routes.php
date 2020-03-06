@@ -101,6 +101,7 @@ class Routes{
 	public function call_gates(){
     	$gates = array_map(function($v){
         	if(is_callable($v)){
+
             	return $v($this);
         	}
         	else if(is_callable(Auth::config($v))){
@@ -110,8 +111,10 @@ class Routes{
     	}, $this->current_route->gates);
 
     	$passes = count($gates) === count(array_filter($gates));
-
     	if(!$passes){
+            if(!Auth::config('auth_proxy_gate')){
+                throw new MissingConfigException("The default gate: 'auth_proxy_gate' is missing. This should be set in the configuration for your framework as a Closure.");
+            }
         	return UserProxy::abort();
     	}
 	}
