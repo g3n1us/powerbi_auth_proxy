@@ -29,21 +29,24 @@ class Routes{
 
 	public $patterns= [
     	'proxy' => '.*?arcgis\\/rest.*?$',
+    	'proxy_sharing' => '.*?sharing\\/rest.*?$',
+    	'proxy_dashboard' => '^\\/apps\\/opsdashboard\\/.*?$',
         'proxy_other' => '.*?ESRI.*?',
 	];
 
 	public function _route($patterns = []){
     	$this->path = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
     	$this->query_string = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
-
 //         $this->patterns = array_merge($this->patterns, $patterns, $this->get_patterns());
         $this->patterns = array_merge($this->get_patterns(), $this->patterns, $patterns);
+        
         $matched = false;
         $method = null;
         $current_route = null;
         foreach($this->patterns as $possible_method => $pattern){
             $matched = !!preg_match('/'.$pattern.'/i', $this->path, $matches);
             if($matched) {
+	            
                 if($pattern instanceof Route){
                     $current_route = $pattern;
                     $current_route->router = $this;
@@ -54,7 +57,6 @@ class Routes{
                     $this->current_route = new Route($pattern);
                     $this->current_route->router = $this;
                     $method = $possible_method;
-
                     $current_route = $this->current_route;
                 }
                 break;
@@ -86,6 +88,10 @@ class Routes{
 
 			else if(method_exists($this, $method)){
 				$response = call_user_func_array([$this, $method], $this->segments);
+			}
+
+			else if(preg_replace('/[^a-z]/', '', $method) === 'proxy'){
+				$response = call_user_func_array([$this, 'proxy'], $this->segments);
 			}
 
 			if($response !== false){
@@ -159,13 +165,14 @@ class Routes{
 	private static function set_mime($filename = null){
     	if(self::$mime_set) return;
     	self::$mime_set = true;
-		$ok = preg_match('/^.*?\.(js|css|html)$/', $filename, $match);
+		$ok = preg_match('/^.*?\.(js|css|html|pbf)$/', $filename, $match);
 		if(!$ok) $mime = 'application/json';
 		else{
 			$mimes = [
 				'js' => 'application/javascript',
 				'css' => 'text/css',
 				'html' => 'text/html',
+				'pbf' => 'application/x-protobuf'
 			];
 			$mime = $mimes[$match[1]];
 		}
@@ -173,8 +180,11 @@ class Routes{
 	}
 
 
-    private function proxy(){
-        $esri_endpoint = Auth::config('esri_endpoint', 'https://services7.arcgis.com');
+    private function proxy($endpoint = null){
+	    if($endpoint)
+	        $esri_endpoint = $endpoint;
+        else
+	        $esri_endpoint = Auth::config('esri_endpoint', 'https://services7.arcgis.com');
 
         $query = $_GET;
 
@@ -183,7 +193,6 @@ class Routes{
         ksort($query);
 
         $url = $esri_endpoint . $this->path . '?' . http_build_query($query);
-    	file_put_contents(__DIR__.'/origins.txt', 'url = '.$url . PHP_EOL, FILE_APPEND);
 
         self::set_mime('.' . @$query['f'] ?? 'html');
 
@@ -191,8 +200,19 @@ class Routes{
 
         return guzzle_get_contents($url);
     }
+    
+    
+    private function proxy_sharing(){
+	    return $this->proxy(Auth::config('esri_dashboard_endpoint', 'https://www.arcgis.com'));
+    }
+    
+    private function proxy_dashboard(){
+	    self::set_mime($this->path);
+	    $content = $this->proxy(Auth::config('esri_dashboard_endpoint', 'https://www.arcgis.com'));
 
-
+	    return $content;
+    }
+    
     private function proxy_other(){
         $esri_endpoint = env('ESRI_ENDPOINT', 'https://services7.arcgis.com');
         $url = $esri_endpoint . $this->path;

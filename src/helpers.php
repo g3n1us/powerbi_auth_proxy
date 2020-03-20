@@ -17,6 +17,7 @@ if(!function_exists('env')){
 if(!function_exists('guzzle_get_contents')){
     function guzzle_get_contents($url){
         $client = new GuzzleHttp\Client;
+        // 'https://pbi-auth.dev.also-too.com' . 
 		$res = $client->get($url);
 
 		$body = $res->getBody();

@@ -75,8 +75,8 @@ class App{
 	        // The map layers are what are protected, not the dashboard itself.
 	        // So the Dashboard itself must use the proxy functionality to function
 	        // Use this installations endpoint for map embeds in the dashboard
-            // We are passing the token anyway, in case future functionality allows for this. Also doesn't hurt anything.
-			$reportContainer.html(`<iframe frameborder="0" src="https://icap.maps.arcgis.com/apps/opsdashboard/index.html?token=${response.access_token}#/${reportId}"></iframe>`)
+            // We are passing the token so it can be retrieved from the referrer
+			$reportContainer.html(`<iframe frameborder="0" src="https://www.arcgis.com/apps/opsdashboard/index.html?token=${response.data.access_token}#/${reportId}"></iframe>`)
         });
 
 	}
@@ -101,7 +101,6 @@ class App{
 		$(window).on('hashchange', (event) => {
 			const { hash } = window.location;
 			if(!(hash in tabs)) {
-				alert('ddd');
 				return;
 			}
 			const link = tabs[hash];

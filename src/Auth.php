@@ -35,6 +35,8 @@ class Auth{
 	private static $instance = false;
 
 	private static $framework;
+	
+	public static $token_from_referrer;
 
 	public static function get_instance(){
 		if(!self::$instance) self::$instance = new self;
@@ -72,6 +74,8 @@ class Auth{
 		    "selected_reports" => env('SELECTED_REPORTS'),
 		    "esri_client_id" => env('ESRI_CLIENT_ID'),
 		    "esri_client_secret" => env('ESRI_CLIENT_SECRET'),
+		    "esri_endpoint" => env('ESRI_ENDPOINT'),
+		    "esri_dashboard_endpoint" => env('ESRI_DASHBOARD_ENDPOINT'),
 		    "accepted_referrers" => env('ACCEPTED_REFERRERS'),
 	    ];
     }
@@ -197,6 +201,32 @@ class Auth{
 		return $reports['value'];
 	}
 
+
+	public static function getTokenFromReferrer(){
+		if(!empty(static::$token_from_referrer)){
+			return static::$token_from_referrer;
+		}
+		
+		if($referrer = @$_SERVER['HTTP_REFERER']){
+	    	['host' => $referrer_host] = array_merge(['host' => false], parse_url($referrer));
+	        $accepted_referrers = array_map('trim', explode(',', Auth::config('accepted_referrers', 'empty')));
+
+	    	foreach($accepted_referrers as $accepted_referrer){
+		    	if(\Illuminate\Support\Str::is($accepted_referrer, $referrer_host)){
+			    	parse_str(parse_url($referrer, PHP_URL_QUERY), $output);
+			    	if($token = @$output['token']){
+				    	static::$token_from_referrer = $token;
+				    	return $token;
+			    	}
+		    	}
+	    	}
+		}
+
+    	return null;
+	}
+
+
+
 	public function getEmbedToken($report_id){
 		if(!isset($this->embed_tokens[$report_id])){
 			$guzzle = new GuzzleClient(['base_uri' => 'https://api.powerbi.com']);
@@ -233,6 +263,9 @@ class Auth{
 
 
 	public function getEsriEmbedToken($report_id = null){
+		if($referrer_token = static::getTokenFromReferrer()){
+			return $referrer_token;
+		}
 		$guzzle = new GuzzleClient();
 		$params = [
 			'client_id' => $this->esri_client_id,
