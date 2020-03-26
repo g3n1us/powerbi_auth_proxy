@@ -57,9 +57,10 @@ if [ ! -f "$FILEPATH" ]; then
 
     rm -r "../$TIMESTAMP"
 
-    echo "adding back node_modules by running `npm i`"
+    echo "adding back node_modules via npm..."
     cd "src/assets"
     npm i
+    echo "done."
 
 else
     echo "build is current"
