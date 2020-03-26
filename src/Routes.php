@@ -172,7 +172,7 @@ class Routes{
 				'js' => 'application/javascript',
 				'css' => 'text/css',
 				'html' => 'text/html',
-				'pbf' => 'application/x-protobuf'
+				'pbf' => 'application/octet-stream'
 			];
 			$mime = $mimes[$match[1]];
 		}
