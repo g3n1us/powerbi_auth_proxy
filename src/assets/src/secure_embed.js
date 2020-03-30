@@ -9,20 +9,16 @@ class App{
 		this.powerbi = new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory);
 		axios.get('/auth_proxy_routes/embed_data').then(response => {
 			this.data = response.data;
-		    this.data.reports.forEach((report, i) => {
-		        Object.defineProperty(this.data.reports, report.id, {
+
+		    this.data.forEach((report, i) => {
+		        Object.defineProperty(this.data, report.id, {
 		            get: function(){
 		                return report;
 		            }
 		        });
 		    });
-		    this.data.selected_reports = this.data.selected_reports.map(v => {
-			    const found = this.data.reports[v.id] || { id: '', slug: '' };
-			    found.slug = found.id.replace(/-/g, '');
-				found.handle = v.name.toLowerCase().replace(/[^a-z]/g, '-');
 
-			    return { ...found, ...v };
-		    });
+			console.log(this.data);
 			this.$ = window.$ || window.jQuery;
 			this.render();
 			this.attachHandlers();
@@ -30,7 +26,6 @@ class App{
 		.catch($e => {
 			console.log($e);
 		});
-
 
 	}
 
@@ -44,40 +39,48 @@ class App{
 	loadReport(link){
 		const { $ } = this;
 		$(link).tab('show');
-		const { reports } = this.data;
-        const reportData = reports[$(link).data('report')];
+		const itemdata = $(link).data('reportdata');
         const $reportContainer = $(link.hash);
         if($reportContainer.find('iframe').length) return;
         $reportContainer.html('<span class="loading-indicator">loading...</span>');
 
-		if($(link).data('reporttype') == 'esri'){
+		if(itemdata.type == 'esri'){
 			return this.loadEsriReport(link, $reportContainer);
 		}
+		
+// 		const { reports } = this.data;
+        const reportData = this.data[itemdata.id];
 
-        axios.get('/auth_proxy_routes/report_embed/' + reportData.id).then(response => {
+        axios.get(`/auth_proxy_routes/report_embed/${reportData.id}`).then(response => {
             const embedConfiguration = {
             	type: 'report',
             	id: reportData.id,
-            	groupId: this.data.group_id,
+            	groupId: response.data.group_id,
             	embedUrl: 'https://app.powerbi.com/reportEmbed',
             	tokenType: models.TokenType.Embed,
             	accessToken: response.data.embed_token
             };
-
+			console.log(embedConfiguration);
             const report = this.powerbi.embed($reportContainer.get(0), embedConfiguration);
         });
 	}
 
 	loadEsriReport(link, $reportContainer){
 		const { $ } = this;
-		const reportId = $(link).data('report');
+		const itemdata = $(link).data('reportdata');
+
+		$reportContainer.html(`<iframe frameborder="0" src="${itemdata.url}"></iframe>`);
+/*
         axios.get(`/auth_proxy_routes/esri_embed/${reportId}`).then(response => {
 	        // The map layers are what are protected, not the dashboard itself.
 	        // So the Dashboard itself must use the proxy functionality to function
 	        // Use this installations endpoint for map embeds in the dashboard
             // We are passing the token so it can be retrieved from the referrer
-			$reportContainer.html(`<iframe frameborder="0" src="https://www.arcgis.com/apps/opsdashboard/index.html?token=${response.data.access_token}#/${reportId}"></iframe>`)
+            
+			$reportContainer.html(`<iframe frameborder="0" src="${itemdata.url}"></iframe>`)
+// 			$reportContainer.html(`<iframe frameborder="0" src="https://www.arcgis.com/apps/opsdashboard/index.html?token=${response.data.access_token}#/${reportId}"></iframe>`)
         });
+*/
 
 	}
 
@@ -113,14 +116,16 @@ class App{
 	}
 
 	render(){
+		console.log('this.data', this.data);
 		const { $ } = this;
-		const links = this.data.selected_reports.map((v, i) => `<li class="${i === 0 ? 'active' : ''}"><a data-XXtoggle="tab" href="#${v.handle}" data-report="${v.id}" data-reporttype="${v.type}">${v.name}</a></li>`);
+// 		const links = this.data.selected_reports.map((v, i) => `<li class="${i === 0 ? 'active' : ''}"><a data-reportdata='${JSON.stringify(v)}' href="#${v.handle}" data-report="${v.id}" data-reporttype="${v.type}">${v.name || v.id}</a></li>`);
+		const links = this.data.map((v, i) => `<li class="${i === 0 ? 'active' : ''}"><a data-reportdata='${JSON.stringify(v)}' href="#${v.handle}">${v.name || v.id}</a></li>`);
 		const tabs = `
 			<ul class="nav nav-tabs" id="secure_embed_tabs">
 				${links.join('')}
 			</ul>
 		`;
-		const tab_panel_items = this.data.selected_reports.map((v, i) => `<div id="${v.handle}" class="tab-pane fade ${i === 0 ? 'in active' : ''}">${v.handle}</div>`);
+		const tab_panel_items = this.data.map((v, i) => `<div id="${v.handle}" class="tab-pane fade ${i === 0 ? 'in active' : ''}">${v.handle}</div>`);
 		const tab_panels = `
 			<div class="tab-content">
 			${tab_panel_items.join('')}

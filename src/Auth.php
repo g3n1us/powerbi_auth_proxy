@@ -81,6 +81,7 @@ class Auth{
     }
 
 	public static function config($key = null, $default = null){
+		
     	$framework = static::getFramework();
 
         $config = array_merge(self::getDefaultConfig(), $framework->getConfig());
@@ -163,15 +164,20 @@ class Auth{
 		return $this->group_id;
 	}
 
+
+/*
 	public function getSelectedReports(){
 		$selected_reports = array_map(function($v){
-			[$id, $name, $type] = array_merge(explode('|', trim($v)), [null, null, null]);
+			[$id, $name, $type] = array_merge(clean_array_from_string($v, '|'), [null, null, null]);
+			
+			$embed = new Embed(['id' => $id, 'name' => $name, 'type' => $type]);
 
-			return ['id' => $id, 'name' => $name, 'type' => $type ?? 'power_bi'];
-		}, explode(',', $this->selected_reports));
+			return $embed;
+		}, clean_array_from_string($this->selected_reports));
 
 		return $selected_reports;
 	}
+*/
 
 	public function getReports(){
 		$guzzle = new GuzzleClient(['base_uri' => 'https://api.powerbi.com']);
@@ -262,7 +268,7 @@ class Auth{
 	}
 
 
-	public function getEsriEmbedToken($report_id = null){
+	public function getEsriEmbedToken(){
 		if($referrer_token = static::getTokenFromReferrer()){
 			return $referrer_token;
 		}

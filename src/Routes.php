@@ -95,9 +95,11 @@ class Routes{
 			}
 
 			if($response !== false){
+
 				self::set_mime(count($this->segments) ? $this->segments[0] : null);
-				if(is_array($response)) $response = json_encode($response);
-				echo $response;
+				
+				if(is_array($response)) echo collect($response);
+				else echo $response;
 				exit();
 			}
 		}
