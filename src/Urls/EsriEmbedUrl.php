@@ -18,6 +18,7 @@ class EsriEmbedUrl extends EmbedUrl{
 
 		if($parts === false){
 			$this->id = $this->str;
+			$this->fragment = '/' . $this->str;
 		}
 		else{
 			$this->scheme = $parts['scheme'];
