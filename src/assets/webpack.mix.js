@@ -1,4 +1,13 @@
 let mix = require('laravel-mix');
+const { execSync } = require('child_process');
+const fs = require('fs');
+
+const hash = execSync('git rev-parse --short HEAD');
+
+fs.writeFileSync('./src/version.json', `{"version": "${hash.toString().trim()}"}`);
+
+
+//  git rev-parse --short HEAD
 
 /*
  |--------------------------------------------------------------------------

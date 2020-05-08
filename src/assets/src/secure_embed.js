@@ -1,7 +1,7 @@
 import PbiClient, { models, service, factories } from 'powerbi-client';
 import axios from 'axios';
-
-
+const { version } = require('./version.json');
+console.log(version, 'version');
 class App{
 
 	constructor(){
@@ -31,7 +31,7 @@ class App{
 
 	embedCSS(){
 		const l = document.createElement('link');
-		l.href = '/auth_proxy_routes/asset/secure_embed.css';
+		l.href = `/auth_proxy_routes/asset/secure_embed.css?v=${version}`;
 		l.rel = 'stylesheet';
 		document.head.appendChild(l);
 	}
@@ -140,7 +140,7 @@ class App{
 			</div>
 		</div>`;
 
-		$('script[src="/auth_proxy_routes/asset/secure_embed.js"]').before(page);
+		$(`script[src="/auth_proxy_routes/asset/secure_embed.js"]`).before(page);
 
 	}
 }
