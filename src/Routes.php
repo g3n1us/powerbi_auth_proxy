@@ -39,7 +39,6 @@ class Routes{
     	$this->query_string = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 //         $this->patterns = array_merge($this->patterns, $patterns, $this->get_patterns());
         $this->patterns = array_merge($this->get_patterns(), $this->patterns, $patterns);
-        
         $matched = false;
         $method = null;
         $current_route = null;
@@ -62,11 +61,11 @@ class Routes{
                 break;
             }
         }
-
+//         dd($this->patterns, $this->path, $matched, $this->current_route);
 		if($matched){
 			$this->auth_proxy = Auth::get_instance();
 
-			$this->segments = explode('/', @$matches[1]);
+			$this->segments = array_filter(explode('/', @$matches[1]));
 
 			$method = $this->method = $method ?? array_shift($this->segments);
 
@@ -95,8 +94,7 @@ class Routes{
 			}
 
 			if($response !== false){
-
-				self::set_mime(count($this->segments) ? $this->segments[0] : null);
+				self::set_mime(count($this->segments) ? $this->segments[0] : $this->path);
 				
 				if(is_array($response)) echo collect($response);
 				else echo $response;
@@ -111,6 +109,10 @@ class Routes{
         	if(is_callable($v)){
 
             	return $v($this);
+        	}
+        	else if(method_exists($this->current_route, $v)){
+
+            	return $this->current_route->{$v}($this);
         	}
         	else if(is_callable(Auth::config($v))){
             	return Auth::config($v)($this);
@@ -168,6 +170,7 @@ class Routes{
     	if(self::$mime_set) return;
     	self::$mime_set = true;
 		$ok = preg_match('/^.*?\.(js|css|html|pbf)$/', $filename, $match);
+
 		if(!$ok) $mime = 'application/json';
 		else{
 			$mimes = [

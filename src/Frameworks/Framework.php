@@ -2,6 +2,8 @@
 
 namespace BlueRaster\PowerBIAuthProxy\Frameworks;
 
+use BlueRaster\PowerBIAuthProxy\Utils\Csrf;
+
 abstract class Framework{
 
 	protected $user;
@@ -35,4 +37,7 @@ abstract class Framework{
 	public function getUser(){
 		return $this->user;
 	}
+	
+	
+	abstract public function getCsrf() : Csrf;
 }

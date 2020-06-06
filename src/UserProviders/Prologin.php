@@ -15,6 +15,12 @@ class Prologin extends UserProvider{
 	public function can($ability = '*'){
 		return true;
 	}
+	
+	public function getEmail(){
+
+		return $this->user->info->email;
+	}
+
 
 	public static function test(Framework $framework){
 		$user = $framework->getUser();

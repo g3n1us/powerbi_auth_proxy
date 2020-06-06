@@ -1,7 +1,7 @@
 import PbiClient, { models, service, factories } from 'powerbi-client';
 import axios from 'axios';
 const { version } = require('./version.json');
-console.log(version, 'version');
+
 class App{
 
 	constructor(){
@@ -18,7 +18,6 @@ class App{
 		        });
 		    });
 
-			console.log(this.data);
 			this.$ = window.$ || window.jQuery;
 			this.render();
 			this.attachHandlers();
@@ -48,7 +47,6 @@ class App{
 			return this.loadEsriReport(link, $reportContainer);
 		}
 		
-// 		const { reports } = this.data;
         const reportData = this.data[itemdata.id];
 
         axios.get(`/auth_proxy_routes/report_embed/${reportData.id}`).then(response => {
@@ -70,18 +68,6 @@ class App{
 		const itemdata = $(link).data('reportdata');
 
 		$reportContainer.html(`<iframe frameborder="0" src="${itemdata.url}"></iframe>`);
-/*
-        axios.get(`/auth_proxy_routes/esri_embed/${reportId}`).then(response => {
-	        // The map layers are what are protected, not the dashboard itself.
-	        // So the Dashboard itself must use the proxy functionality to function
-	        // Use this installations endpoint for map embeds in the dashboard
-            // We are passing the token so it can be retrieved from the referrer
-            
-			$reportContainer.html(`<iframe frameborder="0" src="${itemdata.url}"></iframe>`)
-// 			$reportContainer.html(`<iframe frameborder="0" src="https://www.arcgis.com/apps/opsdashboard/index.html?token=${response.data.access_token}#/${reportId}"></iframe>`)
-        });
-*/
-
 	}
 
 	attachHandlers(){
@@ -116,9 +102,7 @@ class App{
 	}
 
 	render(){
-		console.log('this.data', this.data);
 		const { $ } = this;
-// 		const links = this.data.selected_reports.map((v, i) => `<li class="${i === 0 ? 'active' : ''}"><a data-reportdata='${JSON.stringify(v)}' href="#${v.handle}" data-report="${v.id}" data-reporttype="${v.type}">${v.name || v.id}</a></li>`);
 		const links = this.data.map((v, i) => `<li class="${i === 0 ? 'active' : ''}"><a data-reportdata='${JSON.stringify(v)}' href="#${v.handle}">${v.name || v.id}</a></li>`);
 		const tabs = `
 			<ul class="nav nav-tabs" id="secure_embed_tabs">

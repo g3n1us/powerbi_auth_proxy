@@ -18,9 +18,9 @@ class UserProvider{
 	}
 
 	public function getUser(){
-		return $this->user;
+		return new BaseUser($this->user, $this);
 	}
-
+	
 	public function logged_in(){
 		return false;
 	}
@@ -43,4 +43,43 @@ class UserProvider{
 	public static function test(Framework $framework){
 		return false;
 	}
+}
+
+
+
+
+class BaseUser{
+	
+	protected $user;
+	
+	public function __construct($user, UserProvider $provider){
+		$this->user = $user;
+		$this->provider = $provider;
+	}
+	
+	
+	public function getEmail(){
+		return $this->provider->getEmail();
+	}
+	
+	
+	public function getName(){
+		return $this->provider->getName();
+	}
+	
+	
+	
+	public function __get($name){
+		return @$this->user->{$name};
+	}
+	
+	
+	
+	public function __call($name, $args){
+		if(method_exists($this->provider, $name)){
+			return call_user_func_array([$this->provider, $name], $args);
+		}
+		return call_user_func_array([$this->user, $name], $args);
+	}
+	
 }

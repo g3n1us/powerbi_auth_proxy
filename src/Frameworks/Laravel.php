@@ -1,6 +1,9 @@
 <?php
 	
 namespace BlueRaster\PowerBIAuthProxy\Frameworks;	
+
+use BlueRaster\PowerBIAuthProxy\Utils\Csrf;
+
 	
 class Laravel extends Framework{
 	
@@ -15,4 +18,9 @@ class Laravel extends Framework{
 	public static function test(){
 		return defined('LARAVEL_START');
 	}
+	
+	public function getCsrf() : Csrf {
+		
+	}
+	
 }

@@ -15,6 +15,6 @@ class SafetyNet{
 		if(file_exists($this->document_root . '/auth_proxy_installer.php')){
 			die("The installer file has not been deleted.");
 		}
-// 		dd($this->document_root);
+
 	}
 }

@@ -14,6 +14,12 @@ if(!function_exists('dd')){
 	}
 }
 
+if(!function_exists('dump')){
+	function dump($variable, $depth = null){
+    	foreach(func_get_args() as $v) s($v);
+	}
+}
+
 if(!function_exists('env')){
 	function env($variable, $default = null){
 		$found = getenv($variable);
@@ -71,6 +77,7 @@ if(!function_exists('clean_array_from_string')){
 	}
 }
 
+// make this join url!
 if(!function_exists('spread_url')){
 	function spread_url($str){
 		$parts = array_merge(['scheme' => null, 'query' => null, 'host' => null, 'path' => null, 'fragment' => null], parse_url($str));

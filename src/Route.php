@@ -13,20 +13,25 @@ class Route{
 
     public $router;
 
-    public function __construct($pattern, $gates = [], $callback = null){
+    public function __construct($pattern = null, $gates = [], $callback = null){
         if(count(func_get_args()) === 2){
             $callback = $gates;
             $gates = [];
         }
 
-        $this->pattern = $pattern;
+		if(!empty($pattern)){
+			$this->pattern = $pattern;
+		}
+
         if(is_string($gates) || is_callable($gates)){
             $gates = [$gates];
         }
 
         $this->gates = array_merge($this->gates, $gates);
 
-        $this->callback = $callback;
+		if(!empty($callback)){
+			$this->callback = $callback;
+		}
 
         Routes::$routes[] = $this;
     }

@@ -1,6 +1,9 @@
 <?php
 	
 namespace BlueRaster\PowerBIAuthProxy\Frameworks;	
+
+use BlueRaster\PowerBIAuthProxy\Utils\Csrf;
+
 	
 class Mock extends Framework{
 
@@ -12,6 +15,10 @@ class Mock extends Framework{
 	public static function test(){
 		return php_sapi_name() === 'cli-server';
 	}
+	
+	public function getCsrf() : Csrf {
+		
+	}	
 	
 }
 

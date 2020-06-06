@@ -2,6 +2,9 @@
 
 namespace BlueRaster\PowerBIAuthProxy\Frameworks;
 
+use BlueRaster\PowerBIAuthProxy\Utils\Csrf;
+
+
 class CodeIgniter extends Framework{
 
 	protected $user_providers = ['Prologin'];
@@ -24,5 +27,9 @@ class CodeIgniter extends Framework{
 
 	public static function test(){
 		return class_exists('Ci_Controller');
+	}
+	
+	public function getCsrf() : Csrf {
+		return new Csrf(static::$ci->security->get_csrf_token_name(), static::$ci->security->get_csrf_hash());
 	}
 }

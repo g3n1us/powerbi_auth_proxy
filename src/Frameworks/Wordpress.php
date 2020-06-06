@@ -1,6 +1,9 @@
 <?php
 	
 namespace BlueRaster\PowerBIAuthProxy\Frameworks;	
+
+use BlueRaster\PowerBIAuthProxy\Utils\Csrf;
+
 	
 class Wordpress extends Framework{
 	
@@ -15,4 +18,8 @@ class Wordpress extends Framework{
 	public static function test(){
 		return function_exists( 'wp_get_current_user' );
 	}
+	
+	public function getCsrf() : Csrf {
+		
+	}	
 }

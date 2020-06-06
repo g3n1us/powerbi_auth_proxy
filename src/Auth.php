@@ -77,6 +77,7 @@ class Auth{
 		    "esri_endpoint" => env('ESRI_ENDPOINT'),
 		    "esri_dashboard_endpoint" => env('ESRI_DASHBOARD_ENDPOINT'),
 		    "accepted_referrers" => env('ACCEPTED_REFERRERS'),
+		    "auth_proxy_admins" => env('AUTH_PROXY_ADMINS'),
 	    ];
     }
 
@@ -105,6 +106,8 @@ class Auth{
 	}
 
 	public static function getFramework(){
+		if(static::$framework) return static::$framework;
+		
 		foreach(Filesystem::list_classes('Frameworks') as $class){
 			$class = "$class";
 			if($class::test()){
