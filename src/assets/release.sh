@@ -2,7 +2,7 @@
 
 GIT_CLEAN=$(git status -s)
 
-if [ ! -e "$GIT_CLEAN" ]; then
+if [ ! -z "$GIT_CLEAN" ]; then
 	echo "There are changed files that must be committed before proceeding."
 	echo "exiting."
 	exit
