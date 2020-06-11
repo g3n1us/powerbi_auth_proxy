@@ -119,6 +119,10 @@ class Auth{
 		static::$framework = new \BlueRaster\PowerBIAuthProxy\Frameworks\Mock;
 		return static::$framework;
 	}
+	
+	public function framework(){
+		return static::getFramework();
+	}
 
 
 	public function getAuthToken(){

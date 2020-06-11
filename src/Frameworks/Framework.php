@@ -18,6 +18,11 @@ abstract class Framework{
 	public function getConfig(){
     	return [];
 	}
+	
+	public function installerPath(){
+		$classname = class_basename($this);
+		return auth_proxy_base_path("installers/$classname/installer.php");
+	}
 
 	public static function test(){
 		return false;

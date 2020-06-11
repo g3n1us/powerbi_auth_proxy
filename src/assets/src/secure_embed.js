@@ -104,7 +104,7 @@ class App{
 		
 		$(document).on('click', '.auth_proxy_admin_link', function(e){
 			e.preventDefault();
-			popupwindow(this.href);
+			popupwindow(this.href, "Auth Proxy Admin", 800, 1000);
 			
 		});
 	}

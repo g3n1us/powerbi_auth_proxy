@@ -50,10 +50,28 @@ class View{
 	}
 	
 	
+	
 	private function compile(){
 		
 		$tpl = file_get_contents($this->filepath);
-		$compiled = preg_replace('/\{\{(.*?)\}\}/', '<?php echo e($1); ?>', $tpl);
+		
+		// first bring in imports
+		$compiled = preg_replace_callback('/\@import\((.*?)\)/', function($matches){
+			$tpl_dir = dirname($this->filepath);
+			$path = trim($matches[1], '\'"');
+			if($path[0] === '.'){
+				if($path[1] === '.'){
+					$path = dirname($tpl_dir) . ltrim($path, '.');
+				}
+				else{
+					$path = $tpl_dir . ltrim($path, '.');
+				}
+			}
+			$content = (new \BlueRaster\PowerBIAuthProxy\Views\View($path, $this->context))->show();
+			return $content;
+		}, $tpl);
+
+		$compiled = preg_replace('/\{\{(.*?)\}\}/', '<?php echo e($1); ?>', $compiled);
 		$compiled = preg_replace('/\{\!\!(.*?)\!\!\}/', '<?php echo $1; ?>', $compiled);
 		$compiled = preg_replace('/\@foreach\((.*?)\)/', '<?php foreach($1){ ?>', $compiled);
 		$compiled = preg_replace('/\@endforeach/', '<?php } ?>', $compiled);
@@ -62,6 +80,7 @@ class View{
 		$compiled = preg_replace('/\@selected\((.*?)\)/', '<?php if($1){ ?>selected<?php } ?>', $compiled);
 		
 		$compiled = preg_replace('/\@csrf/', '<?php echo \BlueRaster\PowerBIAuthProxy\Utils::csrf(); ?>', $compiled);
+		
 		
 		$file_contents = implode(PHP_EOL, ['<?php', '// ' . $this->hash(), '?>', $compiled]);
 		return file_put_contents($this->tmp_file(), $file_contents);

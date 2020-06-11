@@ -27,18 +27,21 @@ class CodeigniterPowerBIAuthProxyInstaller{
     private $secure_directory_button = '<a class="btn btn-danger" href="?secure_directory=true">Click to Secure Installer and Continue...</a>';
 
     public function __construct($options = []){
-        define('BASEPATH', '');
+	    if(!defined('BASEPATH')){
+			define('BASEPATH', '');    
+	    }
         try{
-            require(dirname(__DIR__) . '/application/config/config.php');
+	        $this->rootdir = @$_SERVER['DOCUMENT_ROOT'] ?? dirname(__DIR__);
+            require($this->rootdir . '/application/config/config.php');
         }
         catch(\Exception $e){
             die(var_dump($e));
         }
 
         $this->ci_config($config);
-        $this->repository_url = @$options['repository_url'] ? $options['repository_url'] : $this->repository_url;
+        $this->repository_url = @$options['repository_url'] ? $options['repository_url'] : env('BUILD_REPOSITORY_URL', $this->repository_url);
 
-        $this->install_dir = @$options['install_dir'] ? $options['install_dir'] : dirname(__DIR__) . $this->install_dir;
+        $this->install_dir = @$options['install_dir'] ? $options['install_dir'] : $this->rootdir . $this->install_dir;
 
         $this->installer_parent_dirname = @$options['installer_parent_dirname'] ? $options['installer_parent_dirname'] : $this->installer_parent_dirname;
 
@@ -162,7 +165,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
         $thisfilename = basename(__FILE__);
         $scriptdirname = basename(dirname(__FILE__));
 
-        if($scriptdirname != $this->installer_parent_dirname){
+        if($scriptdirname != $this->installer_parent_dirname && !defined('AUTH_PROXY_INSTALLER_EMBEDDED')){
             $this->results[] = '<div class="text-danger">ERROR</div>';
             $this->results[] = "This installer script (<code>$thisfilename</code>) must be placed inside a folder named: <code>$folder</code> in the root folder of your website.";
             return false;
@@ -286,5 +289,11 @@ $html = '
     </body>
 </html>';
 
-echo trim($html);
-die();
+if(defined('AUTH_PROXY_INSTALLER_EMBEDDED')){
+	return '<form method="post">'.$content.'</form>';
+}
+else{
+	echo trim($html);
+	die();	
+}
+

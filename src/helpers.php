@@ -1,4 +1,20 @@
 <?php
+use Illuminate\Support\Str;
+
+if(!function_exists('auth_proxy')){
+	function auth_proxy(){
+    	return \BlueRaster\PowerBIAuthProxy\Auth::get_instance();
+
+	}
+}
+
+if(!function_exists('auth_proxy_base_path')){
+	function auth_proxy_base_path($subpath = null){
+		$subpath = $subpath ? Str::start($subpath, '/') : '';
+    	return dirname(__DIR__) . $subpath;
+
+	}
+}
 
 if(!function_exists('ddd')){
 	function ddd($variable, $depth = null){
