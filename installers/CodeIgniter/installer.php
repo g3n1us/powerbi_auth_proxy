@@ -290,7 +290,7 @@ $html = '
 </html>';
 
 if(defined('AUTH_PROXY_INSTALLER_EMBEDDED')){
-	return '<form method="post">'.$content.'</form>';
+	return '<form method="post" action="/powerbi_auth_proxy_updater/installer.php">'.$content.'</form>';
 }
 else{
 	echo trim($html);
