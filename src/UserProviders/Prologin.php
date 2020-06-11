@@ -16,6 +16,10 @@ class Prologin extends UserProvider{
 		return true;
 	}
 	
+	public function getName(){
+		return $this->user->info->first_name . ' ' . $this->user->info->last_name;
+	}
+	
 	public function getEmail(){
 
 		return $this->user->info->email;

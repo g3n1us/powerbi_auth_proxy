@@ -38,10 +38,12 @@ class AdminRoute extends Route{
 		$reports = collect($_POST['reports'])->values()->map('collect')->map(function($report){
 			return $report->map('head');
 		});
-		$data = time() . '|' . $reports->toJSON();
-		file_put_contents(Utils::data_path('reports'), $data, FILE_APPEND);
+		Utils::save('reports', $reports);
 
-		return 'updating!';
+		return '<script>
+		localStorage._message = "Saved";
+		window.location.assign("/auth_proxy_routes/auth_proxy_admin.html?v='.time().'");
+		</script>';
 	}
 	
 	public function auth_proxy_admin_gate($app){

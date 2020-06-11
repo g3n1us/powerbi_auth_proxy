@@ -1,5 +1,6 @@
 import PbiClient, { models, service, factories } from 'powerbi-client';
 import axios from 'axios';
+import { popupwindow } from 'g3n1us_helpers';
 const { version } = require('./version.json');
 
 class App{
@@ -7,8 +8,11 @@ class App{
 	constructor(){
 		this.embedCSS();
 		this.powerbi = new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory);
-		axios.get('/auth_proxy_routes/embed_data').then(response => {
-			this.data = response.data;
+		Promise.all([axios.get('/auth_proxy_routes/embed_data'), axios.get('/auth_proxy_routes/current_user')]).then(values => {
+
+			const [embed_response, user_response] = values;
+			this.current_user = user_response.data;
+			this.data = embed_response.data;
 
 		    this.data.forEach((report, i) => {
 		        Object.defineProperty(this.data, report.id, {
@@ -21,9 +25,7 @@ class App{
 			this.$ = window.$ || window.jQuery;
 			this.render();
 			this.attachHandlers();
-		})
-		.catch($e => {
-			console.log($e);
+			
 		});
 
 	}
@@ -99,11 +101,21 @@ class App{
 
 		const initial_tab = tabs[window.location.hash] || tabs.initial_tab;
 		this.loadReport(initial_tab);
+		
+		$(document).on('click', '.auth_proxy_admin_link', function(e){
+			e.preventDefault();
+			popupwindow(this.href);
+			
+		});
 	}
 
 	render(){
 		const { $ } = this;
 		const links = this.data.map((v, i) => `<li class="${i === 0 ? 'active' : ''}"><a data-reportdata='${JSON.stringify(v)}' href="#${v.handle}">${v.name || v.id}</a></li>`);
+		if(this.current_user.is_auth_proxy_admin === true){
+			const { admin_route } = this.current_user;
+			links.push(`<li class="pull-right"><a href="${admin_route}" class="text-danger auth_proxy_admin_link">Admin Page</a></li>`);
+		}
 		const tabs = `
 			<ul class="nav nav-tabs" id="secure_embed_tabs">
 				${links.join('')}

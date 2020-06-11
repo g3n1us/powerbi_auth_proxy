@@ -1,0 +1,9 @@
+/*! http-post-message v0.2.3 | (c) 2016 Microsoft Corporation MIT */
+
+/*! powerbi-client v2.11.0 | (c) 2016 Microsoft Corporation MIT */
+
+/*! powerbi-models v1.3.3 | (c) 2016 Microsoft Corporation MIT */
+
+/*! powerbi-router v0.1.5 | (c) 2016 Microsoft Corporation MIT */
+
+/*! window-post-message-proxy v0.2.6 | (c) 2016 Microsoft Corporation MIT */

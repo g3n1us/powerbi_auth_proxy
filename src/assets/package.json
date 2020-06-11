@@ -18,6 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
+    "g3n1us_helpers": "^2.0.0",
     "jquery": "^3.5.1",
     "laravel-mix": "^5.0.4",
     "powerbi-client": "^2.11.0"

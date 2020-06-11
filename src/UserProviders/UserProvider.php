@@ -4,6 +4,8 @@ namespace BlueRaster\PowerBIAuthProxy\UserProviders;
 
 use BlueRaster\PowerBIAuthProxy\Frameworks\Framework;
 
+use BlueRaster\PowerBIAuthProxy\Auth;
+
 class UserProvider{
 
 	protected $user;
@@ -24,6 +26,18 @@ class UserProvider{
 	public function logged_in(){
 		return false;
 	}
+	
+	public function getName(){
+
+		return @$this->user->name;
+	}
+
+	public function getEmail(){
+
+		return @$this->user->email;
+	}
+
+	
 
 	public function can($ability = '*'){
 		$ok = true;
@@ -68,6 +82,13 @@ class BaseUser{
 	}
 	
 	
+	public function isAuthProxyAdmin(){
+		$admin_emails = clean_array_from_string(Auth::config('auth_proxy_admins', ''));
+		
+		return in_array($this->getEmail(), $admin_emails);
+		
+	}
+	
 	
 	public function __get($name){
 		return @$this->user->{$name};
@@ -80,6 +101,19 @@ class BaseUser{
 			return call_user_func_array([$this->provider, $name], $args);
 		}
 		return call_user_func_array([$this->user, $name], $args);
+	}
+	
+	public function toArray(){
+		return [
+			'name' => $this->getName(),
+			'email' => $this->getEmail(),
+			'is_auth_proxy_admin' => $this->isAuthProxyAdmin(),
+			'admin_route' => $this->isAuthProxyAdmin() ? '/auth_proxy_routes/auth_proxy_admin.html' : null,
+		];
+	}
+	
+	public function __toString(){
+		return json_encode($this->toArray());
 	}
 	
 }
