@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## run via npm run dist
+
 GIT_CLEAN=$(git status -s)
 
 if [ ! -z "$GIT_CLEAN" ]; then
