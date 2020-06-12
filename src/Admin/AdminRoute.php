@@ -20,7 +20,7 @@ class AdminRoute extends Route{
 	public function handle(){
 		
 		if(strtolower(@$_SERVER['REQUEST_METHOD']) === 'post'){
-			return $this->update();
+			return @$_POST['application_update'] ? $this->application_update() : $this->update_reports();
 		}
 		
 		return $this->display();
@@ -34,7 +34,7 @@ class AdminRoute extends Route{
 	}
 	
 	
-	public function update(){
+	public function update_reports(){
 		$reports = collect($_POST['reports'])->values()->map('collect')->map(function($report){
 			return $report->map('head');
 		});
@@ -45,6 +45,12 @@ class AdminRoute extends Route{
 		window.location.assign("/auth_proxy_routes/auth_proxy_admin.html?v='.time().'");
 		</script>';
 	}
+	
+	
+	public function application_update(){
+		dd($this);
+	}
+	
 	
 	public function auth_proxy_admin_gate($app){
 		$current_user = Auth::getCurrentUser();

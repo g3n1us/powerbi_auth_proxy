@@ -7,7 +7,11 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
+			<form method="post">
+			@csrf
+			<input type="hidden" name="application_update" value="true">
 			{!! require auth_proxy()->framework()->installerPath() !!}			
+			</form>
 		</div>
 	</div>
 </div>

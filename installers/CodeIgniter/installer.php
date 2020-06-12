@@ -121,7 +121,7 @@ class CodeigniterPowerBIAuthProxyInstaller{
         if ($zip->open($this->install_dir . '/current.zip') === TRUE) {
             $zip->extractTo($this->install_dir);
             $zip->close();
-            $this->results[] = "<div class='alert alert-info'>Update successfully unzipped into the installation directory.</div>";
+            $this->results[] = "<div class='alert alert-success'>Update completed successfully.</div>";
         } else {
             $this->errors[] = "<div class='alert alert-danger'>An error occurred with unzipping the update/install package</div>";
         }
@@ -290,7 +290,7 @@ $html = '
 </html>';
 
 if(defined('AUTH_PROXY_INSTALLER_EMBEDDED')){
-	return '<form method="post" action="/powerbi_auth_proxy_updater/installer.php">'.$content.'</form>';
+	return $content;
 }
 else{
 	echo trim($html);
