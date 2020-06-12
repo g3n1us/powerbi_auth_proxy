@@ -48,7 +48,7 @@ class AdminRoute extends Route{
 	
 	
 	public function application_update(){
-		dd($this);
+		dd($_POST, 'application_update');
 	}
 	
 	
