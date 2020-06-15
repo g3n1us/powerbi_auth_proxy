@@ -106,9 +106,14 @@
 					_this.template.removeAttribute('disabled');
 					
 					// user messages
-					if(localStorage._message){
-						$('<div class="alert alert-success">'+localStorage._message+'<a class="close auth-proxy-reload-main-page" href="#" data-toggle="tooltip" title="Reload main window to view changes" data-dismiss="alert">&times;</a></div>').prependTo('#main_content');
-						delete localStorage._message;
+					if(localStorage._auth_proxy_message){
+						$('<div class="alert alert-success">'+localStorage._auth_proxy_message+'<a class="close auth-proxy-reload-main-page" href="#" data-toggle="tooltip" title="Close message and reload main window to view changes" data-dismiss="alert">&times;</a></div>').prependTo('#main_content');
+						delete localStorage._auth_proxy_message;
+						
+					}
+					if(localStorage._auth_proxy_error){
+						$('<div class="alert alert-danger">'+localStorage._auth_proxy_error+'<a class="close " href="#" data-toggle="tooltip" title="Close message" data-dismiss="alert">&times;</a></div>').prependTo('#main_content');
+						delete localStorage._auth_proxy_message;
 						
 					}
 					$(document).on('click', '.auth-proxy-reload-main-page', function(){

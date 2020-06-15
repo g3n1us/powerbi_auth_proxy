@@ -40,16 +40,39 @@ class Utils{
 	}
 	
 	
+	public static function root_path($path = ''){
+		
+		return dirname(__DIR__) . Str::start($path, '/');
+		
+	}
+	
+	
 	public static function base_path($path = ''){
 		
 		return __DIR__ . Str::start($path, '/');
 		
 	}
+
 	
 	public static function view_path($path = ''){
 		return static::base_path('Views' . Str::start($path, '/'));
 		
 	}
+	
+	
+    public static function get_http($url){
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => $url,
+            CURLOPT_USERAGENT => 'G3N1US cURL Fn'
+        ));
+        $resp = curl_exec($curl);
+        curl_close($curl);
+        return $resp;
+    }
+	
+	
 	
 	public static function data_path($file = null){
 		return dirname(static::base_path()) . '/_data' . Str::start($file, '/');
