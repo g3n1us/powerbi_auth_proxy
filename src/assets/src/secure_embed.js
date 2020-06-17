@@ -1,6 +1,7 @@
 import PbiClient, { models, service, factories } from 'powerbi-client';
 import axios from 'axios';
-import { popupwindow } from 'g3n1us_helpers';
+import { popupwindow, ltrim } from 'g3n1us_helpers';
+import qs from 'qs';
 const { version } = require('./version.json');
 
 class App{
@@ -8,27 +9,41 @@ class App{
 	constructor(){
 		this.embedCSS();
 		this.powerbi = new service.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory);
-		Promise.all([axios.get('/auth_proxy_routes/embed_data'), axios.get('/auth_proxy_routes/current_user')]).then(values => {
-
-			const [embed_response, user_response] = values;
-			this.current_user = user_response.data;
-			this.data = embed_response.data;
-
-		    this.data.forEach((report, i) => {
-		        Object.defineProperty(this.data, report.id, {
-		            get: function(){
-		                return report;
-		            }
-		        });
-		    });
-
+		
+		this.load().then(() => {
 			this.$ = window.$ || window.jQuery;
 			this.render();
 			this.attachHandlers();
-			
 		});
-
 	}
+	
+	
+	
+	load(){
+		
+		return new Promise((resolve, reject) => {
+			const { _version = null } = qs.parse(ltrim(location.search, '?'));
+			Promise.all([axios.get(`/auth_proxy_routes/embed_data?_version=${_version}`), axios.get('/auth_proxy_routes/current_user')]).then(values => {
+	
+				const [embed_response, user_response] = values;
+				this.current_user = user_response.data;
+				this.data = embed_response.data;
+	
+			    this.data.forEach((report, i) => {
+			        Object.defineProperty(this.data, report.id, {
+			            get: function(){
+			                return report;
+			            }
+			        });
+			    });
+	
+				resolve();
+			});
+	
+		});
+	}
+	
+	
 
 	embedCSS(){
 		const l = document.createElement('link');
@@ -60,7 +75,7 @@ class App{
             	tokenType: models.TokenType.Embed,
             	accessToken: response.data.embed_token
             };
-			console.log(embedConfiguration);
+
             const report = this.powerbi.embed($reportContainer.get(0), embedConfiguration);
         });
 	}
@@ -104,7 +119,8 @@ class App{
 		
 		$(document).on('click', '.auth_proxy_admin_link', function(e){
 			e.preventDefault();
-			popupwindow(this.href, "Auth Proxy Admin", 800, 1000);
+			const w = popupwindow(this.href, "Auth Proxy Admin", 800, 1000);
+			w.persist = true;
 			
 		});
 	}

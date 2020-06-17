@@ -8,7 +8,7 @@ class DB{
 	
 	public function __construct(){
 		$this->dir = Utils::data_path();
-		dd($this->dir);
+
 	}
 	
 	public function parse(){

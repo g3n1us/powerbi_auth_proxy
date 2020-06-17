@@ -19,7 +19,7 @@ fs.writeFileSync('./src/version.json', `{"version": "${hash.toString().trim()}"}
  | file for your application, as well as bundling up your JS files.
  |
  */
-
+mix.setPublicPath('dist');
 mix.js('src/secure_embed.js', 'dist/').sourceMaps();
 mix.sass('src/secure_embed.scss', 'dist/').sourceMaps();
 

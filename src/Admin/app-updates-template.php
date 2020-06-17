@@ -7,6 +7,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
+			<h3 class="py-3">Update Application</h3>
 			<form method="post">
 			@csrf
 			<input type="hidden" name="application_update" value="true">

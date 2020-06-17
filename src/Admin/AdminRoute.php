@@ -32,8 +32,12 @@ class AdminRoute extends Route{
 	}
 	
 	public function display(){
+		$version = @$_GET['_version'];
 		return new View(__DIR__.'/template.php', [
-			'data' => collect(['reports' => Utils::getReports()->merge([['id' => null, 'type' => null, 'name' => null]])]),
+			'data' => collect([
+				'reports' => Utils::getReports($version)->merge([['id' => null, 'type' => null, 'name' => null]]),
+				'versions' => Utils::get_versions('reports'),	
+			]),
 			
 		]);
 	}

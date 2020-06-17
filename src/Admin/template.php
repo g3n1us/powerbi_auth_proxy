@@ -28,6 +28,7 @@
 				<a class="nav-item nav-link" href="#available-updates">Available Updates</a>
 			</nav>			
 		</div>
+		<div id="messages" class="container"></div>
 		<div class="tab-content">
 			<div class="tab-pane fade in show active" id="edit-reports">
 				@import('./edit-reports-template.php')
@@ -92,6 +93,15 @@
 				
 				$(document).on('click', '[data-action]', handle);
 				
+				$(document).on('change', '[name="_version"]', function(){
+					console.log(this.form);
+					this.form.submit();
+					// var href = _this.opener.location.href;
+					// var newhref = href.replace(_this.opener.location.search, '?_version=' + this.value);
+					// _this.opener.location.assign(newhref);
+					// console.log(newhref);
+				});
+				
 				
 				(function(){
 					var tpl = $('fieldset[disabled]').clone();
@@ -107,12 +117,12 @@
 					
 					// user messages
 					if(localStorage._auth_proxy_message){
-						$('<div class="alert alert-success">'+localStorage._auth_proxy_message+'<a class="close auth-proxy-reload-main-page" href="#" data-toggle="tooltip" title="Close message and reload main window to view changes" data-dismiss="alert">&times;</a></div>').prependTo('#main_content');
+						$('<div class="alert alert-success">'+localStorage._auth_proxy_message+'<a class="close auth-proxy-reload-main-page" href="#" data-toggle="tooltip" title="Close message and reload main window to view changes" data-dismiss="alert">&times;</a></div>').prependTo('#messages');
 						delete localStorage._auth_proxy_message;
 						
 					}
 					if(localStorage._auth_proxy_error){
-						$('<div class="alert alert-danger">'+localStorage._auth_proxy_error+'<a class="close " href="#" data-toggle="tooltip" title="Close message" data-dismiss="alert">&times;</a></div>').prependTo('#main_content');
+						$('<div class="alert alert-danger">'+localStorage._auth_proxy_error+'<a class="close " href="#" data-toggle="tooltip" title="Close message" data-dismiss="alert">&times;</a></div>').prependTo('#messages');
 						delete localStorage._auth_proxy_message;
 						
 					}
@@ -126,10 +136,8 @@
 					
 					$(window).on('hashchange load', function(){
 						if(window.location.hash){
-							console.log($(window.location.hash));
 							$('[href="'+window.location.hash+'"]').tab('show');
 						}
-						console.log(window.location.hash);
 					});
 				})();
 				

@@ -20,8 +20,7 @@ class Utils{
 	
 	
 	public static function getReports($version = null){
-		$reports = static::get(['reports', $version]);
-		
+		$reports = static::get('reports', $version);
 		if(empty($reports)){
 	    	$reports_string = Auth::config('selected_reports');
 	
@@ -121,16 +120,19 @@ class Utils{
 			if(!file_exists($data_file)) return null;
 			
 			$versions = static::get_versions($key);
-
-			if(is_null($version)){
+;
+			if(empty($version)){
 
 				return $versions->first()['data'];
 			}
 			else{
-				$return_version = $versions->where('version', $version);
-				if($return_version->isEmpty() && (int) $version <= $versions->count()){
+				$return_version = $versions->firstWhere('version', $version);
+/*
+				if(!empty($return_version) && (int) $version <= $versions->count()){
 					$return_version = $versions->get($version);
+					
 				}
+*/
 				return @$return_version['data'];
 			}
 		}
