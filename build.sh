@@ -55,7 +55,7 @@ if [ ! -f "$FILEPATH" ]; then
         fi
     done
 
-    rm -r "../$TIMESTAMP"
+    # rm -r "../$TIMESTAMP"
 
     echo "adding back node_modules via npm..."
     cd "src/assets"
