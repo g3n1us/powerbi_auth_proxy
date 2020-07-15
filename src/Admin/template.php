@@ -25,6 +25,7 @@
 		<div class="container pt-3">
 			<nav class="container nav nav-tabs">
 				<a class="nav-item nav-link active" href="#edit-reports">Edit Reports</a>
+				<a class="nav-item nav-link" href="#edit-admin-users">Edit Users</a>
 				<a class="nav-item nav-link" href="#available-updates">Available Updates</a>
 			</nav>			
 		</div>
@@ -32,6 +33,10 @@
 		<div class="tab-content">
 			<div class="tab-pane fade in show active" id="edit-reports">
 				@import('./edit-reports-template.php')
+			</div>
+			
+			<div class="tab-pane fade" id="edit-admin-users">
+				@import('./edit-users-template.php')
 			</div>
 			
 			<div class="tab-pane fade" id="available-updates">
@@ -68,7 +73,7 @@
 				
 				
 				_this.remove = function(e, data){
-					if(confirm('Are you sure you would like to remove this report?')){
+					if(confirm('Are you sure you would like to remove this item?')){
 						$(this).parents('fieldset').remove();
 					}
 				}
@@ -76,12 +81,14 @@
 				
 				
 				_this.add = function(e, data){
-					var tpl = $(_this.template).clone();
+					var tp = $(this).parents('.tab-pane');
+					var id = tp[0].id;
+					var tpl = $(_this.templates[id]).clone();
 					var mockid = Date.now() + '';
 					tpl.find('[name]').each(function(){
 						this.name = this.name.replace(/reports\[\]/, 'reports['+mockid+']');
 					});
-					$(tpl).prependTo($('#outer')).find('input').first().focus();
+					$(tpl).prependTo(tp.find('.outer')).find('input').first().focus();
 
 				}
 				
@@ -93,7 +100,7 @@
 				
 				$(document).on('click', '[data-action]', handle);
 				
-				$(document).on('change', '[name="_version"]', function(){
+				$(document).on('change', '[name*="_version"]', function(){
 					console.log(this.form);
 					this.form.submit();
 					// var href = _this.opener.location.href;
@@ -102,19 +109,27 @@
 					// console.log(newhref);
 				});
 				
+								
 				
 				(function(){
-					var tpl = $('fieldset[disabled]').clone();
-					$('fieldset[disabled]').remove();
-					
-					tpl.find('[name], label').each(function (){
-						this.removeAttribute('id');
-						this.removeAttribute('for');
-						this.removeAttribute('aria-describedby');
-					});
-					_this.template = tpl[0];
-					_this.template.removeAttribute('disabled');
-					
+					_this.templates = $('.tab-pane').toArray().reduce(function(current, node){
+						var _tpl = $(node).find('.outer fieldset[disabled]');
+						if(!_tpl.length) return current;
+						var tpl = _tpl.clone();
+						_tpl.remove();
+						
+						tpl.find('[name], label').each(function (){
+							this.removeAttribute('id');
+							this.removeAttribute('for');
+							this.removeAttribute('aria-describedby');
+						});
+						var template = tpl[0];
+						template.removeAttribute('disabled');
+						current[node.id] = template;
+						return current;
+						
+					}, {});
+
 					// user messages
 					if(localStorage._auth_proxy_message){
 						$('<div class="alert alert-success">'+localStorage._auth_proxy_message+'<a class="close auth-proxy-reload-main-page" href="#" data-toggle="tooltip" title="Close message and reload main window to view changes" data-dismiss="alert">&times;</a></div>').prependTo('#messages');

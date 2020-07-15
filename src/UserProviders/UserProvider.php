@@ -6,6 +6,8 @@ use BlueRaster\PowerBIAuthProxy\Frameworks\Framework;
 
 use BlueRaster\PowerBIAuthProxy\Auth;
 
+use BlueRaster\PowerBIAuthProxy\DB;
+
 class UserProvider{
 
 	protected $user;
@@ -84,6 +86,9 @@ class BaseUser{
 	
 	public function isAuthProxyAdmin(){
 		$admin_emails = clean_array_from_string(Auth::config('auth_proxy_admins', ''));
+		$admin_emails_db = DB::get('users');
+		$admin_emails = $admin_emails_db->merge($admin_emails)->toArray();
+
 		
 		return in_array($this->getEmail(), $admin_emails);
 		

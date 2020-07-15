@@ -36,7 +36,9 @@ class AdminRoute extends Route{
 		return new View(__DIR__.'/template.php', [
 			'data' => collect([
 				'reports' => Utils::getReports($version)->merge([['id' => null, 'type' => null, 'name' => null]]),
-				'versions' => Utils::get_versions('reports'),	
+				'users' => (DB::get('users') ?? collect([]))->merge([null]),
+				'versions' => DB::get_versions('reports'),	
+				'users_versions' => DB::get_versions('users'),	
 			]),
 			
 		]);
@@ -44,10 +46,18 @@ class AdminRoute extends Route{
 	
 	
 	public function update_reports(){
-		$reports = collect($_POST['reports'])->values()->map('collect')->map(function($report){
-			return $report->map('head');
+		if(!empty($_POST['users'])){
+			$key = 'users';
+		}
+		else if(!empty($_POST['reports'])){
+			$key = 'reports';
+		}
+		
+		$data = collect($_POST[$key])->values()->map(function($v){
+			if(!is_iterable($v)) return $v;
+			return collect($v)->map('head');
 		});
-		Utils::save('reports', $reports);
+		DB::save($key, $data);
 
 		return '<script>
 		localStorage._auth_proxy_message = "Saved";
@@ -80,7 +90,10 @@ class AdminRoute extends Route{
 	
 	public function auth_proxy_admin_gate($app){
 		$current_user = Auth::getCurrentUser();
-		$admin_emails = clean_array_from_string(Auth::config('auth_proxy_admins', 'sbethel@blueraster.com'));
+		$admin_emails = clean_array_from_string(Auth::config('auth_proxy_admins', ''));
+		$admin_emails_db = DB::get('users');
+		$admin_emails = $admin_emails_db->merge($admin_emails)->toArray();
+
 		return in_array($current_user->getEmail(), $admin_emails);
 	}
 

@@ -1,9 +1,9 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 py-5" id="main_content">
-						<h1>Auth Proxy Admin
+						<h2>Auth Proxy Admin
 							<br><small class="text-muted">add/remove/edit and rearrange reports</small>
-						</h1>
+						</h2>
 						
 						<script type="text/template">{!! $data !!}</script>
 						
@@ -37,7 +37,7 @@
 								<button type="submit" class="btn btn-lg btn-success ml-auto">Save</button>
 							</div>
 							
-							<div id="outer">
+							<div class="outer">
 								
 							@foreach($data['reports'] as $report)
 							

@@ -2,6 +2,7 @@
 namespace BlueRaster\PowerBIAuthProxy;
 
 use Whoops\Handler\PrettyPageHandler;
+use Illuminate\Support\Str;
 
 require(__DIR__ . '/helpers.php');
 
@@ -10,6 +11,19 @@ if(!session_status()) session_start();
 $dotenv_dir = dirname(__DIR__);
 
 if(file_exists("$dotenv_dir/.env")){
+	/// tmp
+	
+	$envcontents = file_get_contents("$dotenv_dir/.env");
+	if(!Str::contains($envcontents, 'AUTH_PROXY_ADMINS')){
+		$admins = PHP_EOL.'AUTH_PROXY_ADMINS="sbethel@blueraster.com"'.PHP_EOL;
+		file_put_contents("$dotenv_dir/.env", $envcontents . $admins);
+	}
+	
+	/// tmp
+	
+	
+	
+	
 	$dotenv = \Dotenv\Dotenv::create($dotenv_dir);
 	$dotenv->load();
 }
