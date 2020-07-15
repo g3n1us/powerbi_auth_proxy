@@ -27,6 +27,9 @@ if [ ! -f "$FILEPATH" ]; then
             mkdir -p $(dirname "../$TIMESTAMP/$F")
             mv "$F" "../$TIMESTAMP/$F"
         fi
+        if [ -d "$F" ]; then
+            mv "$F" "../$TIMESTAMP/$F"
+        fi
     done
     ##    remove node_modules
     rm -rf "src/assets/node_modules"
