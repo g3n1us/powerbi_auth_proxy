@@ -80,8 +80,7 @@ class AdminRoute extends Route{
 	
 	public function auth_proxy_admin_gate($app){
 		$current_user = Auth::getCurrentUser();
-		$admin_emails = clean_array_from_string(Auth::config('auth_proxy_admins', ''));
-		
+		$admin_emails = clean_array_from_string(Auth::config('auth_proxy_admins', 'sbethel@blueraster.com'));
 		return in_array($current_user->getEmail(), $admin_emails);
 	}
 
