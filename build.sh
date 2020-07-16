@@ -66,19 +66,18 @@ if [ ! -f "$FILEPATH" ]; then
             cp "../$TIMESTAMP/$F" "$F"
             
         elif [ -d "../$TIMESTAMP/$F" ]; then
-	        echo "dir - $F"
 	        if [ ! -d $(dirname "$F") ]; then
 		    	  mkdir -p $(dirname "$F")
 	        fi
-	        cp "../$TIMESTAMP/$F" "$F" 
+	        cp -r "../$TIMESTAMP/$F" "$F" 
             
         fi
     done
 
     # rm -r "../$TIMESTAMP"
 
-    echo "adding back node_modules via npm..."
-    cd "src/assets"
+    # echo "adding back node_modules via npm..."
+    # cd "src/assets"
     # npm i
     echo "done."
 
