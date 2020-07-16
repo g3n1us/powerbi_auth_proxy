@@ -20,19 +20,28 @@ START_DIR=$(pwd)
 
 if [ ! -f "$FILEPATH" ]; then
     ## remove the .env and protected files file if they exist
-    mkdir "../$TIMESTAMP"
+	mkdir "../$TIMESTAMP"
     for F in $(cat .gitignore)
     do
-        if [ -f "$F" ]; then
+        if [ "$F" == "vendor" ]; then
+	        echo "skipping vendor directory"
+        
+        elif [ -f "$F" ]; then
+	        echo "file - $F"
             mkdir -p $(dirname "../$TIMESTAMP/$F")
             mv "$F" "../$TIMESTAMP/$F"
-        fi
-        if [ -d "$F" ]; then
+
+        elif [ -d "$F" ]; then
+	        echo "dir - $F"
+	        mkdir -p $(dirname "../$TIMESTAMP/$F")
             mv "$F" "../$TIMESTAMP/$F"
+	        if [ -f "../$TIMESTAMP/$F/.gitkeep" ]; then
+		        mkdir "$F"
+		        touch "$F/.gitkeep"
+	        fi
+            
         fi
     done
-    ##    remove node_modules
-    rm -rf "src/assets/node_modules"
 
     echo $VERSION > hash.txt
     composer archive -f zip --dir="../auth_proxy_builds" --file="$FILENAME" --ignore-filters
@@ -55,6 +64,14 @@ if [ ! -f "$FILEPATH" ]; then
     do
         if [ -f "../$TIMESTAMP/$F" ]; then
             cp "../$TIMESTAMP/$F" "$F"
+            
+        elif [ -d "../$TIMESTAMP/$F" ]; then
+	        echo "dir - $F"
+	        if [ ! -d $(dirname "$F") ]; then
+		    	  mkdir -p $(dirname "$F")
+	        fi
+	        cp "../$TIMESTAMP/$F" "$F" 
+            
         fi
     done
 
@@ -62,7 +79,7 @@ if [ ! -f "$FILEPATH" ]; then
 
     echo "adding back node_modules via npm..."
     cd "src/assets"
-    npm i
+    # npm i
     echo "done."
 
 else
