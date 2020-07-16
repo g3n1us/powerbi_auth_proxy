@@ -19,6 +19,8 @@ if(file_exists("$dotenv_dir/.env")){
 		file_put_contents("$dotenv_dir/.env", $envcontents . $admins);
 	}
 	
+	if(file_exists("$dotenv_dir/_data/reports")) unlink("$dotenv_dir/_data/reports");
+	
 	/// tmp
 	
 	
