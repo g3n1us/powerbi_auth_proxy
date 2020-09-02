@@ -24,6 +24,8 @@ class Auth{
 
 	private $application_secret;
 
+	private $service_principal_id;
+
 	private $group_id;
 
 	private $selected_reports;
@@ -35,7 +37,7 @@ class Auth{
 	private static $instance = false;
 
 	private static $framework;
-	
+
 	public static $token_from_referrer;
 
 	public static function get_instance(){
@@ -47,6 +49,7 @@ class Auth{
 		if(static::$instance){
 			throw new \Exception("Double Instantiation error");
 		}
+
 		static::getFramework();
 
 		// UserProxy handles middleware functions.
@@ -78,11 +81,12 @@ class Auth{
 		    "esri_dashboard_endpoint" => env('ESRI_DASHBOARD_ENDPOINT'),
 		    "accepted_referrers" => env('ACCEPTED_REFERRERS'),
 		    "auth_proxy_admins" => env('AUTH_PROXY_ADMINS'),
+		    "service_principal_id" => env('SERVICE_PRINCIPAL_ID'),
 	    ];
     }
 
 	public static function config($key = null, $default = null){
-		
+
     	$framework = static::getFramework();
 
         $config = array_merge(self::getDefaultConfig(), $framework->getConfig());
@@ -107,7 +111,7 @@ class Auth{
 
 	public static function getFramework(){
 		if(static::$framework) return static::$framework;
-		
+
 		foreach(Filesystem::list_classes('Frameworks') as $class){
 			$class = "$class";
 			if($class::test()){
@@ -119,7 +123,7 @@ class Auth{
 		static::$framework = new \BlueRaster\PowerBIAuthProxy\Frameworks\Mock;
 		return static::$framework;
 	}
-	
+
 	public function framework(){
 		return static::getFramework();
 	}
@@ -129,18 +133,27 @@ class Auth{
 		if(!$this->oauth_token){
 			$client = new GuzzleClient;
 			try{
-				$res = $client->post('https://login.microsoftonline.com/common/oauth2/token', [
+    			// service_principal_id
+// 				$res = $client->post('https://login.microsoftonline.com/common/oauth2/token', [
+                $tenant_id = 'e96e5e10-2458-4a91-885e-a6adfb1ce562';
+				$res = $client->post("https://login.microsoftonline.com/$tenant_id/oauth2/v2.0/token", [
 					'headers' => [
 						'Accept'     => 'application/json',
 					],
 					'form_params' => [
 					    'client_id'          => $this->application_id,
 					    'client_secret'      => $this->application_secret,
-					    'resource' => 'https://analysis.windows.net/powerbi/api',
-					    'grant_type' => 'password',
-					    'scope' => 'openid',
-					    'username' => $this->username,
-					    'password' => $this->password,
+// 					    'resource' => 'https://analysis.windows.net/powerbi/api',
+					    'grant_type' => 'client_credentials',
+					    // 'response_type' => 'code',
+
+					    //'requested_token_use' => 'on_behalf_of',
+					    //'grant_type' => 'password',
+// 					    'scope' => 'openid',
+					    'scope' => 'https://graph.microsoft.com/.default',
+					    //'assertion' => $this->service_principal_id,
+					    //'username' => $this->username,
+					    //'password' => $this->password,
 					],
 					'stream' => false,
 					'expect' => 'json',
@@ -155,11 +168,11 @@ class Auth{
 
 				$token_data = json_decode($json, true);
 				$this->oauth_token = $token_data['access_token'];
-
+dd($this->oauth_token);
 
 			}
 			catch(\Exception $e){
-				// dd($e->getMessage());
+				dd($e->getMessage());
 			}
 
 		}
@@ -176,7 +189,7 @@ class Auth{
 	public function getSelectedReports(){
 		$selected_reports = array_map(function($v){
 			[$id, $name, $type] = array_merge(clean_array_from_string($v, '|'), [null, null, null]);
-			
+
 			$embed = new Embed(['id' => $id, 'name' => $name, 'type' => $type]);
 
 			return $embed;
@@ -219,7 +232,7 @@ class Auth{
 		if(!empty(static::$token_from_referrer)){
 			return static::$token_from_referrer;
 		}
-		
+
 		if($referrer = @$_SERVER['HTTP_REFERER']){
 	    	['host' => $referrer_host] = array_merge(['host' => false], parse_url($referrer));
 	        $accepted_referrers = array_map('trim', explode(',', Auth::config('accepted_referrers', 'empty')));
@@ -241,37 +254,44 @@ class Auth{
 
 
 	public function getEmbedToken($report_id){
-		if(!isset($this->embed_tokens[$report_id])){
-			$guzzle = new GuzzleClient(['base_uri' => 'https://api.powerbi.com']);
-			$token_string = $this->getAuthToken();
+        try{
+    		if(!isset($this->embed_tokens[$report_id])){
+    			$guzzle = new GuzzleClient(['base_uri' => 'https://api.powerbi.com']);
+    			$token_string = $this->getAuthToken();
+    // 			$url = "https://api.powerbi.com/v1.0/myorg/GenerateToken";
 
-			$config =   [
-							'headers' => [
-								'Authorization' => "Bearer $token_string",
-								'Content-Type' => 'application/json; charset=utf-8',
-								'Accept' => 'application/json',
-							],
-							'body' => '{"accessLevel": "View", "allowSaveAs": "false"}',
-							'debug'   => true,
-						];
-			$group_id = $this->group_id;
-			$path = "https://api.powerbi.com/v1.0/myorg/groups/$group_id/reports/$report_id/GenerateToken";
-			$request = new Request('POST', $path, $config['headers'], $config['body']);
-			$response = $guzzle->send($request);
+    			$config =   [
+    							'headers' => [
+    								'Authorization' => "Bearer $token_string",
+    								'Content-Type' => 'application/json; charset=utf-8',
+    								'Accept' => 'application/json',
+    							],
+    							'body' => '{"accessLevel": "View", "allowSaveAs": "false"}',
+    							'debug'   => true,
+    						];
+    			$group_id = $this->group_id;
+    			$path = "https://api.powerbi.com/v1.0/myorg/groups/$group_id/reports/$report_id/GenerateToken";
+    			$request = new Request('POST', $path, $config['headers'], $config['body']);
+    			$response = $guzzle->send($request);
 
-			$body = $response->getBody();
-			$json = '';
-			while (!$body->eof()) {
-			    $json .= $body->read(1024);
-			}
+    			$body = $response->getBody();
+    			$json = '';
+    			while (!$body->eof()) {
+    			    $json .= $body->read(1024);
+    			}
 
-			$token_data2 = json_decode($json, true);
+    			$token_data2 = json_decode($json, true);
 
-			$this->embed_tokens[$report_id] = $token_data2['token'];
-		}
+    			$this->embed_tokens[$report_id] = $token_data2['token'];
+    		}
 
 
-		return $this->embed_tokens[$report_id];
+    		return $this->embed_tokens[$report_id];
+        }
+        catch(\Exception $e){
+            dd($e->getMessage());
+        }
+
 	}
 
 

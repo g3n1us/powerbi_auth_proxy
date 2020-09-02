@@ -16,6 +16,7 @@ if(!function_exists('auth_proxy_base_path')){
 	}
 }
 
+Kint::$aliases[] = 'ddd';
 if(!function_exists('ddd')){
 	function ddd($variable, $depth = null){
     	foreach(func_get_args() as $v) d($v);
@@ -23,6 +24,7 @@ if(!function_exists('ddd')){
 	}
 }
 
+Kint::$aliases[] = 'dd';
 if(!function_exists('dd')){
 	function dd($variable, $depth = null){
     	foreach(func_get_args() as $v) s($v);
@@ -30,6 +32,7 @@ if(!function_exists('dd')){
 	}
 }
 
+Kint::$aliases[] = 'dump';
 if(!function_exists('dump')){
 	function dump($variable, $depth = null){
     	foreach(func_get_args() as $v) s($v);
@@ -58,6 +61,21 @@ if(!function_exists('guzzle_get_contents')){
 }
 
 
+if(!function_exists('guzzle_post_contents')){
+    function guzzle_post_contents($url){
+        $client = new GuzzleHttp\Client;
+		$res = $client->post($url);
+
+		$body = $res->getBody();
+		$content = '';
+		while (!$body->eof()) {
+		    $content .= $body->read(1024);
+		}
+        return $content;
+    }
+}
+
+
 if(!function_exists('spread_url')){
 	function spread_url($str){
 		$parts = array_merge(['scheme' => null, 'query' => null, 'host' => null, 'path' => null, 'fragment' => null], parse_url($str));
@@ -66,7 +84,7 @@ if(!function_exists('spread_url')){
 		if(array_keys(array_filter($parts)) == ['path']){
 			return false;
 		}
-		
+
 		return $parts;
 	}
 }
@@ -79,7 +97,7 @@ if(!function_exists('parse_keyless_query')){
 			parse_str($str, $arr);
 		}
 		if([1, 0] == [count(array_filter(array_keys($arr))), count(array_filter($arr))]){
-			return array_keys($arr)[0];	
+			return array_keys($arr)[0];
 		}
 		return false;
 	}
@@ -103,8 +121,8 @@ if(!function_exists('spread_url')){
 		if(array_keys(array_filter($parts)) == ['path']){
 			return false;
 		}
-		
+
 		return $parts;
 	}
 }
-	
+
