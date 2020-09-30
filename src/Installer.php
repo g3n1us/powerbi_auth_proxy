@@ -55,6 +55,7 @@ class Installer{
 		$missing = [];
 		// is the controller in place?
 		$controller_filepath =  $this->applicationDir . '/core/MY_Controller.php';
+		die($controller_filepath);
 		if(!file_exists($controller_filepath)){
 			$missing[] = 'installController';
 		}

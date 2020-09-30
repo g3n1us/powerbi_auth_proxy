@@ -35,7 +35,7 @@ class Auth{
 	private static $instance = false;
 
 	private static $framework;
-	
+
 	public static $token_from_referrer;
 
 	public static function get_instance(){
@@ -48,7 +48,6 @@ class Auth{
 			throw new \Exception("Double Instantiation error");
 		}
 		static::getFramework();
-
 		// UserProxy handles middleware functions.
 		// Aborts the request if authorization is not valid
 		UserProxy::handle(static::$framework->getUserProvider());
@@ -82,7 +81,7 @@ class Auth{
     }
 
 	public static function config($key = null, $default = null){
-		
+
     	$framework = static::getFramework();
 
         $config = array_merge(self::getDefaultConfig(), $framework->getConfig());
@@ -107,7 +106,7 @@ class Auth{
 
 	public static function getFramework(){
 		if(static::$framework) return static::$framework;
-		
+
 		foreach(Filesystem::list_classes('Frameworks') as $class){
 			$class = "$class";
 			if($class::test()){
@@ -119,7 +118,7 @@ class Auth{
 		static::$framework = new \BlueRaster\PowerBIAuthProxy\Frameworks\Mock;
 		return static::$framework;
 	}
-	
+
 	public function framework(){
 		return static::getFramework();
 	}
@@ -172,19 +171,6 @@ class Auth{
 	}
 
 
-/*
-	public function getSelectedReports(){
-		$selected_reports = array_map(function($v){
-			[$id, $name, $type] = array_merge(clean_array_from_string($v, '|'), [null, null, null]);
-			
-			$embed = new Embed(['id' => $id, 'name' => $name, 'type' => $type]);
-
-			return $embed;
-		}, clean_array_from_string($this->selected_reports));
-
-		return $selected_reports;
-	}
-*/
 
 	public function getReports(){
 		$guzzle = new GuzzleClient(['base_uri' => 'https://api.powerbi.com']);
@@ -219,7 +205,7 @@ class Auth{
 		if(!empty(static::$token_from_referrer)){
 			return static::$token_from_referrer;
 		}
-		
+
 		if($referrer = @$_SERVER['HTTP_REFERER']){
 	    	['host' => $referrer_host] = array_merge(['host' => false], parse_url($referrer));
 	        $accepted_referrers = array_map('trim', explode(',', Auth::config('accepted_referrers', 'empty')));

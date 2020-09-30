@@ -10,7 +10,7 @@ if(!session_status()) session_start();
 
 $dotenv_dir = dirname(__DIR__);
 
-if(file_exists("$dotenv_dir/.env")){	
+if(file_exists("$dotenv_dir/.env")){
 	$dotenv = \Dotenv\Dotenv::create($dotenv_dir);
 	$dotenv->load();
 }
@@ -28,10 +28,10 @@ if(env('APP_ENV') == 'dev'){
 
 $method_string = strtoupper(@$_REQUEST['_method']);
 if(in_array($method_string, ['GET', 'POST', 'PUT'])){
-	
+
 	$_SERVER['REQUEST_METHOD'] = $method_string;
 	unset($_REQUEST['_method']);
 	unset($_POST['_method']);
 }
 
-require(__DIR__ . '/routes.php');
+require(__DIR__ . '/route_list.php');

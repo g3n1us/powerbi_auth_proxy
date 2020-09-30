@@ -12,13 +12,14 @@ abstract class Framework{
 
 	public function __construct(Array $config = ['user' => null]){
 		[ 'user' => $user ] = $config;
+
 		if($user) $this->user = $user;
 	}
 
 	public function getConfig(){
     	return [];
 	}
-	
+
 	public function installerPath(){
 		$classname = class_basename($this);
 		return auth_proxy_base_path("installers/$classname/installer.php");
@@ -42,7 +43,7 @@ abstract class Framework{
 	public function getUser(){
 		return $this->user;
 	}
-	
-	
+
+
 	abstract public function getCsrf() : Csrf;
 }

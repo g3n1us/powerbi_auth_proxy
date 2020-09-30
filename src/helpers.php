@@ -38,6 +38,7 @@ if(!function_exists('dump')){
 
 if(!function_exists('env')){
 	function env($variable, $default = null){
+		die('$variable');
 		$found = getenv($variable);
 	    return $found ? $found : $default;
 	}
@@ -66,7 +67,7 @@ if(!function_exists('spread_url')){
 		if(array_keys(array_filter($parts)) == ['path']){
 			return false;
 		}
-		
+
 		return $parts;
 	}
 }
@@ -79,7 +80,7 @@ if(!function_exists('parse_keyless_query')){
 			parse_str($str, $arr);
 		}
 		if([1, 0] == [count(array_filter(array_keys($arr))), count(array_filter($arr))]){
-			return array_keys($arr)[0];	
+			return array_keys($arr)[0];
 		}
 		return false;
 	}
@@ -103,8 +104,8 @@ if(!function_exists('spread_url')){
 		if(array_keys(array_filter($parts)) == ['path']){
 			return false;
 		}
-		
+
 		return $parts;
 	}
 }
-	
+

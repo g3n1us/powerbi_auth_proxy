@@ -37,7 +37,6 @@ class Routes{
 	public function _route($patterns = []){
     	$this->path = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
     	$this->query_string = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
-//         $this->patterns = array_merge($this->patterns, $patterns, $this->get_patterns());
         $this->patterns = array_merge($this->get_patterns(), $this->patterns, $patterns);
         $matched = false;
         $method = null;
@@ -45,7 +44,7 @@ class Routes{
         foreach($this->patterns as $possible_method => $pattern){
             $matched = !!preg_match('/'.$pattern.'/i', $this->path, $matches);
             if($matched) {
-	            
+
                 if($pattern instanceof Route){
                     $current_route = $pattern;
                     $current_route->router = $this;
@@ -61,7 +60,7 @@ class Routes{
                 break;
             }
         }
-//         dd($this->patterns, $this->path, $matched, $this->current_route);
+
 		if($matched){
 			$this->auth_proxy = Auth::get_instance();
 
@@ -95,7 +94,7 @@ class Routes{
 
 			if($response !== false){
 				self::set_mime(count($this->segments) ? $this->segments[0] : $this->path);
-				
+
 				if(is_array($response)) echo collect($response);
 				else echo $response;
 				exit();
@@ -205,19 +204,19 @@ class Routes{
 
         return guzzle_get_contents($url);
     }
-    
-    
+
+
     private function proxy_sharing(){
 	    return $this->proxy(Auth::config('esri_dashboard_endpoint', 'https://www.arcgis.com'));
     }
-    
+
     private function proxy_dashboard(){
 	    self::set_mime($this->path);
 	    $content = $this->proxy(Auth::config('esri_dashboard_endpoint', 'https://www.arcgis.com'));
 
 	    return $content;
     }
-    
+
     private function proxy_other(){
         $esri_endpoint = env('ESRI_ENDPOINT', 'https://services7.arcgis.com');
         $url = $esri_endpoint . $this->path;

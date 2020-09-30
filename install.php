@@ -1,5 +1,4 @@
 <?php
-require_once(__DIR__.'/src/boot.php');
 if(!defined('PBI_AUTH_PROXY_RUNNING_INSTALL')){
     define('PBI_AUTH_PROXY_RUNNING_INSTALL', true);
 }
@@ -12,6 +11,8 @@ $output[] = '
 </style>
 ';
 if(!empty($_GET['configure'])){
+	require_once(__DIR__.'/src/boot.php');
+
 	$example = array_map('trim', file(__DIR__.'/.env.example'));
 	$config = array_filter(array_map(function($line){
 		if(preg_match('/^(.*?)=(.*?)$/', $line, $matches)){
@@ -36,7 +37,7 @@ if(!empty($_GET['configure'])){
 			}
 		}
 		// put .env one directory above the document root for security purposes
-		file_put_contents(dirname($_SERVER['DOCUMENT_ROOT'])."/.env", implode(PHP_EOL, $env_contents));
+		file_put_contents($_SERVER['DOCUMENT_ROOT']."/.env", implode(PHP_EOL, $env_contents));
 		$output[] =  "Configuration complete, <button class='btn btn-primary' onclick='window.location.assign(window.location.pathname)'>click to continue...</button>";
 	}
 	else{
@@ -61,8 +62,12 @@ if(!empty($_GET['configure'])){
 
 else if(!empty($_GET['installing'])){
 	$build_dir = __DIR__.'/build';
+	if(!is_dir($build_dir)){
+		mkdir($build_dir);
+	}
 	$dir = __DIR__;
-	file_put_contents("$build_dir/composer.phar", file_get_contents('https://getcomposer.org/composer-stable.phar'));
+
+	copy('https://getcomposer.org/composer-stable.phar', "$build_dir/composer.phar");
 	$output[] = "Installation complete.\n";
 	$output[] = "Errors (if any) will be reported below.\n";
 	$output[] = "<pre><small style='line-height:1'>";
@@ -72,8 +77,8 @@ else if(!empty($_GET['installing'])){
 
 }
 else{
-// 	echo "Installation is required. Please be patient while this completes.<br />";
-// 	echo "<button class='btn btn-primary' onclick='window.location.assign(window.location.pathname + \"?installing=true\")'>click to continue...</button>";
+	echo "Installation is required. Please be patient while this completes.<br />";
+	echo "<button class='btn btn-primary' onclick='window.location.assign(window.location.pathname + \"?installing=true\")'>click to continue...</button>";
 // 	echo('<script>window.location.assign("/?installing=true")</script>');
 }
 
