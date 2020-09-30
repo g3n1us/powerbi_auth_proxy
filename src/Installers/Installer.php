@@ -9,9 +9,9 @@ use BlueRaster\PowerBIAuthProxy\Command;
 
 class Installer{
 
-	private $vendorDir;
+	private $vendorDir = 'vendor';
 
-	private $applicationDir;
+	private $applicationDir = 'application';
 
 	private $controller_contents = 'BlueRaster\\PowerBIAuthProxy\\Routes::route();';
 
@@ -27,9 +27,9 @@ class Installer{
 	}
 
 	public function run(Event $event = null){
-        $this->vendorDir = $event->getComposer()->getConfig()->get('vendor-dir');
-        $this->applicationDir = dirname($this->vendorDir);
-        require $this->vendorDir . '/autoload.php';
+//         $this->vendorDir = $event->getComposer()->getConfig()->get('vendor-dir');
+//         $this->applicationDir = dirname($this->vendorDir);
+//         require $this->vendorDir . '/autoload.php';
         $steps = $this->isInstalled();
 		if($steps !== true){
 			Command::say("Installation of the PowerBIAuthProxy is not yet complete.");
@@ -56,7 +56,7 @@ class Installer{
 		$missing = [];
 		// is the controller in place?
 		$controller_filepath =  $this->applicationDir . '/core/MY_Controller.php';
-		die($controller_filepath);
+
 		if(!file_exists($controller_filepath)){
 			$missing[] = 'installController';
 		}

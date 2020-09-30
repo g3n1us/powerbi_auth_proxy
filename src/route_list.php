@@ -3,6 +3,8 @@ namespace BlueRaster\PowerBIAuthProxy;
 
 use BlueRaster\PowerBIAuthProxy\Admin\AdminRoute;
 
+use BlueRaster\PowerBIAuthProxy\Installers\Installer;
+
 class DefaultRoute extends Route{
 
 

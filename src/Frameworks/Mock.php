@@ -7,7 +7,7 @@ use BlueRaster\PowerBIAuthProxy\Utils\Csrf;
 
 class Mock extends Framework{
 
-	protected $user_providers = ['MockUser'];
+	protected $user_providers = ['MockUserProvider'];
 
 
 	public static function test(){
@@ -18,15 +18,13 @@ class Mock extends Framework{
 
 	}
 
+/*
 	public function getUser(){
 		$this->user = new User;
 		return $this->user;
 	}
+*/
 
 
 }
 
-class User{
-	public $logged_in = true;
-	public $loggedin = true;
-}

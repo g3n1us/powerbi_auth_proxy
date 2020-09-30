@@ -25,7 +25,7 @@ if [ ! -f "$FILEPATH" ]; then
     do
         if [ "$F" == "vendor" ]; then
 	        echo "skipping vendor directory"
-        
+
         elif [ -f "$F" ]; then
 	        echo "file - $F"
             mkdir -p $(dirname "../$TIMESTAMP/$F")
@@ -39,7 +39,7 @@ if [ ! -f "$FILEPATH" ]; then
 		        mkdir "$F"
 		        touch "$F/.gitkeep"
 	        fi
-            
+
         fi
     done
 
@@ -64,13 +64,13 @@ if [ ! -f "$FILEPATH" ]; then
     do
         if [ -f "../$TIMESTAMP/$F" ]; then
             cp "../$TIMESTAMP/$F" "$F"
-            
+
         elif [ -d "../$TIMESTAMP/$F" ]; then
 	        if [ ! -d $(dirname "$F") ]; then
 		    	  mkdir -p $(dirname "$F")
 	        fi
-	        cp -r "../$TIMESTAMP/$F" "$F" 
-            
+	        cp -r "../$TIMESTAMP/$F" "$F"
+
         fi
     done
 

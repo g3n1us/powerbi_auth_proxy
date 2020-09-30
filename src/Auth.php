@@ -50,6 +50,7 @@ class Auth{
 		static::getFramework();
 		// UserProxy handles middleware functions.
 		// Aborts the request if authorization is not valid
+
 		UserProxy::handle(static::$framework->getUserProvider());
 
 

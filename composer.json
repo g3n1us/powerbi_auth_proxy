@@ -22,5 +22,6 @@
         "psr-4": {
             "BlueRaster\\PowerBIAuthProxy\\": "src/"
         }
-    }
+    },
+    "bin": ["bin/powerbi-auth-proxy-installer"]
 }

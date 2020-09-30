@@ -7,7 +7,7 @@ use BlueRaster\PowerBIAuthProxy\Utils\Csrf;
 
 class CodeIgniter extends Framework{
 
-	protected $user_providers = ['Prologin'];
+	protected $user_providers = ['MockUserProvider', 'Prologin'];
 
 	public static $ci;
 
@@ -18,7 +18,6 @@ class CodeIgniter extends Framework{
 			static::$ci =& get_instance();
 		}
 
-		$this->user = static::$ci->user;
 	}
 
 	public function getConfig(){
@@ -28,7 +27,7 @@ class CodeIgniter extends Framework{
 	public static function test(){
 		return class_exists('Ci_Controller');
 	}
-	
+
 	public function getCsrf() : Csrf {
 		return new Csrf(static::$ci->security->get_csrf_token_name(), static::$ci->security->get_csrf_hash());
 	}

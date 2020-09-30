@@ -99,6 +99,7 @@ class Routes{
 				else echo $response;
 				exit();
 			}
+
 		}
 	}
 

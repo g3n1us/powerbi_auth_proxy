@@ -24,10 +24,10 @@ class UserProxy{
 	public static function handle(UserProvider $user){
 		$instance = new self($user);
 
-		if( ! Auth::getTokenFromReferrer() && ! $instance->user->logged_in() ){	
+		if( ! Auth::getTokenFromReferrer() && ! $instance->user->logged_in() ){
 			self::abort();
 		}
-		
+
 	}
 
 
