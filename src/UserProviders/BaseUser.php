@@ -2,6 +2,9 @@
 
 namespace BlueRaster\PowerBIAuthProxy\UserProviders;
 
+use BlueRaster\PowerBIAuthProxy\Auth;
+use BlueRaster\PowerBIAuthProxy\DB;
+
 
 
 class BaseUser{

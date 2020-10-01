@@ -4,11 +4,17 @@
     flex-direction: column;
 }
 
-#secure_embed_root{
+[data-pbi-secure-embed-uses-bootstrap], [data-pbi-secure-embed-root="true"]{
+	@import "./bootstrap_custom";
+}
+
+[data-pbi-secure-embed-root="true"]{
 	display: flex;
 	flex: 1 1 100%;
 
-	.tabbable, .main-container{
+
+
+	.tabbable, > section{
 		flex: 1 1 100%;
 		display: flex;
 		flex-direction: column;
@@ -26,6 +32,7 @@
 		border: 1px solid #ddd;
 		border-top: none;
 		display: flex;
+		min-height: 350px;
 	}
 
 

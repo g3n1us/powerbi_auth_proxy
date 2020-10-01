@@ -29,16 +29,6 @@
  * Date: 2020-05-04T22:49Z
  */
 
-/*! http-post-message v0.2.3 | (c) 2016 Microsoft Corporation MIT */
-
-/*! powerbi-client v2.14.1 | (c) 2016 Microsoft Corporation MIT */
-
-/*! powerbi-models v1.4.0 | (c) 2016 Microsoft Corporation MIT */
-
-/*! powerbi-router v0.1.5 | (c) 2016 Microsoft Corporation MIT */
-
-/*! window-post-message-proxy v0.2.6 | (c) 2016 Microsoft Corporation MIT */
-
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
  * @version 1.16.1

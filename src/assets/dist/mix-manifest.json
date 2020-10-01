@@ -1,5 +1,8 @@
 {
     "/secure_embed.js": "/secure_embed.js",
     "/secure_embed.css": "/secure_embed.css",
-    "/secure_embed.js.map": "/secure_embed.js.map"
+    "/secure_embed.js.map": "/secure_embed.js.map",
+    "/secure_embed.css.map": "/secure_embed.css.map",
+    "/secure_embed_admin.js": "/secure_embed_admin.js",
+    "/secure_embed_admin.js.map": "/secure_embed_admin.js.map"
 }

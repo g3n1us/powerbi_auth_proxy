@@ -20,8 +20,13 @@ fs.writeFileSync('./src/version.json', `{"version": "${hash.toString().trim()}"}
  |
  */
 mix.setPublicPath('dist');
+mix.autoload({
+    jquery: ['$', 'window.jQuery'],
+});
 mix.js('src/secure_embed.js', 'dist/').sourceMaps();
+mix.js('src/secure_embed_admin.js', 'dist/').sourceMaps();
 mix.sass('src/secure_embed.scss', 'dist/').sourceMaps();
+
 
 // Full API
 // mix.js(src, output);
