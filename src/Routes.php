@@ -153,10 +153,15 @@ class Routes{
 
     public static function route(){
 		try{
-			(new self)->_route();
+			$router = new self;
+			$router->_route();
 		}
 		catch(\Exception $e){
-			if(method_exists($e, 'handle')){
+			if($router->current_route->isNullable()){
+				self::set_mime($router->path);
+				die('');
+			}
+			else if(method_exists($e, 'handle')){
 				$e->handle();
 			}
 			else{

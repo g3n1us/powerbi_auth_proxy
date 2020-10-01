@@ -3,6 +3,7 @@
 namespace BlueRaster\PowerBIAuthProxy\Frameworks;
 
 use BlueRaster\PowerBIAuthProxy\Utils\Csrf;
+use BlueRaster\PowerBIAuthProxy\Exceptions\MissingUserProviderException;
 
 abstract class Framework{
 
@@ -31,7 +32,7 @@ abstract class Framework{
 		return false;
 	}
 
-	public function getUserProvider(){
+	final public function getUserProvider(){
 		if($this->user_provider) return $this->user_provider;
 		$this->user_provider = collect($this->user_providers)->map(function($classname){
 			$p = "BlueRaster\\PowerBIAuthProxy\\UserProviders\\$classname";
@@ -40,6 +41,11 @@ abstract class Framework{
 				return new $p;
 			}
 		})->filter()->first();
+
+		if(empty($this->user_provider)){
+			throw new MissingUserProviderException;
+		}
+
 
 		return $this->user_provider;
 	}

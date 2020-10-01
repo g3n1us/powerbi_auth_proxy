@@ -1,0 +1,3 @@
+{
+	"1098": "The UserProvider is responsible for determining the currently logged in user. It determines what type of user object the framework is using. It acts as an intermediary between the framework this application."
+}

@@ -12,6 +12,7 @@ class DefaultRoute extends Route{
 
     public $method_name;
 
+    protected $nullable_methods = ["asset"];
 
     public function __construct(){
         parent::__construct('^\/auth_proxy_routes\/(.*?)$', ['auth_proxy_gate'], null);
@@ -21,6 +22,8 @@ class DefaultRoute extends Route{
             $this->method_name = @$matches[1];
             $this->report_id = @$matches[2];
         }
+
+        $this->nullable = in_array($this->method_name, $this->nullable_methods);
     }
 
 	// responds to the url: /auth_proxy_routes/embed_data
@@ -58,6 +61,8 @@ class DefaultRoute extends Route{
 
 	// responds to the url: /auth_proxy_routes/asset/{secure_embed.js|secure_embed.css}
 	public function asset($filename){
+		$this->nullable = true;
+dd($this->nullable, 'd');
 		$ok = preg_match('/^secure_embed.*?\.(js|css|js\.map|css\.map)$/', $filename, $match);
 		if(!$ok) return false;
 		return @file_get_contents(__DIR__."/assets/dist/$filename");

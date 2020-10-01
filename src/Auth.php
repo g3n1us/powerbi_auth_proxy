@@ -48,6 +48,7 @@ class Auth{
 			throw new \Exception("Double Instantiation error");
 		}
 		static::getFramework();
+
 		// UserProxy handles middleware functions.
 		// Aborts the request if authorization is not valid
 

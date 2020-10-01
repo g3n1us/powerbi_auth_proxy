@@ -16,12 +16,16 @@ if(!function_exists('auth_proxy_base_path')){
 	}
 }
 
+Kint::$aliases[] = 'ddd';
+
 if(!function_exists('ddd')){
 	function ddd($variable, $depth = null){
     	foreach(func_get_args() as $v) d($v);
 	    die();
 	}
 }
+
+Kint::$aliases[] = 'dd';
 
 if(!function_exists('dd')){
 	function dd($variable, $depth = null){
@@ -38,7 +42,6 @@ if(!function_exists('dump')){
 
 if(!function_exists('env')){
 	function env($variable, $default = null){
-		die('$variable');
 		$found = getenv($variable);
 	    return $found ? $found : $default;
 	}

@@ -13,6 +13,8 @@ class Route{
 
     public $router;
 
+    protected $nullable = false;
+
     public function __construct($pattern = null, $gates = [], $callback = null){
         if(count(func_get_args()) === 2){
             $callback = $gates;
@@ -39,4 +41,9 @@ class Route{
     public function __toString(){
         return $this->pattern;
     }
+
+    public function isNullable(){
+	    return $this->nullable;
+    }
+
 }
