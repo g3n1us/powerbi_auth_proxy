@@ -25,7 +25,7 @@ class Embed extends Collection{
 		$type_classname = @$types[$type] ?? 'PowerBiEmbedUrl';
 		$type_classname = '\\BlueRaster\\PowerBIAuthProxy\\Urls\\' . $type_classname;
 		$this->url = new $type_classname($id);
-		dd($this->url);
+
 		$this->id = $this->url->id;
 		if($name) $this->name = $name;
 		else $this->name = $this->id;

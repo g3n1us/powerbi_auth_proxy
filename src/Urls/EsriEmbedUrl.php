@@ -1,20 +1,22 @@
 <?php
 
-namespace BlueRaster\PowerBIAuthProxy\Urls;	
+namespace BlueRaster\PowerBIAuthProxy\Urls;
 
 use BlueRaster\PowerBIAuthProxy\Auth;
 
+use BlueRaster\PowerBIAuthProxy\Utils;
+
 use BlueRaster\PowerBIAuthProxy\Exceptions\IdCannotBeDeterminedException;
-	
+
 class EsriEmbedUrl extends EmbedUrl{
-	
+
 	public $host = 'www.arcgis.com';
-	
+
 	public $path = '/apps/opsdashboard/index.html';
-		
+
 	public function __construct($id){
 		$this->str = $id;
-		$parts = static::spread_url($id);
+		$parts = Utils::spread_url($id);
 
 		if($parts === false){
 			$this->id = $this->str;
@@ -33,6 +35,6 @@ class EsriEmbedUrl extends EmbedUrl{
 		}
 
 		$this->setToken($_SESSION['esri_token']);
-		
+
 	}
 }

@@ -28,8 +28,21 @@ class DefaultRoute extends Route{
 
 	// responds to the url: /auth_proxy_routes/embed_data
 	public function embed_data(){
-		return Utils::getReports();
+		$reports = DB::get('reports');
+		if(empty($reports)){
+	    	$reports_string = Auth::config('selected_reports');
 
+			$selected_reports = array_map(function($v){
+				return Embed::createFromString($v);
+			}, Utils::clean_array_from_string($reports_string));
+		}
+		else{
+			$selected_reports = $reports->map(function($v){
+				return new Embed($v);
+			});
+		}
+
+		return collect($selected_reports);
 	}
 
 	// responds to the url: /auth_proxy_routes/current_user

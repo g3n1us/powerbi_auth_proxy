@@ -33,15 +33,13 @@ class AdminRoute extends Route{
 
 	public function display(){
 		$version = @$_GET['_version'];
+		$version_users = @$_GET['_version_users'];
 		return new View(__DIR__.'/template.php', [
-//			'data' => collect([
-				'reports'         => Utils::getReports($version)->merge([['id' => null, 'type' => null, 'name' => null]]),
-				'users'           => (DB::get('users') ?? collect([]))->merge([null]),
-				'versions'        => DB::get_versions('reports'),
-				'users_versions'  => DB::get_versions('users'),
-				'standalone'      => auth_proxy()->is_standalone(),
-//			]),
-
+			'reports'         => (DB::get('reports', $version) ?? collect([]))->merge([['id' => null, 'type' => null, 'name' => null]]),
+			'users'           => (DB::get('users', $version_users) ?? collect([]))->merge([null]),
+			'versions'        => DB::get_versions('reports')->slice(1),
+			'users_versions'  => DB::get_versions('users')->slice(1),
+			'standalone'      => auth_proxy()->is_standalone(),
 		]);
 	}
 
@@ -96,7 +94,7 @@ class AdminRoute extends Route{
 
 	public function auth_proxy_admin_gate($app){
 		$current_user = Auth::getCurrentUser();
-		$admin_emails = clean_array_from_string(Auth::config('auth_proxy_admins', ''));
+		$admin_emails = Utils::clean_array_from_string(Auth::config('auth_proxy_admins', ''));
 		$admin_emails_db = DB::get('users');
 		$admin_emails = $admin_emails_db->merge($admin_emails)->toArray();
 

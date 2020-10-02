@@ -1,20 +1,22 @@
 <?php
 
-namespace BlueRaster\PowerBIAuthProxy\Urls;	
+namespace BlueRaster\PowerBIAuthProxy\Urls;
 
 use BlueRaster\PowerBIAuthProxy\Auth;
 
+use BlueRaster\PowerBIAuthProxy\Utils;
+
 use BlueRaster\PowerBIAuthProxy\Exceptions\IdCannotBeDeterminedException;
-	
+
 class PowerBiEmbedUrl extends EmbedUrl{
-	
+
 	public $host = 'app.powerbi.com';
-	
+
 	public $path = '/reportEmbed';
-		
+
 	public function __construct($id){
 		$this->str = $id;
-		$parts = static::spread_url($id);
+		$parts = Utils::spread_url($id);
 
 		if($parts === false){
 			$this->id = $this->str;
@@ -27,6 +29,6 @@ class PowerBiEmbedUrl extends EmbedUrl{
 			$this->fragment = $parts['fragment'];
 			$this->id = static::determine_id($parts);
 		}
-		
+
 	}
 }

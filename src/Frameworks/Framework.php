@@ -2,8 +2,11 @@
 
 namespace BlueRaster\PowerBIAuthProxy\Frameworks;
 
+use BlueRaster\PowerBIAuthProxy\Utils;
 use BlueRaster\PowerBIAuthProxy\Utils\Csrf;
 use BlueRaster\PowerBIAuthProxy\Exceptions\MissingUserProviderException;
+use BlueRaster\PowerBIAuthProxy\UserProviders\UserProvider;
+use BlueRaster\PowerBIAuthProxy\UserProviders\BaseUser;
 
 abstract class Framework{
 
@@ -25,14 +28,14 @@ abstract class Framework{
 
 	public function installerPath(){
 		$classname = class_basename($this);
-		return auth_proxy_base_path("installers/$classname/installer.php");
+		return Utils::root_path("installers/$classname/installer.php");
 	}
 
 	public static function test(){
 		return false;
 	}
 
-	final public function getUserProvider(){
+	final public function getUserProvider() : UserProvider{
 		if($this->user_provider) return $this->user_provider;
 		$this->user_provider = collect($this->user_providers)->map(function($classname){
 			$p = "BlueRaster\\PowerBIAuthProxy\\UserProviders\\$classname";
@@ -52,9 +55,8 @@ abstract class Framework{
 
 	// Provides the currently used "user" object that the framework is utilizing.
 	//
-	final public function getUser(){
+	final public function getUser() : BaseUser{
 		return $this->getUserProvider()->getUser();
-// 		return $this->user;
 	}
 
 

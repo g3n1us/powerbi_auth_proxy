@@ -4,6 +4,7 @@ namespace BlueRaster\PowerBIAuthProxy;
 
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use GuzzleHttp\Client as GuzzleClient;
 
 // convenience class for accessing utility classes found in Utils
 
@@ -19,42 +20,42 @@ class Utils{
 	}
 
 
-	public static function getReports($version = null){
-		$reports = DB::get('reports', $version);
-		if(empty($reports)){
-	    	$reports_string = Auth::config('selected_reports');
-
-			$selected_reports = array_map(function($v){
-				return Embed::createFromString($v);
-			}, clean_array_from_string($reports_string));
-		}
-		else{
-			$selected_reports = $reports->map(function($v){
-				return new Embed($v);
-			});
-		}
-
-		return collect($selected_reports);
-
+	public static function tidy_path($path = ''){
+		// remove any duplicated slashes
+		$path = preg_replace('/\/+/', '/', $path);
+		// ensure it starts with a slash
+		$path = Str::start($path, '/');
+		// ensure id does not end in a slash
+		$path = rtrim($path, '/');
+		return $path;
 	}
 
 
 	public static function root_path($path = ''){
 
-		return dirname(__DIR__) . Str::start($path, '/');
+		return dirname(__DIR__) . Utils::tidy_path($path);
 
 	}
 
 
+
 	public static function base_path($path = ''){
 
-		return __DIR__ . Str::start($path, '/');
+		return __DIR__ . Utils::tidy_path($path);
 
 	}
 
 
 	public static function view_path($path = ''){
-		return static::base_path('Views' . Str::start($path, '/'));
+
+		return Utils::base_path("Views/$path");
+
+	}
+
+
+	public static function data_path($file = ''){
+
+		return Utils::root_path("_data/$file");
 
 	}
 
@@ -73,9 +74,57 @@ class Utils{
 
 
 
-	public static function data_path($file = null){
-		return dirname(static::base_path()) . '/_data' . Str::start($file, '/');
 
+	public static function auth_proxy(){
+    	return \BlueRaster\PowerBIAuthProxy\Auth::get_instance();
 	}
+
+
+
+    public static function guzzle_get_contents($url){
+        $client = new GuzzleClient;
+		$res = $client->get($url);
+
+		$body = $res->getBody();
+		$content = '';
+		while (!$body->eof()) {
+		    $content .= $body->read(1024);
+		}
+        return $content;
+    }
+
+
+	public static function spread_url($str){
+		$parts = array_merge(['scheme' => null, 'query' => null, 'host' => null, 'path' => null, 'fragment' => null], parse_url($str));
+		$q = parse_str($parts['query'], $qq);
+		$parts['query'] = $qq;
+		if(array_keys(array_filter($parts)) == ['path']){
+			return false;
+		}
+
+		return $parts;
+	}
+
+
+
+	public static function parse_keyless_query($str){
+		$arr = $str;
+		if(is_string($str)){
+			parse_str($str, $arr);
+		}
+		if([1, 0] == [count(array_filter(array_keys($arr))), count(array_filter($arr))]){
+			return array_keys($arr)[0];
+		}
+		return false;
+	}
+
+
+
+	public static function clean_array_from_string($str, $delimiter = ","){
+		$parts = explode($delimiter, trim(trim($str), $delimiter));
+		$parts = array_map('trim', $parts);
+		return array_filter($parts);
+	}
+
 
 }

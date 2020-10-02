@@ -4,6 +4,7 @@ namespace BlueRaster\PowerBIAuthProxy\UserProviders;
 
 use BlueRaster\PowerBIAuthProxy\Auth;
 use BlueRaster\PowerBIAuthProxy\DB;
+use BlueRaster\PowerBIAuthProxy\Utils;
 
 
 
@@ -28,7 +29,7 @@ class BaseUser{
 
 
 	public function isAuthProxyAdmin(){
-		$admin_emails = clean_array_from_string(Auth::config('auth_proxy_admins', ''));
+		$admin_emails = Utils::clean_array_from_string(Auth::config('auth_proxy_admins', ''));
 		$admin_emails_db = DB::get('users');
 		$admin_emails = $admin_emails_db->merge($admin_emails)->toArray();
 

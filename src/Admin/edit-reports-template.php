@@ -20,7 +20,10 @@
 									<select class="custom-select" name="_version" id="version_select">
 										<option value="">LATEST</option>
 									@foreach($versions as $version)
-										<option value="{{ $version['version'] }}" @if(@$_GET['_version'] === $version['version']) selected @endif>{{ $version['timestamp'] }}</option>
+										<option value="{{ $version['version'] }}"
+											@if(@$_GET['_version'] === $version['version'])
+											selected
+											@endif>{{ $version['timestamp'] }}</option>
 									@endforeach
 									</select>
 									<div class="input-group-append">
