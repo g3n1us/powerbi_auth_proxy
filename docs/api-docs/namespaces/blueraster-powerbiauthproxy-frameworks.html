@@ -1,445 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8">
     <title>Documentation</title>
-    <meta name="author" content=""/>
-    <meta name="description" content=""/>
-
-    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/prism.css" rel="stylesheet" media="all"/>
-    <link href="../css/template.css" rel="stylesheet" media="all"/>
-    
-    <!--[if lt IE 9]>
-    <script src="../js/html5.js"></script>
-    <![endif]-->
-    <script src="../js/jquery-1.11.0.min.js"></script>
-    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/jquery.smooth-scroll.js"></script>
-    <script src="../js/prism.min.js"></script>
-    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
-    
-    <link rel="shortcut icon" href="../images/favicon.ico"/>
-    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
-    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
-    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
-</head>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/template.css">
+    <link rel="icon" href="../images/favicon.ico"/>
+        <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.6/fuse.min.js"></script>
+    <script src="../js/search.js"></script>
+    <script defer src="../js/searchIndex.js"></script>
+    </head>
 <body>
+<header class="phpdocumentor-top-header"></header>
+<header class="phpdocumentor-header">
+    <section class="phpdocumentor-section">
+        <h1 class="phpdocumentor-title">Documentation</h1>
+    </section>
+</header>
+<main class="phpdocumentor">
+    <div class="phpdocumentor-section">
+        <aside class="three phpdocumentor-columns phpdocumentor-sidebar">
+    <section data-search-form class="phpdocumentor-search">
+        <h1 class="phpdocumentor-sidebar__category-header">Search</h1>
+        <label class="phpdocumentor-label">
+            <span class="visually-hidden">Search for</span>
+            <input type="search" class="phpdocumentor-field phpdocumentor-search__field" placeholder="Loading .." disabled />
+        </label>
+    </section>
 
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <i class="icon-ellipsis-vertical"></i>
-            </a>
-            <a class="brand" href="../index.html">Documentation</a>
+    
+    <h1 class="phpdocumentor-sidebar__category-header">Namespaces</h1>
+            <h2 class="phpdocumentor-sidebar__root-namespace"><a href="../namespaces/default.html"><abbr title="\">Global</abbr></a></h2>
+                    <h3 class="phpdocumentor-sidebar__root-namespace"><a href="../namespaces/blueraster.html"><abbr title="\BlueRaster">BlueRaster</abbr></a></h3>
+            <ul class="phpdocumentor-list">
+                                    <li><a href="../namespaces/blueraster-powerbiauthproxy.html"><abbr title="\BlueRaster\PowerBIAuthProxy">PowerBIAuthProxy</abbr></a></li>
+                            </ul>
+            
+    
+    <h1 class="phpdocumentor-sidebar__category-header">Reports</h1>
+        <h2 class="phpdocumentor-sidebar__root-package"><a href="../graphs/classes.html">Class Diagram</a></h2>
+        <h2 class="phpdocumentor-sidebar__root-package"><a href="../reports/deprecated.html">Deprecated</a></h2>
+    <h2 class="phpdocumentor-sidebar__root-package"><a href="../reports/errors.html">Errors</a></h2>
+    <h2 class="phpdocumentor-sidebar__root-package"><a href="../reports/markers.html">Markers</a></h2>
+</aside>
 
-            <div class="nav-collapse">
-                <ul class="nav pull-right">
-                                        <li class="dropdown">
-                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
-                            API Documentation <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                                                        <li><a href="../namespaces/blueraster.html"><abbr title="\BlueRaster">normal</abbr></a></li>
-                                                    </ul>
-                    </li>
-                                        <li class="dropdown" id="charts-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Charts <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="../graphs/class.html">
-                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown" id="reports-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Reports <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="../reports/deprecated.html">
-                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+        <div class="nine phpdocumentor-columns phpdocumentor-content">
+            <ul class="phpdocumentor-breadcrumbs">
+    <li><a href="../index.html">Home</a></li>
+                        <li><a href="../namespaces/blueraster.html">BlueRaster</a></li>
+                    <li><a href="../namespaces/blueraster-powerbiauthproxy.html">PowerBIAuthProxy</a></li>
+            </ul>
+
+    <h2 class="phpdocumentor-content__title">Frameworks</h2>
+
+    
+            <h3>Interfaces, Classes and Traits</h3>
+        <dl>
+            
+                            <dt><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-CodeIgniter.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\CodeIgniter">CodeIgniter</abbr></a></dt>
+                <dd></dd>
+                            <dt><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Framework.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Framework">Framework</abbr></a></dt>
+                <dd></dd>
+                            <dt><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Laravel.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Laravel">Laravel</abbr></a></dt>
+                <dd></dd>
+                            <dt><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Mock.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Mock">Mock</abbr></a></dt>
+                <dd></dd>
+                            <dt><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Wordpress.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Wordpress">Wordpress</abbr></a></dt>
+                <dd></dd>
+            
+                    </dl>
+    
+    
+    
+                <div data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+
+                <h2>Search results</h2>
+                <ul class="phpdocumentor-search-results__entries">
+
                 </ul>
             </div>
         </div>
     </div>
-    <!--<div class="go_to_top">-->
-    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
-    <!--</div>-->
-</div>
-
-<div id="___" class="container-fluid">
-        <section class="row-fluid">
-        <div class="span2 sidebar">
-                                <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-270670091"></a>
-                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
-            </div>
-            <div id="namespace-270670091" class="accordion-body collapse in">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-414250775"></a>
-                                <a href="../namespaces/blueraster.html" style="margin-left: 30px; padding-left: 0">BlueRaster</a>
-            </div>
-            <div id="namespace-414250775" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-872511469"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy.html" style="margin-left: 30px; padding-left: 0">PowerBIAuthProxy</a>
-            </div>
-            <div id="namespace-872511469" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-53967832"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-admin.html" style="margin-left: 30px; padding-left: 0">Admin</a>
-            </div>
-            <div id="namespace-53967832" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Admin-AdminRoute.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Admin\AdminRoute">AdminRoute</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-780461860"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
-            </div>
-            <div id="namespace-780461860" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Exceptions-IdCannotBeDeterminedException.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Exceptions\IdCannotBeDeterminedException">IdCannotBeDeterminedException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Exceptions-IllegalClassDirectoryListException.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Exceptions\IllegalClassDirectoryListException">IllegalClassDirectoryListException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Exceptions-MissingConfigException.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Exceptions\MissingConfigException">MissingConfigException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Exceptions-MissingUserProviderException.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Exceptions\MissingUserProviderException">MissingUserProviderException</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1021778718"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-frameworks.html" style="margin-left: 30px; padding-left: 0">Frameworks</a>
-            </div>
-            <div id="namespace-1021778718" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-CodeIgniter.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\CodeIgniter">CodeIgniter</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Framework.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Framework">Framework</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Laravel.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Laravel">Laravel</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Mock.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Mock">Mock</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Wordpress.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Wordpress">Wordpress</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-887334914"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-installers.html" style="margin-left: 30px; padding-left: 0">Installers</a>
-            </div>
-            <div id="namespace-887334914" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Installers-CodeIgniterInstaller.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Installers\CodeIgniterInstaller">CodeIgniterInstaller</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Installers-Installer.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Installers\Installer">Installer</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2029597364"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-traits.html" style="margin-left: 30px; padding-left: 0">Traits</a>
-            </div>
-            <div id="namespace-2029597364" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                            <li class="trait"><a href="../classes/BlueRaster-PowerBIAuthProxy-Traits-Arrayable.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Traits\Arrayable">Arrayable</abbr></a></li>
-                                                                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1179071590"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-urls.html" style="margin-left: 30px; padding-left: 0">Urls</a>
-            </div>
-            <div id="namespace-1179071590" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl">EmbedUrl</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EsriEmbedUrl.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Urls\EsriEmbedUrl">EsriEmbedUrl</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-PowerBiEmbedUrl.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Urls\PowerBiEmbedUrl">PowerBiEmbedUrl</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-305127710"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-userproviders.html" style="margin-left: 30px; padding-left: 0">UserProviders</a>
-            </div>
-            <div id="namespace-305127710" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-BaseUser.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\BaseUser">BaseUser</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-Eloquent.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\Eloquent">Eloquent</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-MockUser.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\MockUser">MockUser</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-MockUserProvider.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\MockUserProvider">MockUserProvider</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-Prologin.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\Prologin">Prologin</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-User.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\User">User</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-UserProvider.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\UserProvider">UserProvider</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-WordpressUser.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\WordpressUser">WordpressUser</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1415874358"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-utils.html" style="margin-left: 30px; padding-left: 0">Utils</a>
-            </div>
-            <div id="namespace-1415874358" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Utils-Csrf.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Utils\Csrf">Csrf</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-807001193"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-views.html" style="margin-left: 30px; padding-left: 0">Views</a>
-            </div>
-            <div id="namespace-807001193" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Views-View.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Views\View">View</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Auth.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Auth">Auth</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-ClassIterable.html"><abbr title="\BlueRaster\PowerBIAuthProxy\ClassIterable">ClassIterable</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Command.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Command">Command</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Command.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Command">Command</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-DB.html"><abbr title="\BlueRaster\PowerBIAuthProxy\DB">DB</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-DefaultRoute.html"><abbr title="\BlueRaster\PowerBIAuthProxy\DefaultRoute">DefaultRoute</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Embed.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Embed">Embed</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Filesystem.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Filesystem">Filesystem</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Installer.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Installer">Installer</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Route.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Route">Route</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Routes.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Routes">Routes</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-SafetyNet.html"><abbr title="\BlueRaster\PowerBIAuthProxy\SafetyNet">SafetyNet</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProxy.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProxy">UserProxy</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Utils.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Utils">Utils</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-        </div>
-    </section>
-    <section class="row-fluid">
-        <div class="span10 offset2">
-            <div class="row-fluid">
-                <div class="span8 content namespace">
-                    <nav>
-                                                <a href="../namespaces/blueraster-powerbiauthproxy.html"><abbr title="\BlueRaster\PowerBIAuthProxy">normal</abbr></a>
-                                            </nav>
-                    <h1><small>\BlueRaster\PowerBIAuthProxy</small>Frameworks</h1>
-
-                    
-                    
-                    
-                                        <h2>Classes</h2>
-                    <table class="table table-hover">
-                                            <tr>
-                            <td><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-CodeIgniter.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\CodeIgniter">CodeIgniter</abbr></a></td>
-                            <td><em></em></td>
-                        </tr>
-                                            <tr>
-                            <td><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Framework.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Framework">Framework</abbr></a></td>
-                            <td><em></em></td>
-                        </tr>
-                                            <tr>
-                            <td><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Laravel.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Laravel">Laravel</abbr></a></td>
-                            <td><em></em></td>
-                        </tr>
-                                            <tr>
-                            <td><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Mock.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Mock">Mock</abbr></a></td>
-                            <td><em></em></td>
-                        </tr>
-                                            <tr>
-                            <td><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Wordpress.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Wordpress">Wordpress</abbr></a></td>
-                            <td><em></em></td>
-                        </tr>
-                                        </table>
-                                    </div>
-
-                <aside class="span4 detailsbar">
-                    <dl>
-                        <dt>Namespace hierarchy</dt>
-                        <dd class="hierarchy">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-                                    <div class="namespace-wrapper"><a href="../namespaces/default.html"><abbr title="\">normal</abbr></a></div>
-                                                            
-                                    <div class="namespace-wrapper"><a href="../namespaces/blueraster.html"><abbr title="\BlueRaster">normal</abbr></a></div>
-                                                            
-                                    <div class="namespace-wrapper"><a href="../namespaces/blueraster-powerbiauthproxy.html"><abbr title="\BlueRaster\PowerBIAuthProxy">normal</abbr></a></div>
-                                                                                        <div class="namespace-wrapper">\BlueRaster\PowerBIAuthProxy\Frameworks</div>
-                        </dd>
-                    </dl>
-                </aside>
-            </div>
-
-            
-            
-        </div>
-    </section>
-
-    <footer class="row-fluid">
-        <section class="span10 offset2">
-            <section class="row-fluid">
-                <section class="span10 offset1">
-                    <section class="row-fluid footer-sections">
-                        <section class="span4">
-                                                        <h1><i class="icon-code"></i></h1>
-                            <div>
-                                <ul>
-                                                                            <li><a href="../namespaces/blueraster.html"><abbr title="\BlueRaster">normal</abbr></a></li>
-                                                                    </ul>
-                            </div>
-                        </section>
-                        <section class="span4">
-                                                        <h1><i class="icon-bar-chart"></i></h1>
-                            <div>
-                                <ul>
-                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
-                                </ul>
-                            </div>
-                        </section>
-                        <section class="span4">
-                                                        <h1><i class="icon-pushpin"></i></h1>
-                            <div>
-                                <ul>
-                                    <li><a href="../reports/errors.html">Errors</a></li>
-                                    <li><a href="../reports/markers.html">Markers</a></li>
-                                </ul>
-                            </div>
-                        </section>
-                    </section>
-                </section>
-            </section>
-            <section class="row-fluid">
-                <section class="span10 offset1">
-                    <hr />
-                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on October 2nd, 2020 at 18:18.
-                </section>
-            </section>
-        </section>
-    </footer>
-</div>
+</main>
 
 </body>
 </html>

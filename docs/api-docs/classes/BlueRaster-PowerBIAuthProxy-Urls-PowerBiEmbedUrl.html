@@ -1,941 +1,557 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8">
     <title>Documentation</title>
-    <meta name="author" content=""/>
-    <meta name="description" content=""/>
-
-    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/prism.css" rel="stylesheet" media="all"/>
-    <link href="../css/template.css" rel="stylesheet" media="all"/>
-    
-    <!--[if lt IE 9]>
-    <script src="../js/html5.js"></script>
-    <![endif]-->
-    <script src="../js/jquery-1.11.0.min.js"></script>
-    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/jquery.smooth-scroll.js"></script>
-    <script src="../js/prism.min.js"></script>
-    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
-    <script type="text/javascript">
-    function loadExternalCodeSnippets() {
-        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
-            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-            var language = 'php';
-
-            var code = document.createElement('code');
-            code.className = 'language-' + language;
-
-            pre.textContent = '';
-
-            code.textContent = 'Loading…';
-
-            pre.appendChild(code);
-
-            var xhr = new XMLHttpRequest();
-
-            xhr.open('GET', src, true);
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-
-                    if (xhr.status < 400 && xhr.responseText) {
-                        code.textContent = xhr.responseText;
-
-                        Prism.highlightElement(code);
-                    }
-                    else if (xhr.status >= 400) {
-                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
-                    }
-                    else {
-                        code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
-                    }
-                }
-            };
-
-            xhr.send(null);
-        });
-    }
-
-    $(document).ready(function(){
-        loadExternalCodeSnippets();
-    });
-    $('#source-view').on('shown', function () {
-        loadExternalCodeSnippets();
-    })
-</script>
-
-    <link rel="shortcut icon" href="../images/favicon.ico"/>
-    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
-    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
-    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
-</head>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/template.css">
+    <link rel="icon" href="../images/favicon.ico"/>
+        <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.6/fuse.min.js"></script>
+    <script src="../js/search.js"></script>
+    <script defer src="../js/searchIndex.js"></script>
+    </head>
 <body>
+<header class="phpdocumentor-top-header"></header>
+<header class="phpdocumentor-header">
+    <section class="phpdocumentor-section">
+        <h1 class="phpdocumentor-title">Documentation</h1>
+    </section>
+</header>
+<main class="phpdocumentor">
+    <div class="phpdocumentor-section">
+        <aside class="three phpdocumentor-columns phpdocumentor-sidebar">
+    <section data-search-form class="phpdocumentor-search">
+        <h1 class="phpdocumentor-sidebar__category-header">Search</h1>
+        <label class="phpdocumentor-label">
+            <span class="visually-hidden">Search for</span>
+            <input type="search" class="phpdocumentor-field phpdocumentor-search__field" placeholder="Loading .." disabled />
+        </label>
+    </section>
 
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <i class="icon-ellipsis-vertical"></i>
-            </a>
-            <a class="brand" href="../index.html">Documentation</a>
+    
+    <h1 class="phpdocumentor-sidebar__category-header">Namespaces</h1>
+            <h2 class="phpdocumentor-sidebar__root-namespace"><a href="../namespaces/default.html"><abbr title="\">Global</abbr></a></h2>
+                    <h3 class="phpdocumentor-sidebar__root-namespace"><a href="../namespaces/blueraster.html"><abbr title="\BlueRaster">BlueRaster</abbr></a></h3>
+            <ul class="phpdocumentor-list">
+                                    <li><a href="../namespaces/blueraster-powerbiauthproxy.html"><abbr title="\BlueRaster\PowerBIAuthProxy">PowerBIAuthProxy</abbr></a></li>
+                            </ul>
+            
+    
+    <h1 class="phpdocumentor-sidebar__category-header">Reports</h1>
+        <h2 class="phpdocumentor-sidebar__root-package"><a href="../graphs/classes.html">Class Diagram</a></h2>
+        <h2 class="phpdocumentor-sidebar__root-package"><a href="../reports/deprecated.html">Deprecated</a></h2>
+    <h2 class="phpdocumentor-sidebar__root-package"><a href="../reports/errors.html">Errors</a></h2>
+    <h2 class="phpdocumentor-sidebar__root-package"><a href="../reports/markers.html">Markers</a></h2>
+</aside>
 
-            <div class="nav-collapse">
-                <ul class="nav pull-right">
-                                        <li class="dropdown">
-                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
-                            API Documentation <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                                                        <li><a href="../namespaces/blueraster.html"><abbr title="\BlueRaster">normal</abbr></a></li>
-                                                    </ul>
-                    </li>
-                                        <li class="dropdown" id="charts-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Charts <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="../graphs/class.html">
-                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown" id="reports-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Reports <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="../reports/deprecated.html">
-                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+        <div class="nine phpdocumentor-columns phpdocumentor-content">
+            <ul class="phpdocumentor-breadcrumbs">
+    <li><a href="../index.html">Home</a></li>
+                        <li><a href="../namespaces/blueraster.html">BlueRaster</a></li>
+                    <li><a href="../namespaces/blueraster-powerbiauthproxy.html">PowerBIAuthProxy</a></li>
+                    <li><a href="../namespaces/blueraster-powerbiauthproxy-urls.html">Urls</a></li>
+            </ul>
+
+    <article class="phpdocumentor-element phpdocumentor-class">
+        <h2 class="phpdocumentor-content__title">
+            PowerBiEmbedUrl
+                            <span class="phpdocumentor-class__extends">
+                    extends <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl">EmbedUrl</abbr></a>
+                </span>
+                                                        </h2>
+        <aside class="phpdocumentor-element-found-in">
+            <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/PowerBiEmbedUrl.php"><a href="../files/src-urls-powerbiembedurl.html"><abbr title="src/Urls/PowerBiEmbedUrl.php">PowerBiEmbedUrl.php</abbr></a></abbr>
+            :
+            <span class="phpdocumentor-element-found-in__line">11</span>
+        </aside>
+
+        <p class="phpdocumentor-class__summary"></p>
+        <section class="phpdocumentor-class__description"></section>
+
+        <h3>Table of Contents</h3>
+        <table class="phpdocumentor-table_of_contents">
+                                        <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-PowerBiEmbedUrl.html#property_host">$host</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell"><a href=""><abbr title=""></abbr></a></td>
+                </tr>
+                            <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-PowerBiEmbedUrl.html#property_path">$path</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell"><a href=""><abbr title=""></abbr></a></td>
+                </tr>
+                                                    <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#property_str">$str</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell"><a href=""><abbr title=""></abbr></a></td>
+                </tr>
+                            <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#property_id">$id</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell"><a href=""><abbr title=""></abbr></a></td>
+                </tr>
+                            <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#property_scheme">$scheme</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell"><a href=""><abbr title=""></abbr></a></td>
+                </tr>
+                            <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#property_query">$query</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell"><a href=""><abbr title=""></abbr></a></td>
+                </tr>
+                            <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#property_host">$host</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell"><a href=""><abbr title=""></abbr></a></td>
+                </tr>
+                            <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#property_path">$path</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell"><a href=""><abbr title=""></abbr></a></td>
+                </tr>
+                            <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#property_fragment">$fragment</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell"><a href=""><abbr title=""></abbr></a></td>
+                </tr>
+                                        <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-PowerBiEmbedUrl.html#method___construct">__construct()</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell">mixed</td>
+                </tr>
+                                                    <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#method_determine_type">determine_type()</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell">mixed</td>
+                </tr>
+                            <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#method_setToken">setToken()</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell">mixed</td>
+                </tr>
+                            <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#method_determine_id">determine_id()</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell">mixed</td>
+                </tr>
+                            <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#method_createFromString">createFromString()</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell">mixed</td>
+                </tr>
+                            <tr>
+                    <th class="phpdocumentor-heading"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#method___toString">__toString()</a></th>
+                    <td class="phpdocumentor-cell"></td>
+                    <td class="phpdocumentor-cell">mixed</td>
+                </tr>
+                    </table>
+
+        
+                    <section>
+                <h3 class="phpdocumentor-properties__header">Properties</h3>
+                                    <a id="property_host"></a>
+<article
+        class="
+            phpdocumentor-property
+            phpdocumentor-property--public
+                                "
+>
+    <h4 class="phpdocumentor-property__name">$host</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/PowerBiEmbedUrl.php"><a href="../files/src-urls-powerbiembedurl.html"><abbr title="src/Urls/PowerBiEmbedUrl.php">PowerBiEmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">13</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__name">$host</span>
+         = <span class="phpdocumentor-signature__default-value">&#039;app.powerbi.com&#039;</span>    </code>
+    </article>
+                                    <a id="property_path"></a>
+<article
+        class="
+            phpdocumentor-property
+            phpdocumentor-property--public
+                                "
+>
+    <h4 class="phpdocumentor-property__name">$path</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/PowerBiEmbedUrl.php"><a href="../files/src-urls-powerbiembedurl.html"><abbr title="src/Urls/PowerBiEmbedUrl.php">PowerBiEmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">15</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__name">$path</span>
+         = <span class="phpdocumentor-signature__default-value">&#039;/reportEmbed&#039;</span>    </code>
+    </article>
+                                                                    <a id="property_str"></a>
+<article
+        class="
+            phpdocumentor-property
+            phpdocumentor-property--public
+                                "
+>
+    <h4 class="phpdocumentor-property__name">$str</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/EmbedUrl.php"><a href="../files/src-urls-embedurl.html"><abbr title="src/Urls/EmbedUrl.php">EmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">10</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__name">$str</span>
+            </code>
+    </article>
+                                    <a id="property_id"></a>
+<article
+        class="
+            phpdocumentor-property
+            phpdocumentor-property--public
+                                "
+>
+    <h4 class="phpdocumentor-property__name">$id</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/EmbedUrl.php"><a href="../files/src-urls-embedurl.html"><abbr title="src/Urls/EmbedUrl.php">EmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">12</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__name">$id</span>
+            </code>
+    </article>
+                                    <a id="property_scheme"></a>
+<article
+        class="
+            phpdocumentor-property
+            phpdocumentor-property--public
+                                "
+>
+    <h4 class="phpdocumentor-property__name">$scheme</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/EmbedUrl.php"><a href="../files/src-urls-embedurl.html"><abbr title="src/Urls/EmbedUrl.php">EmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">14</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__name">$scheme</span>
+         = <span class="phpdocumentor-signature__default-value">&#039;https&#039;</span>    </code>
+    </article>
+                                    <a id="property_query"></a>
+<article
+        class="
+            phpdocumentor-property
+            phpdocumentor-property--public
+                                "
+>
+    <h4 class="phpdocumentor-property__name">$query</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/EmbedUrl.php"><a href="../files/src-urls-embedurl.html"><abbr title="src/Urls/EmbedUrl.php">EmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">16</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__name">$query</span>
+         = <span class="phpdocumentor-signature__default-value">[]</span>    </code>
+    </article>
+                                    <a id="property_host"></a>
+<article
+        class="
+            phpdocumentor-property
+            phpdocumentor-property--public
+                                "
+>
+    <h4 class="phpdocumentor-property__name">$host</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/EmbedUrl.php"><a href="../files/src-urls-embedurl.html"><abbr title="src/Urls/EmbedUrl.php">EmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">18</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__name">$host</span>
+         = <span class="phpdocumentor-signature__default-value">&#039;www.arcgis.com&#039;</span>    </code>
+    </article>
+                                    <a id="property_path"></a>
+<article
+        class="
+            phpdocumentor-property
+            phpdocumentor-property--public
+                                "
+>
+    <h4 class="phpdocumentor-property__name">$path</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/EmbedUrl.php"><a href="../files/src-urls-embedurl.html"><abbr title="src/Urls/EmbedUrl.php">EmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">20</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__name">$path</span>
+         = <span class="phpdocumentor-signature__default-value">&#039;/apps/opsdashboard/index.html&#039;</span>    </code>
+    </article>
+                                    <a id="property_fragment"></a>
+<article
+        class="
+            phpdocumentor-property
+            phpdocumentor-property--public
+                                "
+>
+    <h4 class="phpdocumentor-property__name">$fragment</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/EmbedUrl.php"><a href="../files/src-urls-embedurl.html"><abbr title="src/Urls/EmbedUrl.php">EmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">22</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__name">$fragment</span>
+         = <span class="phpdocumentor-signature__default-value">null</span>    </code>
+    </article>
+                            </section>
+        
+                    <section>
+                <h3 class="phpdocumentor-methods__header">Methods</h3>
+                                    <a id="method___construct"></a>
+<article
+        class="
+            phpdocumentor-method
+            phpdocumentor-method--public
+                                                        "
+>
+    <h4 class="phpdocumentor-method__name">__construct()</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/PowerBiEmbedUrl.php"><a href="../files/src-urls-powerbiembedurl.html"><abbr title="src/Urls/PowerBiEmbedUrl.php">PowerBiEmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">17</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                                <span class="phpdocumentor-signature__name">__construct</span>(
+                    <span class="phpdocumentor-signature__argument">
+                            <span class="phpdocumentor-signature__argument__name">$id</span> :
+                <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </span>
+                )
+        : <span class="phpdocumentor-signature__response_type">mixed</span>
+    </code>
+
+    
+            <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+        <dl class="phpdocumentor-argument-list">
+                            <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name">$id</span>
+                    : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                                    </dt>
+                <dd class="phpdocumentor-argument-list__definition"><section class="phpdocumentor-description"></section></dd>
+                    </dl>
+    
+        
+            <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">mixed</span>
+            
+</article>
+                                                                    <a id="method_determine_type"></a>
+<article
+        class="
+            phpdocumentor-method
+            phpdocumentor-method--public
+                                                        "
+>
+    <h4 class="phpdocumentor-method__name">determine_type()</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/EmbedUrl.php"><a href="../files/src-urls-embedurl.html"><abbr title="src/Urls/EmbedUrl.php">EmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">25</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                                <span class="phpdocumentor-signature__name">determine_type</span>(
+                )
+        : <span class="phpdocumentor-signature__response_type">mixed</span>
+    </code>
+
+    
+    
+        
+            <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">mixed</span>
+            
+</article>
+                                    <a id="method_setToken"></a>
+<article
+        class="
+            phpdocumentor-method
+            phpdocumentor-method--public
+                                                        "
+>
+    <h4 class="phpdocumentor-method__name">setToken()</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/EmbedUrl.php"><a href="../files/src-urls-embedurl.html"><abbr title="src/Urls/EmbedUrl.php">EmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">32</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                                <span class="phpdocumentor-signature__name">setToken</span>(
+                    <span class="phpdocumentor-signature__argument">
+                            <span class="phpdocumentor-signature__argument__name">$token</span> :
+                <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </span>
+                )
+        : <span class="phpdocumentor-signature__response_type">mixed</span>
+    </code>
+
+    
+            <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+        <dl class="phpdocumentor-argument-list">
+                            <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name">$token</span>
+                    : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                                    </dt>
+                <dd class="phpdocumentor-argument-list__definition"><section class="phpdocumentor-description"></section></dd>
+                    </dl>
+    
+        
+            <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">mixed</span>
+            
+</article>
+                                    <a id="method_determine_id"></a>
+<article
+        class="
+            phpdocumentor-method
+            phpdocumentor-method--public
+                                    phpdocumentor-element--static                    "
+>
+    <h4 class="phpdocumentor-method__name">determine_id()</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/EmbedUrl.php"><a href="../files/src-urls-embedurl.html"><abbr title="src/Urls/EmbedUrl.php">EmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">38</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                        <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">determine_id</span>(
+                    <span class="phpdocumentor-signature__argument">
+                            <span class="phpdocumentor-signature__argument__name">$parts</span> :
+                <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </span>
+                )
+        : <span class="phpdocumentor-signature__response_type">mixed</span>
+    </code>
+
+    
+            <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+        <dl class="phpdocumentor-argument-list">
+                            <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name">$parts</span>
+                    : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                                    </dt>
+                <dd class="phpdocumentor-argument-list__definition"><section class="phpdocumentor-description"></section></dd>
+                    </dl>
+    
+        
+            <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">mixed</span>
+            
+</article>
+                                    <a id="method_createFromString"></a>
+<article
+        class="
+            phpdocumentor-method
+            phpdocumentor-method--public
+                                    phpdocumentor-element--static                    "
+>
+    <h4 class="phpdocumentor-method__name">createFromString()</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/EmbedUrl.php"><a href="../files/src-urls-embedurl.html"><abbr title="src/Urls/EmbedUrl.php">EmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">70</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                        <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">createFromString</span>(
+                    <span class="phpdocumentor-signature__argument">
+                            <span class="phpdocumentor-signature__argument__name">$str</span> :
+                <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </span>
+                )
+        : <span class="phpdocumentor-signature__response_type">mixed</span>
+    </code>
+
+    
+            <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+        <dl class="phpdocumentor-argument-list">
+                            <dt class="phpdocumentor-argument-list__entry">
+                    <span class="phpdocumentor-signature__argument__name">$str</span>
+                    : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                                    </dt>
+                <dd class="phpdocumentor-argument-list__definition"><section class="phpdocumentor-description"></section></dd>
+                    </dl>
+    
+        
+            <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">mixed</span>
+            
+</article>
+                                    <a id="method___toString"></a>
+<article
+        class="
+            phpdocumentor-method
+            phpdocumentor-method--public
+                                                        "
+>
+    <h4 class="phpdocumentor-method__name">__toString()</h4>
+    <aside class="phpdocumentor-element-found-in">
+        <abbr class="phpdocumentor-element-found-in__file" title="src/Urls/EmbedUrl.php"><a href="../files/src-urls-embedurl.html"><abbr title="src/Urls/EmbedUrl.php">EmbedUrl.php</abbr></a></abbr>
+        :
+        <span class="phpdocumentor-element-found-in__line">77</span>
+    </aside>
+        <code class="phpdocumentor-signature phpdocumentor-code ">
+        <span class="phpdocumentor-signature__visibility">public</span>
+                                <span class="phpdocumentor-signature__name">__toString</span>(
+                )
+        : <span class="phpdocumentor-signature__response_type">mixed</span>
+    </code>
+
+    
+    
+        
+            <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">mixed</span>
+            
+</article>
+                            </section>
+            </article>
+            <div data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+
+                <h2>Search results</h2>
+                <ul class="phpdocumentor-search-results__entries">
+
                 </ul>
             </div>
         </div>
     </div>
-    <!--<div class="go_to_top">-->
-    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
-    <!--</div>-->
-</div>
-
-<div id="___" class="container-fluid">
-        <section class="row-fluid">
-        <div class="span2 sidebar">
-                                <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-771279746"></a>
-                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
-            </div>
-            <div id="namespace-771279746" class="accordion-body collapse in">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1497609609"></a>
-                                <a href="../namespaces/blueraster.html" style="margin-left: 30px; padding-left: 0">BlueRaster</a>
-            </div>
-            <div id="namespace-1497609609" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1913231383"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy.html" style="margin-left: 30px; padding-left: 0">PowerBIAuthProxy</a>
-            </div>
-            <div id="namespace-1913231383" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1971769972"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-admin.html" style="margin-left: 30px; padding-left: 0">Admin</a>
-            </div>
-            <div id="namespace-1971769972" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Admin-AdminRoute.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Admin\AdminRoute">AdminRoute</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-388598493"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
-            </div>
-            <div id="namespace-388598493" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Exceptions-IdCannotBeDeterminedException.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Exceptions\IdCannotBeDeterminedException">IdCannotBeDeterminedException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Exceptions-IllegalClassDirectoryListException.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Exceptions\IllegalClassDirectoryListException">IllegalClassDirectoryListException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Exceptions-MissingConfigException.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Exceptions\MissingConfigException">MissingConfigException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Exceptions-MissingUserProviderException.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Exceptions\MissingUserProviderException">MissingUserProviderException</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1873081570"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-frameworks.html" style="margin-left: 30px; padding-left: 0">Frameworks</a>
-            </div>
-            <div id="namespace-1873081570" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-CodeIgniter.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\CodeIgniter">CodeIgniter</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Framework.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Framework">Framework</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Laravel.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Laravel">Laravel</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Mock.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Mock">Mock</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Frameworks-Wordpress.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Frameworks\Wordpress">Wordpress</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1695709616"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-installers.html" style="margin-left: 30px; padding-left: 0">Installers</a>
-            </div>
-            <div id="namespace-1695709616" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Installers-CodeIgniterInstaller.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Installers\CodeIgniterInstaller">CodeIgniterInstaller</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Installers-Installer.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Installers\Installer">Installer</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1715677572"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-traits.html" style="margin-left: 30px; padding-left: 0">Traits</a>
-            </div>
-            <div id="namespace-1715677572" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                            <li class="trait"><a href="../classes/BlueRaster-PowerBIAuthProxy-Traits-Arrayable.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Traits\Arrayable">Arrayable</abbr></a></li>
-                                                                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-406095367"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-urls.html" style="margin-left: 30px; padding-left: 0">Urls</a>
-            </div>
-            <div id="namespace-406095367" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl">EmbedUrl</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EsriEmbedUrl.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Urls\EsriEmbedUrl">EsriEmbedUrl</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-PowerBiEmbedUrl.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Urls\PowerBiEmbedUrl">PowerBiEmbedUrl</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1703648909"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-userproviders.html" style="margin-left: 30px; padding-left: 0">UserProviders</a>
-            </div>
-            <div id="namespace-1703648909" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-BaseUser.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\BaseUser">BaseUser</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-Eloquent.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\Eloquent">Eloquent</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-MockUser.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\MockUser">MockUser</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-MockUserProvider.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\MockUserProvider">MockUserProvider</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-Prologin.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\Prologin">Prologin</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-User.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\User">User</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-UserProvider.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\UserProvider">UserProvider</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProviders-WordpressUser.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProviders\WordpressUser">WordpressUser</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1638134960"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-utils.html" style="margin-left: 30px; padding-left: 0">Utils</a>
-            </div>
-            <div id="namespace-1638134960" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Utils-Csrf.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Utils\Csrf">Csrf</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-288521528"></a>
-                                <a href="../namespaces/blueraster-powerbiauthproxy-views.html" style="margin-left: 30px; padding-left: 0">Views</a>
-            </div>
-            <div id="namespace-288521528" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Views-View.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Views\View">View</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Auth.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Auth">Auth</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-ClassIterable.html"><abbr title="\BlueRaster\PowerBIAuthProxy\ClassIterable">ClassIterable</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Command.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Command">Command</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Command.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Command">Command</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-DB.html"><abbr title="\BlueRaster\PowerBIAuthProxy\DB">DB</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-DefaultRoute.html"><abbr title="\BlueRaster\PowerBIAuthProxy\DefaultRoute">DefaultRoute</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Embed.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Embed">Embed</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Filesystem.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Filesystem">Filesystem</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Installer.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Installer">Installer</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Route.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Route">Route</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Routes.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Routes">Routes</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-SafetyNet.html"><abbr title="\BlueRaster\PowerBIAuthProxy\SafetyNet">SafetyNet</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-UserProxy.html"><abbr title="\BlueRaster\PowerBIAuthProxy\UserProxy">UserProxy</abbr></a></li>
-                                                    <li class="class"><a href="../classes/BlueRaster-PowerBIAuthProxy-Utils.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Utils">Utils</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-        </div>
-    </section>
-    <section class="row-fluid">
-        <div class="span10 offset2">
-            <div class="row-fluid">
-                <div class="span8 content class">
-                    <nav>
-                                                <a href="../namespaces/blueraster-powerbiauthproxy-urls.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Urls">normal</abbr></a> <i class="icon-level-up"></i>
-                                            </nav>
-                    
-                    <h1><small>\BlueRaster\PowerBIAuthProxy\Urls</small>PowerBiEmbedUrl</h1>
-                    <p><em></em></p>
-                    
-                    
-                                        
-                    <section id="summary">
-                        <h2>Summary</h2>
-                        <section class="row-fluid heading">
-                            <section class="span4">
-                                <a href="#methods">Methods</a>
-                            </section>
-                            <section class="span4">
-                                <a href="#properties">Properties</a>
-                            </section>
-                            <section class="span4">
-                                <a href="#constants">Constants</a>
-                            </section>
-                        </section>
-                        <section class="row-fluid public">
-                            <section class="span4">
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#method_determine_type" class="">determine_type()</a><br />
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#method_setToken" class="">setToken()</a><br />
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#method_determine_id" class="">determine_id()</a><br />
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#method_createFromString" class="">createFromString()</a><br />
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#method___toString" class="">__toString()</a><br />
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-PowerBiEmbedUrl.html#method___construct" class="">__construct()</a><br />
-                                                            </section>
-                            <section class="span4">
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#property_str" class="">$str</a><br />
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#property_id" class="">$id</a><br />
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#property_scheme" class="">$scheme</a><br />
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#property_query" class="">$query</a><br />
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-PowerBiEmbedUrl.html#property_host" class="">$host</a><br />
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-PowerBiEmbedUrl.html#property_path" class="">$path</a><br />
-                                                                    <a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html#property_fragment" class="">$fragment</a><br />
-                                                            </section>
-                            <section class="span4">
-                                                                    <em>No constants found</em>
-                                                            </section>
-                        </section>
-                        <section class="row-fluid protected">
-                            <section class="span4">
-                                                                    <em>No protected methods found</em>
-                                                            </section>
-                            <section class="span4">
-                                                                    <em>No protected properties found</em>
-                                                            </section>
-                            <section class="span4">
-                                <em>N/A</em>
-                            </section>
-                        </section>
-                        <section class="row-fluid private">
-                            <section class="span4">
-                                                                    <em>No private methods found</em>
-                                                            </section>
-                            <section class="span4">
-                                                                    <em>No private properties found</em>
-                                                            </section>
-                            <section class="span4">
-                                <em>N/A</em>
-                            </section>
-                        </section>
-                    </section>
-                </div>
-                <aside class="span4 detailsbar">
-                                        
-                    
-                    <dl>
-                        <dt>File</dt>
-                            <dd><a href="../files/src-urls-powerbiembedurl.html"><div class="path-wrapper">src/Urls/PowerBiEmbedUrl.php</div></a></dd>
-                                                <dt>Package</dt>
-                            <dd><div class="namespace-wrapper">Default</div></dd>
-                                                <dt>Class hierarchy</dt>
-                            <dd class="hierarchy">
-                                                                                                                                                                                                                                                                                                
-                                        <div class="namespace-wrapper"><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><abbr title="\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl">normal</abbr></a></div>
-                                                                                                    <div class="namespace-wrapper">\BlueRaster\PowerBIAuthProxy\Urls\PowerBiEmbedUrl</div>
-                            </dd>
-
-                        
-                        
-                        
-                                                
-                                                                        </dl>
-                    <h2>Tags</h2>
-                    <table class="table table-condensed">
-                                            <tr><td colspan="2"><em>None found</em></td></tr>
-                                        </table>
-                </aside>
-            </div>
-
-                        
-                                    <a id="properties" name="properties"></a>
-            <div class="row-fluid">
-                <div class="span8 content class">
-                    <h2>Properties</h2>
-                </div>
-                <aside class="span4 detailsbar"></aside>
-            </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_str" name="property_str" class="anchor"></a>
-            <article class="property">
-                <h3 class="public ">$str</h3>
-                <pre class="signature">$str</pre>
-                <p><em></em></p>
-                
-
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><div class="path-wrapper">\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_id" name="property_id" class="anchor"></a>
-            <article class="property">
-                <h3 class="public ">$id</h3>
-                <pre class="signature">$id</pre>
-                <p><em></em></p>
-                
-
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><div class="path-wrapper">\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_scheme" name="property_scheme" class="anchor"></a>
-            <article class="property">
-                <h3 class="public ">$scheme</h3>
-                <pre class="signature">$scheme</pre>
-                <p><em></em></p>
-                
-
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><div class="path-wrapper">\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_query" name="property_query" class="anchor"></a>
-            <article class="property">
-                <h3 class="public ">$query</h3>
-                <pre class="signature">$query</pre>
-                <p><em></em></p>
-                
-
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><div class="path-wrapper">\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_host" name="property_host" class="anchor"></a>
-            <article class="property">
-                <h3 class="public ">$host</h3>
-                <pre class="signature">$host</pre>
-                <p><em></em></p>
-                
-
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_path" name="property_path" class="anchor"></a>
-            <article class="property">
-                <h3 class="public ">$path</h3>
-                <pre class="signature">$path</pre>
-                <p><em></em></p>
-                
-
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_fragment" name="property_fragment" class="anchor"></a>
-            <article class="property">
-                <h3 class="public ">$fragment</h3>
-                <pre class="signature">$fragment</pre>
-                <p><em></em></p>
-                
-
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><div class="path-wrapper">\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                                            
-                                    <a id="methods" name="methods"></a>
-            <div class="row-fluid">
-                <div class="span8 content class"><h2>Methods</h2></div>
-                <aside class="span4 detailsbar"></aside>
-            </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_determine_type" name="method_determine_type" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">determine_type()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">determine_type() : mixed</pre>
-                <p><em></em></p>
-                
-
-                
-                
-                                    <h4>Returns</h4>
-                    mixed
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><div class="path-wrapper">\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_setToken" name="method_setToken" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">setToken()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setToken(mixed  <span class="argument">$token</span>) : mixed</pre>
-                <p><em></em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>mixed</td>
-                                <td>$token </td>
-                                <td></td>
-                            </tr>
-                                            </table>
-                
-                
-                                    <h4>Returns</h4>
-                    mixed
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><div class="path-wrapper">\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_determine_id" name="method_determine_id" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">determine_id()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">determine_id(mixed  <span class="argument">$parts</span>) : mixed</pre>
-                <p><em></em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>mixed</td>
-                                <td>$parts </td>
-                                <td></td>
-                            </tr>
-                                            </table>
-                
-                
-                                    <h4>Returns</h4>
-                    mixed
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><div class="path-wrapper">\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_createFromString" name="method_createFromString" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">createFromString()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">createFromString(mixed  <span class="argument">$str</span>) : mixed</pre>
-                <p><em></em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>mixed</td>
-                                <td>$str </td>
-                                <td></td>
-                            </tr>
-                                            </table>
-                
-                
-                                    <h4>Returns</h4>
-                    mixed
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><div class="path-wrapper">\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method___toString" name="method___toString" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">__toString()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__toString() : mixed</pre>
-                <p><em></em></p>
-                
-
-                
-                
-                                    <h4>Returns</h4>
-                    mixed
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-EmbedUrl.html"><div class="path-wrapper">\BlueRaster\PowerBIAuthProxy\Urls\EmbedUrl</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method___construct" name="method___construct" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">__construct()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(mixed  <span class="argument">$id</span>) : mixed</pre>
-                <p><em></em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>mixed</td>
-                                <td>$id </td>
-                                <td></td>
-                            </tr>
-                                            </table>
-                
-                
-                                    <h4>Returns</h4>
-                    mixed
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/BlueRaster-PowerBIAuthProxy-Urls-PowerBiEmbedUrl.html"><div class="path-wrapper">\BlueRaster\PowerBIAuthProxy\Urls\PowerBiEmbedUrl</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                                                    </div>
-    </section>
-
-    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="source-view-label">PowerBiEmbedUrl.php</h3>
-        </div>
-        <div class="modal-body">
-            <pre data-src="../files/src/Urls/PowerBiEmbedUrl.php.txt" class="language-php line-numbers"></pre>
-        </div>
-    </div>
-
-    <footer class="row-fluid">
-        <section class="span10 offset2">
-            <section class="row-fluid">
-                <section class="span10 offset1">
-                    <section class="row-fluid footer-sections">
-                        <section class="span4">
-                                                        <h1><i class="icon-code"></i></h1>
-                            <div>
-                                <ul>
-                                                                            <li><a href="../namespaces/blueraster.html"><abbr title="\BlueRaster">normal</abbr></a></li>
-                                                                    </ul>
-                            </div>
-                        </section>
-                        <section class="span4">
-                                                        <h1><i class="icon-bar-chart"></i></h1>
-                            <div>
-                                <ul>
-                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
-                                </ul>
-                            </div>
-                        </section>
-                        <section class="span4">
-                                                        <h1><i class="icon-pushpin"></i></h1>
-                            <div>
-                                <ul>
-                                    <li><a href="../reports/errors.html">Errors</a></li>
-                                    <li><a href="../reports/markers.html">Markers</a></li>
-                                </ul>
-                            </div>
-                        </section>
-                    </section>
-                </section>
-            </section>
-            <section class="row-fluid">
-                <section class="span10 offset1">
-                    <hr />
-                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on October 2nd, 2020 at 18:18.
-                </section>
-            </section>
-        </section>
-    </footer>
-</div>
+</main>
 
 </body>
 </html>
