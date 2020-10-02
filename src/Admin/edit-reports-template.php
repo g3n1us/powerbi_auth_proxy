@@ -4,9 +4,9 @@
 						<h2>Auth Proxy Admin
 							<br><small class="text-muted">add/remove/edit and rearrange reports</small>
 						</h2>
-						
-						<script type="text/template">{!! $data !!}</script>
-						
+
+						<script type="text/template">{!! collect($this->context) !!}</script>
+
 						<div class="text-right py-3">
 							<a href="#versions_collapse" class="text-muted" data-toggle="collapse">versions</a>
 						</div>
@@ -16,18 +16,18 @@
 									<div class="input-group-prepend">
 										<label class="input-group-text" for="version_select">Versions</label>
 									</div>
-									
+
 									<select class="custom-select" name="_version" id="version_select">
 										<option value="">LATEST</option>
-									@foreach($data['versions'] as $version)
+									@foreach($versions as $version)
 										<option value="{{ $version['version'] }}" @if(@$_GET['_version'] === $version['version']) selected @endif>{{ $version['timestamp'] }}</option>
-									@endforeach								
+									@endforeach
 									</select>
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="submit">ok</button>
 									</div>
 								</div>
-																
+
 							</form>
 						</div>
 						<form method="post">
@@ -36,11 +36,11 @@
 								<button type="button" class="btn btn-lg btn-primary"  data-action="add">Add Report</button>
 								<button type="submit" class="btn btn-lg btn-success ml-auto">Save</button>
 							</div>
-							
+
 							<div class="outer">
-								
-							@foreach($data['reports'] as $report)
-							
+
+							@foreach($reports as $report)
+
 							<fieldset class="card mb-4" @if(!$report['id']) disabled @endif>
 								<div class="card-header">
 									<div class="clearfix"><a href="#" data-action="remove" data-toggle="tooltip" title="Remove Report" class="close">&times;</a></div>
@@ -52,14 +52,14 @@
 										</div>
 										<input type="text" name="reports[{{$report['id']}}][id][]" required class="form-control" id="{{$report['id']}}id" aria-describedby="{{$report['id']}}id_label" value="{{$report['id']}}">
 									</div>
-									
+
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
 											<label class="input-group-text" for="{{$report['name']}}name" id="{{$report['name']}}name_label">Report Label</label>
 										</div>
 										<input type="text" name="reports[{{$report['id']}}][name][]" class="form-control" id="{{$report['name']}}name" aria-describedby="{{$report['name']}}name_label" value="{{$report['name']}}">
 									</div>
-									
+
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
 											<label class="input-group-text" for="{{$report['id']}}type">Report Type</label>
@@ -68,7 +68,7 @@
 											<option value="">--</option>
 											<option value="power_bi" @selected($report['type'] == 'power_bi')>Power BI</option>
 											<option value="esri" @selected($report['type'] == 'esri')>Esri</option>
-										</select>								
+										</select>
 									</div>
 								</div>
 								<div class="card-footer d-flex">
@@ -81,7 +81,7 @@
 							<div class="sticky-top py-3 text-right">
 								<button type="submit" class="btn btn-lg btn-success">Save</button>
 							</div>
-							
+
 						</form>
 					</div>
 				</div>

@@ -8,6 +8,7 @@ if(!function_exists('auth_proxy')){
 	}
 }
 
+
 if(!function_exists('auth_proxy_base_path')){
 	function auth_proxy_base_path($subpath = null){
 		$subpath = $subpath ? Str::start($subpath, '/') : '';

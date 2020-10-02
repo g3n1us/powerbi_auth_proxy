@@ -60,6 +60,16 @@ class Auth{
 		}
 	}
 
+
+	public function is_standalone(){
+		if(env('APP_IS_STANDALONE') === true){
+			return true;
+		}
+
+		return false;
+	}
+
+
 	public static function getCurrentUser(){
     	static::get_instance();
     	return static::$framework->getUserProvider()->getUser();

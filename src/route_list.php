@@ -62,7 +62,7 @@ class DefaultRoute extends Route{
 	// responds to the url: /auth_proxy_routes/asset/{secure_embed.js|secure_embed.css}
 	public function asset($filename){
 		$this->nullable = true;
-dd($this->nullable, 'd');
+
 		$ok = preg_match('/^secure_embed.*?\.(js|css|js\.map|css\.map)$/', $filename, $match);
 		if(!$ok) return false;
 		return @file_get_contents(__DIR__."/assets/dist/$filename");

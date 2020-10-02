@@ -7,7 +7,7 @@ use BlueRaster\PowerBIAuthProxy\Utils\Csrf;
 
 class CodeIgniter extends Framework{
 
-	protected $user_providers = ['Prologin'];
+	protected $user_providers = ['MockUserProvider', 'Prologin'];
 
 	public static $ci;
 

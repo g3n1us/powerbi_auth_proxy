@@ -4,7 +4,7 @@
 						<h2>Auth Proxy Admin
 							<br><small class="text-muted">Edit Administrative Users</small>
 						</h2>
-						
+
 						<div class="text-right py-3">
 							<a href="#user_versions_collapse" class="text-muted" data-toggle="collapse">versions</a>
 						</div>
@@ -14,18 +14,18 @@
 									<div class="input-group-prepend">
 										<label class="input-group-text" for="version_select_users">Versions</label>
 									</div>
-									
+
 									<select class="custom-select" name="_version_users" id="version_select_users">
 										<option value="">LATEST</option>
-									@foreach($data['users_versions'] as $users_version)
+									@foreach($users_versions as $users_version)
 										<option value="{{ $users_version['version'] }}" @if(@$_GET['_version_users'] === $users_version['version']) selected @endif>{{ $users_version['timestamp'] }}</option>
-									@endforeach								
+									@endforeach
 									</select>
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="submit">ok</button>
 									</div>
 								</div>
-																
+
 							</form>
 						</div>
 						<form method="post">
@@ -34,11 +34,11 @@
 								<button type="button" class="btn btn-lg btn-primary"  data-action="add">Add User</button>
 								<button type="submit" class="btn btn-lg btn-success ml-auto">Save</button>
 							</div>
-							
+
 							<div class="outer">
-								
-							@foreach($data['users'] as $i => $user)
-							
+
+							@foreach($users as $i => $user)
+
 							<fieldset class="card mb-4" @if(!$user) disabled @endif>
 								<div class="card-header">
 									<div class="clearfix"><a href="#" data-action="remove" data-toggle="tooltip" title="Remove User" class="close">&times;</a></div>
@@ -57,7 +57,7 @@
 							<div class="sticky-top py-3 text-right">
 								<button type="submit" class="btn btn-lg btn-success">Save</button>
 							</div>
-							
+
 						</form>
 					</div>
 				</div>

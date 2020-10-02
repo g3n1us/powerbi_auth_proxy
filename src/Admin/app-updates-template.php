@@ -1,4 +1,5 @@
 <?php define('AUTH_PROXY_INSTALLER_EMBEDDED', '1'); ?>
+
 <style>
 	[href="?secure_directory=true"]{
 		display: none;
@@ -11,7 +12,7 @@
 			<form method="post">
 			@csrf
 			<input type="hidden" name="application_update" value="true">
-			{!! require auth_proxy()->framework()->installerPath() !!}			
+			{!! require auth_proxy()->framework()->installerPath() !!}
 			</form>
 		</div>
 	</div>
