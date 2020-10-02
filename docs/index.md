@@ -25,3 +25,9 @@ Embed Code:
 </script>
 
 ```
+
+## API Documentation
+
+Below you will find a link to generated documentation and diagrams of the codebase.
+
+### [Documentation](api-docs/index.html)
