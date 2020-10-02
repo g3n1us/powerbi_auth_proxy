@@ -2,7 +2,7 @@
 <phpdoc>
     <title>Dashboard Auth Proxy</title>
     <parser>
-        <target>output</target>
+        <target>phpdoctmp</target>
         <encoding>utf8</encoding>
         <markers>
             <item>TODO</item>

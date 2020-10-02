@@ -48,7 +48,7 @@ php -S localhost:8000 serve.php
 
 Generate Documentation
 ```
-php phpDocumentor.phar --template=default -s graphs.enabled=true --force
+php phpDocumentor.phar --template=default -s graphs.enabled=true --sourcecode --force
 ```
 
 
