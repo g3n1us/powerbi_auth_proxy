@@ -43,8 +43,10 @@
 				@import('./app-updates-template.php')
 @else
 				<div class="p-4">
-					<code>This application has been installed with Composer.</code>
-					<code>Run: <pre>composer update</pre> from the command line</code>
+					<pre>This application has been installed with Composer.</pre>
+					<pre>Run: </pre>
+					<code class="d-block mb-3">composer update</code>
+					<pre>from the command line</pre>
 				</div>
 @endif
 			</div>
