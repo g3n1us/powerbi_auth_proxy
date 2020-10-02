@@ -12,7 +12,7 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "start": "npm run watch",
     "serve": "php -S localhost:8000 -t ../../ ../../serve.php",
-    "dist": "bash release.sh"
+    "dist": "npm run production"
   },
   "keywords": [],
   "author": "",
