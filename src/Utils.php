@@ -5,6 +5,9 @@ namespace BlueRaster\PowerBIAuthProxy;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use GuzzleHttp\Client as GuzzleClient;
+use BlueRaster\PowerBIAuthProxy\Filesystem;
+use BlueRaster\PowerBIAuthProxy\Frameworks\Mock as MockFramework;
+
 
 // convenience class for accessing utility classes found in Utils
 
@@ -12,6 +15,18 @@ class Utils{
 
 	public static function csrf(){
 		return new Utils\Csrf;
+	}
+
+
+	public static function getFramework(){
+		foreach(Filesystem::list_classes('Frameworks') as $class){
+			$class = "$class";
+			if($class::test()){
+				return $class;
+			}
+		}
+
+		return MockFramework::class;
 	}
 
 

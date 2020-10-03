@@ -21,7 +21,8 @@
     "autoload": {
         "psr-4": {
             "BlueRaster\\PowerBIAuthProxy\\": "src/"
-        }
+        },
+        "files": ["src/helpers.php"]
     },
     "bin": ["bin/powerbi-auth-proxy-installer"]
 }

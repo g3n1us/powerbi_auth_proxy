@@ -1,7 +1,14 @@
 #!/usr/bin/env php
 <?php
 
-require 'vendor/autoload.php';
+namespace BlueRaster\PowerBIAuthProxy\Installers;
 
-(new BlueRaster\PowerBIAuthProxy\Installers\Installer)->run();
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+Installer::install();
+
+
+
+
+// (new BlueRaster\PowerBIAuthProxy\Installers\Installer)->run();
 

@@ -1,7 +1,6 @@
 <?php
 namespace BlueRaster\PowerBIAuthProxy;
 
-use BlueRaster\PowerBIAuthProxy\Admin\AdminRoute;
 
 use BlueRaster\PowerBIAuthProxy\Installers\Installer;
 
@@ -90,10 +89,4 @@ class DefaultRoute extends Route{
 	}
 
 }
-
-// responds to the url: /auth_proxy_routes/auth_proxy_admin.html
-new AdminRoute;
-
-
-new DefaultRoute();
 

@@ -4,7 +4,11 @@ namespace BlueRaster\PowerBIAuthProxy;
 use Whoops\Handler\PrettyPageHandler;
 use Illuminate\Support\Str;
 
-require(__DIR__ . '/helpers.php');
+use BlueRaster\PowerBIAuthProxy\Admin\AdminRoute;
+use BlueRaster\PowerBIAuthProxy\DefaultRoute;
+
+
+//require(__DIR__ . '/helpers.php');
 
 if(!session_status()) session_start();
 
@@ -34,4 +38,9 @@ if(in_array($method_string, ['GET', 'POST', 'PUT'])){
 	unset($_POST['_method']);
 }
 
-require(__DIR__ . '/route_list.php');
+
+// responds to the url: /auth_proxy_routes/auth_proxy_admin.html
+new AdminRoute();
+
+
+new DefaultRoute();

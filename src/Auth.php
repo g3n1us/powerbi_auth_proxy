@@ -119,15 +119,10 @@ class Auth{
 	public static function getFramework(){
 		if(static::$framework) return static::$framework;
 
-		foreach(Filesystem::list_classes('Frameworks') as $class){
-			$class = "$class";
-			if($class::test()){
-    			static::$framework = new $class;
-				return static::$framework;
-			}
-		}
+		$class = Utils::getFramework();
 
-		static::$framework = new \BlueRaster\PowerBIAuthProxy\Frameworks\Mock;
+		static::$framework = new "$class";
+
 		return static::$framework;
 	}
 

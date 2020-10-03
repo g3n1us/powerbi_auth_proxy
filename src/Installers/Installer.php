@@ -5,31 +5,39 @@ namespace BlueRaster\PowerBIAuthProxy\Installers;
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 use BlueRaster\PowerBIAuthProxy\Command;
+use BlueRaster\PowerBIAuthProxy\Utils;
 
 
-class Installer{
+abstract class Installer{
 
-	private $vendorDir = 'vendor';
 
-	private $applicationDir = 'application';
-
-	private $controller_contents = 'BlueRaster\\PowerBIAuthProxy\\Routes::route();';
-
-    public  $installed_with_composer;
 
 	public static function postAutoloadDump(Event $event){
 		(new self())->run($event);
 	}
 
-	public function __construct(){
+	final public function __construct(){
     	$this->installed_with_composer = basename(dirname(dirname(__DIR__))) == 'vendor';
 
 	}
 
+
+	final public static function getInstaller(){
+		$framework_name = Utils::getFramework();
+		$installerClass = __NAMESPACE__ . '\\' . class_basename($framework_name).'Installer';
+		return $installerClass;
+	}
+
+
+	final public static function install(){
+		$installerClass = static::getInstaller();
+		return (new $installerClass)->run();
+
+	}
+
+
 	public function run(Event $event = null){
-//         $this->vendorDir = $event->getComposer()->getConfig()->get('vendor-dir');
-//         $this->applicationDir = dirname($this->vendorDir);
-//         require $this->vendorDir . '/autoload.php';
+		dd($this);
         $steps = $this->isInstalled();
 		if($steps !== true){
 			Command::say("Installation of the PowerBIAuthProxy is not yet complete.");
@@ -97,106 +105,3 @@ class Installer{
 	}
 }
 
-
-/*
-class Command{
-
-	private static $instance;
-
-	private static $stdin;
-
-	public function _ask($question, $status = 'WARNING'){
-		$this->say($question, $status);
-		echo "> ";
-		$stdin = $this->getStdin();
-		return $this->clean(fgets($stdin));
-	}
-
-	public function _say($text, $status = 'NOTE'){
-		echo($this->colorize($text, $status));
-	}
-
-	public function _clean($input){
-		return trim(preg_replace('/[^a-z0-9\-\.]/', '', strtolower(trim($input))), '-');
-	}
-
-	public function _error($message = null){
-		$this->say($message . PHP_EOL, "FAILURE");
-		die($this->say('exiting' . PHP_EOL, "FAILURE"));
-	}
-
-
-	public function _confirm($question = "Are you sure?", $status = 'WARNING'){
-		$answer = $this->ask($question . " [y/n]");
-		if(!in_array(strtolower($answer), ['y', 'yes'])){
-			exit($this->say('exiting' . PHP_EOL));
-		}
-	}
-
-
-	public function _getStdin(){
-		if(!static::$stdin){
-			static::$stdin = fopen('php://stdin', 'r');
-		}
-		return static::$stdin;
-	}
-
-
-	public function _colorize($text, $status = 'NOTE') {
-		$out = "";
-		switch(strtoupper($status)) {
-			case "SUCCESS":
-			$out = "[32m"; //Green
-			break;
-
-			case "FAILURE":
-			$out = "[31m"; //Red
-			break;
-
-			case "ERROR":
-			$out = "[31m"; //Red
-			break;
-
-			case "WARNING":
-			$out = "[33m"; //Yellow
-			break;
-
-			case "NOTE":
-			$out = "[36m"; //Blue
-			break;
-
-			case "INFO":
-			$out = "[36m"; //Blue
-			break;
-
-			case "MUTED":
-			$out = "[37m"; // Grey
-			break;
-
-			default:
-			throw new \Exception("Invalid status: " . $status);
-		}
-		return chr(27) . "$out" . "$text" . chr(27) . "[0m" . PHP_EOL;
-	}
-
-	public function __construct(){
-		if(static::$instance) throw new \Exception("One instance can exist at at time.");
-		static::$instance = $this;
-	}
-
-	public function __destruct(){
-		fclose(static::getStdin());
-	}
-
-	public static function __callStatic($name, $arguments){
-		if(!static::$instance) new self;
-		return call_user_func_array([static::$instance, "_$name"], $arguments);
-	}
-
-	public function __call($name, $arguments){
-		if(!static::$instance) new self;
-		return call_user_func_array([static::$instance, "_$name"], $arguments);
-	}
-
-}
-*/
