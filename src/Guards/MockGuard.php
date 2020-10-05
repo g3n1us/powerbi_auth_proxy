@@ -6,4 +6,8 @@ class MockGuard {
 
 	protected $exception;
 
+	public static function challenge() : MockGuard{
+
+	}
+
 }

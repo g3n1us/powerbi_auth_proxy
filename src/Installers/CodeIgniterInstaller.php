@@ -21,28 +21,6 @@ class CodeIgniterInstaller extends Installer{
 	}
 
 
-	public function run(Event $event = null){
-        $steps = $this->isInstalled();
-		if($steps !== true){
-			Command::say("Installation of the PowerBIAuthProxy is not yet complete.");
-			Command::say("You will be guided through a few short steps to complete installation.");
-			Command::confirm("Would you like to continue?");
-			$required_steps = [
-				'installController',
-				//
-			];
-
-			$total_steps = count($steps);
-			$current_step = 1;
-			foreach($required_steps as $step){
-				if(in_array($step, $steps)){
-					Command::say("\n*** Step $current_step of $total_steps:\n\n");
-					$current_step++;
-					$this->{$step}();
-				}
-			}
-		}
-	}
 
 	private function isInstalled(){
 		$missing = [];

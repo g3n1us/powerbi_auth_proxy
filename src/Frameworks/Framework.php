@@ -16,6 +16,8 @@ abstract class Framework{
 
 	protected $user_provider;
 
+	protected $installer;
+
 	protected $config;
 
 	public function __construct(Array $config = []){
@@ -26,7 +28,9 @@ abstract class Framework{
     	return $this->config;
 	}
 
-	public function installerPath(){
+	public static function getInstaller(){
+		dd(class_basename(__NAMESPACE__));
+		__NAMESPACE__ . '\\' . class_basename($framework_name).'Installer';
 		$classname = class_basename($this);
 		return Utils::root_path("installers/$classname/installer.php");
 	}

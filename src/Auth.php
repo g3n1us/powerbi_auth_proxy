@@ -121,7 +121,7 @@ class Auth{
 
 		$class = Utils::getFramework();
 
-		static::$framework = new "$class";
+		static::$framework = new $class;
 
 		return static::$framework;
 	}
