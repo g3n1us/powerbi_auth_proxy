@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const hash = execSync('git rev-parse --short HEAD');
 
-fs.writeFileSync('./src/version.json', `{"version": "${hash.toString().trim()}"}`);
+fs.writeFileSync('./resources/version.json', `{"version": "${hash.toString().trim()}"}`);
 
 
 //  git rev-parse --short HEAD
@@ -19,13 +19,13 @@ fs.writeFileSync('./src/version.json', `{"version": "${hash.toString().trim()}"}
  | file for your application, as well as bundling up your JS files.
  |
  */
-mix.setPublicPath('dist');
+mix.setPublicPath('public');
 mix.autoload({
     jquery: ['$', 'window.jQuery'],
 });
-mix.js('src/secure_embed.js', 'dist/').sourceMaps();
-mix.js('src/secure_embed_admin.js', 'dist/').sourceMaps();
-mix.sass('src/secure_embed.scss', 'dist/').sourceMaps();
+mix.js('resources/js/secure_embed.js', 'public/').sourceMaps();
+mix.js('resources/js/secure_embed_admin.js', 'public/').sourceMaps();
+mix.sass('resources/sass/secure_embed.scss', 'public/').sourceMaps();
 
 
 // Full API

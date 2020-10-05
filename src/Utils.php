@@ -30,6 +30,22 @@ class Utils{
 	}
 
 
+	public static function installationType(){
+		$test = basename(dirname(__DIR__)) === 'vendor';
+		return $test ? "composer" : "standalone";
+	}
+
+
+	public static function installedComposer(){
+		return Utils::installationType() === "composer";
+	}
+
+
+	public static function installedStandalone(){
+		return Utils::installationType() === "standalone" && env('APP_IS_STANDALONE') === true;
+	}
+
+
 	public static function method_field($method){
 		return '<input type="hidden" name="_method" value="'.trim(strtoupper($method)).'" />';
 	}
@@ -53,10 +69,16 @@ class Utils{
 	}
 
 
-
 	public static function base_path($path = ''){
 
 		return __DIR__ . Utils::tidy_path($path);
+
+	}
+
+
+	public static function public_path($path = ''){
+
+		return Utils::root_path("public/$path");
 
 	}
 
@@ -72,6 +94,11 @@ class Utils{
 
 		return Utils::root_path("_data/$file");
 
+	}
+
+
+	public static function namespace(){
+		return __NAMESPACE__;
 	}
 
 

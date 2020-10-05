@@ -29,10 +29,9 @@ abstract class Framework{
 	}
 
 	public static function getInstaller(){
-		dd(class_basename(__NAMESPACE__));
-		__NAMESPACE__ . '\\' . class_basename($framework_name).'Installer';
-		$classname = class_basename($this);
-		return Utils::root_path("installers/$classname/installer.php");
+		$classname = Utils::namespace() . '\\Installers\\' . class_basename(static::class).'Installer';
+
+		return $classname;
 	}
 
 	public static function test(){

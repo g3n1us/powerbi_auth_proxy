@@ -14,15 +14,9 @@ class CodeIgniterInstaller extends Installer{
 
 	private $controller_contents = 'BlueRaster\\PowerBIAuthProxy\\Routes::route();';
 
-    public  $installed_with_composer = true;
-
-	public static function postAutoloadDump(Event $event){
-		(new self())->run($event);
-	}
 
 
-
-	private function isInstalled(){
+	protected function getSteps() : array{
 		$missing = [];
 		// is the controller in place?
 		$controller_filepath =  $this->applicationDir . '/core/MY_Controller.php';
@@ -36,8 +30,13 @@ class CodeIgniterInstaller extends Installer{
 
 		// is composer autoloading setting set to true?
 
-		if(empty($missing)) return true;
 		return $missing;
+	}
+
+
+
+	protected function isInstalled() : bool {
+		return empty($this->getSteps());
 	}
 
 
@@ -48,7 +47,7 @@ class CodeIgniterInstaller extends Installer{
 	}
 
 
-	private function installController(){
+	protected function installController(){
 		$filepath =  $this->applicationDir . '/core/MY_Controller.php';
 		if(!file_exists($filepath)){
 			file_put_contents($filepath, "<?php" . PHP_EOL . PHP_EOL . $this->controller_contents . PHP_EOL);

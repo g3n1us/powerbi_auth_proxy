@@ -62,11 +62,7 @@ class Auth{
 
 
 	public function is_standalone(){
-		if(env('APP_IS_STANDALONE') === true){
-			return true;
-		}
-
-		return false;
+		return Utils::installedStandalone();
 	}
 
 

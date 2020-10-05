@@ -32,7 +32,7 @@ $html = '
   <head>
     <meta charset="utf-8">
 	<style>
-	'. file_get_contents($src . '/assets/dist/secure_embed.css') .'
+	'. file_get_contents(BlueRaster\PowerBIAuthProxy\Utils::public_path('secure_embed.css')) .'
 	</style>
 
   </head>

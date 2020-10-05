@@ -4,6 +4,8 @@ namespace BlueRaster\PowerBIAuthProxy;
 
 use BlueRaster\PowerBIAuthProxy\Installers\Installer;
 
+use Utils;
+
 class DefaultRoute extends Route{
 
 
@@ -12,6 +14,7 @@ class DefaultRoute extends Route{
     public $method_name;
 
     protected $nullable_methods = ["asset"];
+
 
     public function __construct(){
         parent::__construct('^\/auth_proxy_routes\/(.*?)$', ['auth_proxy_gate'], null);
@@ -77,7 +80,7 @@ class DefaultRoute extends Route{
 
 		$ok = preg_match('/^secure_embed.*?\.(js|css|js\.map|css\.map)$/', $filename, $match);
 		if(!$ok) return false;
-		return @file_get_contents(__DIR__."/assets/dist/$filename");
+		return @file_get_contents(Utils::public_path($filename));
 	}
 
 

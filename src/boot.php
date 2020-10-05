@@ -8,8 +8,6 @@ use BlueRaster\PowerBIAuthProxy\Admin\AdminRoute;
 use BlueRaster\PowerBIAuthProxy\DefaultRoute;
 
 
-//require(__DIR__ . '/helpers.php');
-
 if(!session_status()) session_start();
 
 $dotenv_dir = dirname(__DIR__);
@@ -21,7 +19,7 @@ if(file_exists("$dotenv_dir/.env")){
 
 new SafetyNet;
 
-if(env('APP_ENV') == 'dev'){
+if(env('APP_ENV') === 'dev'){
 	$whoops = new \Whoops\Run;
 	$whoops->pushHandler(new PrettyPageHandler);
 	$whoops->register();

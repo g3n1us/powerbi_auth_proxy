@@ -6,9 +6,3 @@ namespace BlueRaster\PowerBIAuthProxy\Installers;
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 Installer::install();
-
-
-
-
-// (new BlueRaster\PowerBIAuthProxy\Installers\Installer)->run();
-

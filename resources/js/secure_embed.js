@@ -2,9 +2,8 @@ import PbiClient, { models, service, factories } from 'powerbi-client';
 import axios from 'axios';
 import { popupwindow, ltrim } from 'g3n1us_helpers';
 import qs from 'qs';
-const { version } = require('./version.json');
+const { version } = require('../version.json');
 
-//require('popper.js');
 import 'bootstrap';
 
 class App{
