@@ -4,7 +4,7 @@ namespace BlueRaster\PowerBIAuthProxy;
 
 use BlueRaster\PowerBIAuthProxy\Installers\Installer;
 
-use Utils;
+use BlueRaster\PowerBIAuthProxy\Utils;
 
 class DefaultRoute extends Route{
 

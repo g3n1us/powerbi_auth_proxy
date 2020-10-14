@@ -21,12 +21,22 @@ class Mock extends Framework{
 
 	}
 
-/*
-	public function getUser(){
-		$this->user = new User;
-		return $this->user;
+	public function getConfig(){
+		return [
+			'selected_reports' => [
+				[
+					'id' => '',
+					'type' => 'powerbi',
+					'name' => 'Demonstration',
+				],
+			],
+		    'auth_proxy_gate' => function($router){
+		        // dd($router);
+		        return true;
+		    },
+
+		];
 	}
-*/
 
 
 }

@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+DEST=$1
+
+if [[ -d ".git" && -d "bin" ]]; then
+
+	if [ -z $DEST ]; then
+
+		echo "You must specify a destination folder."
+		echo " - bin/create-local-dev-site <destination>"
+		exit
+
+	fi
+
+	if [ -d $DEST ]; then
+
+		echo "The destination directory already exists"
+		exit
+
+	fi
+
+	cp -r "internal_development_template" "$DEST"
+
+	echo ""
+	echo "Files copied to $DEST"
+	echo "Go to $DEST and run..."
+	echo " - composer install"
+	echo "To start the dev server run..."
+	echo " - php -S localhost:8000 -t . index.php"
+	echo ""
+
+else
+
+	echo "You must run this script from the root of the repository"
+	exit
+
+fi
