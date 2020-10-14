@@ -31,7 +31,6 @@ abstract class Installer{
 
 
 	final public static function install(){
-// 		$installer = new $installerClass;
 		$framework = Utils::getFramework();
 		$installerClass = $framework::getInstaller();
 		return (new $installerClass)->run();
@@ -57,7 +56,7 @@ abstract class Installer{
 		Command::say("Installation of the PowerBIAuthProxy is not yet complete.");
 		Command::say("You will be guided through a few short steps to complete installation.");
 		Command::confirm("Would you like to continue?");
-		$required_steps = array_ $this->getSteps();
+		$required_steps = $this->getSteps();
 
 		$total_steps = count($required_steps);
 		$current_step = 1;

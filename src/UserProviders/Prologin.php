@@ -41,8 +41,7 @@ class Prologin extends UserProvider{
 	}
 
 
-	public static function test(Framework $framework){
-		return false;
+	public static function test(Framework $framework) : bool{
 		$user = $framework->getUser();
 		$reflection = new ReflectionClass($user);
 

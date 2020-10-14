@@ -1,0 +1,12 @@
+{
+    "minimum-stability": "dev",
+    "repositories": {
+        "auth_proxy": {
+            "type": "path",
+            "url": "../powerbi_auth_proxy"
+        }
+    },
+    "require": {
+        "g3n1us/powerbi_auth_proxy": "dev-develop"
+    }
+}

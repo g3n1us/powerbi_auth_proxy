@@ -22,7 +22,7 @@ class Eloquent extends UserProvider{
 		return false;
 	}
 
-	public static function test(Framework $framework){
+	public static function test(Framework $framework) : bool{
 		$user = $this->getUser();
 		if($user) return $user instanceof Illuminate\Foundation\Auth\User;
 		return false;

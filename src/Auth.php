@@ -92,6 +92,8 @@ class Auth{
 
     	$framework = static::getFramework();
 
+    	dd(self::getDefaultConfig(), $framework->getConfig(), $framework);
+
         $config = array_merge(self::getDefaultConfig(), $framework->getConfig());
 
 	    if(!defined('PBI_AUTH_PROXY_RUNNING_INSTALL') && !static::check_config($config)){
@@ -106,9 +108,12 @@ class Auth{
 
 	// return boolean
 	public static function check_config(Array $config){
+// 	    if(empty($config["username"]) || empty($config["password"]) || empty($config["application_id"]) || empty($config["application_secret"]) || empty($config["group_id"]) || empty($config["selected_reports"])){
+/*
 	    if(empty($config["username"]) || empty($config["password"]) || empty($config["application_id"]) || empty($config["application_secret"]) || empty($config["group_id"]) || empty($config["selected_reports"])){
 		    return false;
 	    }
+*/
 	    return true;
 	}
 

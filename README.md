@@ -39,10 +39,11 @@ rm composer.lock && \
 composer clearcache && \
 composer config minimum-stability dev && \
 composer config repositories.auth_proxy "{\"type\":\"path\",\"url\":\"../powerbi_auth_proxy\"}" && \
-composer require g3n1us/powerbi_auth_proxy:dev-september-cleanup
+composer require g3n1us/powerbi_auth_proxy:dev-develop
 
 ## run in a local web server
 php -S localhost:8000 serve.php
+php -S localhost:8000 -t . serve.php
 
 ```
 

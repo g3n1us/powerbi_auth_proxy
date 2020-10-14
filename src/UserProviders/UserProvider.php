@@ -14,10 +14,13 @@ abstract class UserProvider{
 
 	protected $user_reflection;
 
-	public static $gates = [];
+	public static $gates = [
+		"view" => null,
+		"admin" => null,
+	];
 
-	public function __construct(){
-
+	final public function __construct(){
+		$this->getUser();
 	}
 
 	abstract public function getUser() : BaseUser;
@@ -39,7 +42,7 @@ abstract class UserProvider{
 
 
 
-	public function can($ability = '*'){
+	final public function can($ability = '*'){
 		$ok = true;
 		foreach(static::$gates as $gate){
     		if($gate() !== true){
@@ -50,13 +53,11 @@ abstract class UserProvider{
 		return $ok;
 	}
 
-	public static function gate($handle, Closure $callback){
+	final public static function gate($handle, \Closure $callback){
         static::$gates[$handle] = $callback;
 	}
 
-	public static function test(Framework $framework){
-		return false;
-	}
+	abstract public static function test(Framework $framework) : bool;
 }
 
 

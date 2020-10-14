@@ -39,6 +39,11 @@ class BaseUser{
 	}
 
 
+	public function can($ability = '*'){
+		return $this->provider->can($ability);
+	}
+
+
 	public function __get($name){
 		return @$this->user->{$name};
 	}

@@ -5,7 +5,7 @@ namespace BlueRaster\PowerBIAuthProxy\Installers;
 class MockInstaller extends Installer{
 
 	protected function isInstalled() : bool {
-		return false;
+		return true;
 	}
 
 	protected function getSteps() : array{

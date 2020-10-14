@@ -13,8 +13,8 @@ class Mock extends Framework{
 
 
 	public static function test(){
-		new MockGuard();
-		return php_sapi_name() === 'cli-server';
+		return new MockGuard();
+
 	}
 
 	public function getCsrf() : Csrf {

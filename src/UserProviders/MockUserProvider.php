@@ -3,23 +3,22 @@
 namespace BlueRaster\PowerBIAuthProxy\UserProviders;
 
 use BlueRaster\PowerBIAuthProxy\Frameworks\Framework;
+use BlueRaster\PowerBIAuthProxy\Frameworks\Mock as MockFramework;
 
 class MockUserProvider extends UserProvider{
-
-	public function __construct(){
-// 		dd($this);
-	}
 
 	public function logged_in(){
 		return !!$this->getUser()->loggedin;
 	}
 
+/*
 	public function can($ability = '*'){
 		return true;
 	}
+*/
 
-	public static function test(Framework $framework){
-		return true;
+	public static function test(Framework $framework) : bool{
+		return $framework instanceof MockFramework;
 	}
 
 	public function getUser() : BaseUser{
@@ -31,6 +30,9 @@ class MockUserProvider extends UserProvider{
 
 }
 
+MockUserProvider::gate('view', function(){
+	return true;
+});
 
 class User{
 	public $logged_in = true;
