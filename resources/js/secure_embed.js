@@ -56,6 +56,7 @@ class App{
 	loadReport(link){
 		$(link).tab('show');
 		const itemdata = $(link).data('reportdata');
+
         const $reportContainer = $(link.hash);
         if($reportContainer.find('iframe').length) return;
         $reportContainer.html('<span class="loading-indicator">loading...</span>');
@@ -66,18 +67,29 @@ class App{
 
         const reportData = this.data[itemdata.id];
 
-        axios.get(`/auth_proxy_routes/report_embed/${reportData.id}`).then(response => {
-            const embedConfiguration = {
-            	type: 'report',
-            	id: reportData.id,
-            	groupId: response.data.group_id,
-            	embedUrl: 'https://app.powerbi.com/reportEmbed',
-            	tokenType: models.TokenType.Embed,
-            	accessToken: response.data.embed_token
-            };
+        const embedConfiguration = {
+        	type: 'report',
+        	id: reportData.id,
+        	groupId: reportData.group_id,
+        	embedUrl: 'https://app.powerbi.com/reportEmbed',
+        	tokenType: models.TokenType.Embed,
+        	accessToken: reportData.embed_token
+        };
 
-            const report = this.powerbi.embed($reportContainer.get(0), embedConfiguration);
-        });
+
+
+
+        if(embedConfiguration.accessToken){
+	        this.powerbi.embed($reportContainer.get(0), embedConfiguration);
+        }
+
+		else{
+	        axios.get(`/auth_proxy_routes/report_embed/${reportData.id}`).then(response => {
+		        embedConfiguration.accessToken = response.data.embed_token;
+
+		        const report = this.powerbi.embed($reportContainer.get(0), embedConfiguration);
+	        });
+		}
 	}
 
 	loadEsriReport(link, $reportContainer){

@@ -5,6 +5,7 @@ namespace BlueRaster\PowerBIAuthProxy;
 use Illuminate\Support\Collection;
 use BlueRaster\PowerBIAuthProxy\Urls\EsriEmbedUrl;
 use BlueRaster\PowerBIAuthProxy\Urls\PowerBiEmbedUrl;
+use BlueRaster\PowerBIAuthProxy\Auth;
 
 class Embed extends Collection{
 
@@ -17,7 +18,7 @@ class Embed extends Collection{
 	public $url;
 
 	public function __construct($items = []){
-		['id' => $id, 'name' => $name, 'type' => $type] = $items;
+		@['id' => $id, 'name' => $name, 'type' => $type, 'embed_token' => $embed_token] = $items;
 		$types = [
 			'esri' => 'EsriEmbedUrl',
 			'power_bi' => 'PowerBiEmbedUrl',
@@ -38,6 +39,8 @@ class Embed extends Collection{
 			'slug' => preg_replace('/-/', '', $this->id),
 			'handle' => preg_replace('/[^a-z0-9]/', '-', strtolower($this->name)),
 			'url' => (string) $this->url,
+			'embed_token' => $embed_token,
+			'group_id' => Auth::config('group_id'),
 		];
 
 		parent::__construct($new_items);

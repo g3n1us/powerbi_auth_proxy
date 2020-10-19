@@ -94,7 +94,6 @@ class Auth{
 
         $config = array_merge(self::getDefaultConfig(), $framework->getConfig());
 
-//         dd($config);
 
 	    if(!defined('PBI_AUTH_PROXY_RUNNING_INSTALL') && !static::check_config($config)){
 		    throw new MissingConfigException;

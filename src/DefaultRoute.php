@@ -31,12 +31,14 @@ class DefaultRoute extends Route{
 	// responds to the url: /auth_proxy_routes/embed_data
 	public function embed_data(){
 		$reports = DB::get('reports');
-		if(empty($reports)){
-	    	$reports_string = Auth::config('selected_reports');
+
+		if($reports->isEmpty()){
+	    	$selected_reports = Auth::config('selected_reports');
 
 			$selected_reports = array_map(function($v){
-				return Embed::createFromString($v);
-			}, Utils::clean_array_from_string($reports_string));
+				return new Embed($v);
+				//return Embed::createFromString($v);
+			}, $selected_reports);
 		}
 		else{
 			$selected_reports = $reports->map(function($v){
